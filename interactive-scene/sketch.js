@@ -6,11 +6,16 @@
 // - describe what you did to take this project "above and beyond"
 
 
-// 0 = Title Screen, 1 = Select Screen, 2 = Timing Game, 3 = Number Game.
+// 0 = Title Screen, 1 = Select Screen, 2 = Timing Game Instructions, 3 = Number Game Instructions
 let gameMode = 0;
+let thunderImg;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
+}
+
+function preload() {
+  thunderImg = loadImage('thunderbolt.png');
 }
 
 // Changing gameMode
@@ -46,13 +51,14 @@ function titleScreen() {
   background(51, 153, 255);
 
   // Title Text
-  textSize(40);
+  textSize(80);
+  fill("white")
   textFont("Verdana");
-  text("Human Benchmark Ripoff", width / 2 - 240, height / 2 - 200);
+  text("Human Benchmark Ripoff", width / 2 - 500, height / 2 - 200);
 
   // Start Button Text
   textSize(30);
-  text("Click to Start", width / 2 - 85, height / 2 + height / 5.5);
+  text("Click to Start", width / 2 - 100, height / 2 + height / 5.5);
 
   // Call for gameStarted Function
   if (gameMode > 0) {
@@ -65,9 +71,9 @@ function gameStarted() {
   background(51, 153, 255);
 
   // Title Text
-  textSize(40);
-  fill("black");
-  text("Pick Game!", width / 2 - 125, height / 2 - 280);
+  textSize(60);
+  fill("white");
+  text("Pick Game!", width / 2 - 150, height / 2 - 280);
 
   // Game Name Text
   textSize(30);
@@ -93,7 +99,20 @@ function gameStarted() {
 }
 
 function timerGame() {
-  background("red");
+  // Title Text
+  background(51, 153, 255);
+  textSize(60)
+  fill("white")
+  text("Reaction Time Test", width / 2 - 275, height / 2 - 200); 
+  image(thunderImg, width/2- 100, height/2- 150, thunderImg.width/5, thunderImg.height/5);
+
+  // Instructions Text
+  textSize(30);
+  text("When the red box turns green, click as quickly as you can can.", width/2 - 430, height / 2 + height / 4);
+
+  // Start Button Text
+  textSize(30);
+  text("Click to Start", width / 2 - 85, height / 2 + height / 3);
 }
 
 function numberGame() {
