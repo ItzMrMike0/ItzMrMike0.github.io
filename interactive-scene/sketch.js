@@ -24,7 +24,7 @@ function mouseClicked() {
   if (gameMode === 0) {
     gameMode += 1;
   }
-  // Timing Game or Number Game
+  // Timing Game
   else if (gameMode === 1) {
     if (
       mouseX > 0 &&
@@ -33,6 +33,7 @@ function mouseClicked() {
       mouseY < 2 * height
     ) {
       gameMode += 1;
+      // Number Game
     } else {
       if (
         mouseX > width / 2 &&
@@ -44,6 +45,9 @@ function mouseClicked() {
       }
     }
   }
+  else if (gameMode === 2) {
+    gameMode += 1;
+    }
 }
 
 // Title Screen Function
@@ -59,11 +63,6 @@ function titleScreen() {
   // Start Button Text
   textSize(30);
   text("Click to Start", width / 2 - 100, height / 2 + height / 5.5);
-
-  // Call for gameStarted Function
-  if (gameMode > 0) {
-    gameStarted();
-  }
 }
 
 // Game Started Function
@@ -87,15 +86,6 @@ function gameStarted() {
   // Blue Rectangle Number Game
   fill("blue");
   rect(width / 2, height / 3.5, width / 2, height);
-
-  // Call for Timer Game
-  if (gameMode > 1) {
-    timerGame();
-  }
-  // Call for Number Game
-  if (gameMode > 2) {
-    numberGame();
-  }
 }
 
 function timerGame() {
@@ -113,6 +103,7 @@ function timerGame() {
   // Start Button Text
   textSize(30);
   text("Click to Start", width / 2 - 85, height / 2 + height / 3);
+  
 }
 
 function numberGame() {
@@ -120,5 +111,22 @@ function numberGame() {
 }
 
 function draw() {
+  text(gameMode, 0, 300);
   titleScreen();
+
+  // Call for gameStarted Function
+  if (gameMode === 1) {
+    gameStarted();
+  }
+
+  // Call for Timer Game
+  if (gameMode === 2) {
+    timerGame();
+  }
+
+  // Call for Number Game
+  if (gameMode === 3) {
+    numberGame();
+  }
+
 }
