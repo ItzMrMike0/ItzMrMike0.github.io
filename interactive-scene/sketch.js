@@ -77,8 +77,8 @@ function gameStarted() {
 
   // Game Name Text
   textSize(30);
-  text("Reaction Time", width / 2 - 300, height / 2 - 200);
-  text("Number Memory", width / 2 + 50, height / 2 - 200);
+  text("Reaction Time", width / 2 - width /3.25 , height / 2 - 200);
+  text("Number Memory", width / 2 + width /5.7, height / 2 - 200);
 
   // Red Rectangle Timer Game
   fill("red");
@@ -108,7 +108,7 @@ function timerGame() {
 
   // Instructions Text
   textSize(30);
-  text("When the red box turns green, click as quickly as you can can.", width/2 - 430, height / 2 + height / 4);
+  text("When the red screen turns green, click as quickly as you can can.", width/2 - 480, height / 2 + height / 4);
 
   // Start Button Text
   textSize(30);
