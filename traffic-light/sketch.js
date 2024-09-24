@@ -6,7 +6,7 @@
 // changing according to time. You may want to investigate the millis()
 // function at https://p5js.org/reference/#/p5/millis
 
-let state = "red"
+let state = "red";
 let waitTime = 3000;
 let lastSwitchedTime = 0;
 
@@ -20,39 +20,36 @@ function draw() {
 }
 
 function drawOutlineOfLights() {
-  //box
+  // Box
   rectMode(CENTER);
   fill(0);
-  rect(width/2, height/2, 75, 200, 10);
-  //lights
-  fill(255);
-  // cycle colors
+  rect(width / 2, height / 2, 75, 200, 10);
+  
+  // Cycle colors
   changeLight();
 }
 
 function changeLight() {
   if (state === "red") {
     fill("red");
-    ellipse(width/2, height/2 - 65, 50, 50); //top
+    ellipse(width / 2, height / 2 - 65, 50, 50); // Top
     if (millis() >= lastSwitchedTime + waitTime) {
       lastSwitchedTime = millis();
-      state = "yellow"
+      state = "yellow";
+    }
+  } else if (state === "yellow") {
+    fill("yellow");
+    ellipse(width / 2, height / 2, 50, 50); // Middle
+    if (millis() >= lastSwitchedTime + waitTime / 2) {
+      lastSwitchedTime = millis();
+      state = "green";
+    }
+  } else if (state === "green") {
+    fill("green");
+    ellipse(width / 2, height / 2 + 65, 50, 50); // Bottom
+    if (millis() >= lastSwitchedTime + waitTime) {
+      lastSwitchedTime = millis();
+      state = "red";
     }
   }
-  else if (state === "yellow"){
-    fill("yellow");
-    ellipse(width/2, height/2, 50, 50); //middle
-    if (millis() >= lastSwitchedTime + waitTime/2) {
-      lastSwitchedTime = millis();
-      state = "green"
-  }
-}
-  else if (state === "green"){
-    fill("green");
-    ellipse(width/2, height/2 + 65, 50, 50); //bottom
-    if (millis() >= lastSwitchedTime + waitTime) {
-      lastSwitchedTime = millis()
-      state = "red"
-  }
-}
 }
