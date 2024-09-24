@@ -5,7 +5,7 @@
 // - describe what you did to take this project "above and beyond"
 
 // Variables
-let gameState = "title";; // Possible states: "title", "select", "timerIns", "timer", "number"
+let gameState = "title"; // Possible states: "title", "select", "timerIns", "timer", "number"
 let thunderImg;
 
 //Canvas Setup
@@ -31,11 +31,10 @@ function mouseClicked() {
   }
   // Timing Game
   else if (gameState === "select") {
-    if (mouseX > 0 && mouseX < width / 2 && mouseY > height / 3.5 && mouseY < 2 * height) {
-      gameState = "timerIns"
-      // Number Game
+    if (mouseY > height / 3.5) {
+      if (mouseX < width / 2) {
+        gameState = "timerIns";
       } else {
-      if (mouseX > width / 2 && mouseX < width + width / 2 && mouseY > height / 3.5 && mouseY < height / 3.5 + height) {
         gameState = "numberIns";
       }
     }
