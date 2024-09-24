@@ -102,7 +102,9 @@ function timerGameInstruction() {
   let timerText = "Reaction Time Test";
   let timerX = width / 2 - textWidth(timerText) / 2;
   text(timerText, timerX, height / 2 - height * 0.3); 
-  image(thunderImg, width / 2 - thunderImg.width / 9, height / 2 - thunderImg.height / 7, thunderImg.width / 4, thunderImg.height / 4);
+
+  // image scalablity needs to be added
+  image(thunderImg, width / 2 - thunderImg.width / 8.5, height / 2 - thunderImg.height / 6, thunderImg.width / 4, thunderImg.height / 4);
 
   // Instructions Text
   textSize(height * 0.04); // 4% of height
