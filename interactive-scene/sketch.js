@@ -2,10 +2,10 @@
 // Michael Yang
 // Date
 // Extra for Experts:
-// - describe what you did to take this project "above and beyond"
+// Made program scale if user resizes window.
 
 // Variables
-let gameState = "title"; // Possible states: "title", "select", "timerIns", "timer", "number"
+let gameState = "title"; // Possible states: "title", "select", "timerIns", "timer", "numberins", "number"
 let thunderImg;
 
 //Canvas Setup
@@ -16,6 +16,7 @@ function setup() {
 // Images
 function preload() {
   thunderImg = loadImage("thunderbolt.png");
+  numberImg = loadImage("numbers.png")
 }
 
 // Handle Window Resizing
@@ -41,57 +42,47 @@ function mouseClicked() {
   } else if (gameState === "timerIns") {
     gameState = "timer"
   }
+  else if (gameState === "numberIns") {
+    gameState = "number"
+  }
 }
 
-// // Function to draw centered text
-// function drawCenteredText(text, size, y, color, font = "Verdana") {
-//   textSize(size);
-//   fill(color);
-//   textFont(font);
-//   let x = width / 2 - textWidth(text) / 2;
-//   text(text, x, y); 
-// }
+// Function to Draw Centered Text
+function drawCenteredText(textSentence, size, y, color = "white", font = "Verdana") {
+  textSize(size);
+  fill(color);
+  textFont(font);
+  let x = width / 2 - textWidth(textSentence) / 2;
+  text(textSentence, x, y); 
+}
+
+// Function to Draw Offcentered Text
+function drawOffCenteredText(textSentence, size, x, y, color = "white", font = "Verdana") {
+  textSize(size);
+  fill(color);
+  textFont(font);
+  text(textSentence, x, y); 
+}
 
 // Title Screen Function
 function titleScreen() {
   background(51, 153, 255);
-
   // Title Text
-  textSize(width * 0.05);
-  fill("white");
-  textFont("Verdana");
-  let titleText = "Human Benchmark Ripoff";
-  let titleX = width/2 - textWidth(titleText) / 2; // Center text horizontally
-  text(titleText, titleX, height * 0.25); // Center text vertically
+  drawCenteredText("Human Benchmark Ripoff", width * 0.05, height *0.25);
 
   // Start Button Text
-  textSize(width * 0.03);
-  let startText = "Click to Start";
-  let startX = width / 2 - textWidth(startText) / 2; 
-  text(startText, startX, height * 0.80); 
+  drawCenteredText("Click to Start", width * 0.03, height * 0.8)
 }
 
 // Game Started Function
 function gameStarted() {
   background(51, 153, 255);
-
   // Title Text
-  textSize(width * 0.04);
-  fill("white");
-  let pickGameText = "Pick Game!";
-  let pickGameX = width/2 - textWidth(pickGameText) / 2; 
-  text(pickGameText, pickGameX, height * 0.15);
+  drawCenteredText("Pick Game!", width * 0.04, height * 0.15);
 
   // Game Name Text
-  textSize(width * 0.02);
-  let reactionTimeText = "Reaction Time";
-  let numberMemoryText = "Number Memory";
-
-  let reactionX = width / 2 - width * 0.32
-  let numberX = width / 2 + width * 0.17
-
-  text(reactionTimeText, reactionX, height * 0.25);
-  text(numberMemoryText, numberX, height * 0.25);
+  drawOffCenteredText("Reaction Time", width * 0.02, width / 2 - width * 0.32 ,height * 0.25);
+  drawOffCenteredText("Number Memory", width * 0.02, width / 2 + width * 0.17 ,height * 0.25); 
 
   // Red Rectangle for Timer Game
   fill("red");
@@ -102,15 +93,12 @@ function gameStarted() {
   rect(width / 2, height / 3.5, width / 2, height);
 }
 
+// Timer Game Instructions Page
 function timerGameInstruction() {
   background(51, 153, 255);
 
   // Title Text
-  textSize(width * 0.04); 
-  fill("white");
-  let timerText = "Reaction Time Test";
-  let timerX = width / 2 - textWidth(timerText) / 2;
-  text(timerText, timerX, height * 0.2); 
+  drawCenteredText("Reaction Time Test", width * 0.04, height * 0.2); 
 
   // Thunder Image
   let imgWidth = width * 0.15;
@@ -118,20 +106,29 @@ function timerGameInstruction() {
   image(thunderImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
 
   // Instructions Text
-  textSize(width * 0.02); 
-  let instructionText = "When the red screen turns green, click as quickly as you can.";
-  let instructionX = width / 2 - textWidth(instructionText) / 2; 
-  text(instructionText, instructionX, height * 0.7); // Position below the image
+  drawCenteredText("When the red screen turns green, click as quickly as you can.", width * 0.02, height * 0.7);
 
   // Start Button Text
-  textSize(width * 0.015);
-  let startButtonText = "Click to Start";
-  let startButtonX = width / 2 - textWidth(startButtonText) / 2; 
-  text(startButtonText, startButtonX, height * 0.8); // Position at 75% of height
+  drawCenteredText("Click to Start", width* 0.015, height * 0.8);
 }
 
-function numberGameIns() {
-  background("blue");
+// Numbers Game Instruction Page
+function numberGameInstruction() {
+  background(51, 153, 255);
+
+   // Title Text
+   drawCenteredText("Number Memorization Test", width * 0.04, height * 0.2); 
+
+   // Thunder Image
+   let imgWidth = width * 0.15;
+   let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
+   image(numberImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
+ 
+   // Instructions Text
+   drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
+ 
+   // Start Button Text
+   drawCenteredText("Click to Start", width* 0.015, height * 0.8); 
 }
 
 // Draw function to manage game screens
@@ -143,6 +140,6 @@ function draw() {
   } else if (gameState === "timerIns") {
     timerGameInstruction();
   }else if (gameState === "numberIns") {
-    numberGameIns();
-  }  
+    numberGameInstruction();
+  }
 }
