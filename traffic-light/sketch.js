@@ -35,13 +35,6 @@ function changeLight() {
     ellipse(width / 2, height / 2 - 65, 50, 50); // Top
     if (millis() >= lastSwitchedTime + waitTime) {
       lastSwitchedTime = millis();
-      state = "yellow";
-    }
-  } else if (state === "yellow") {
-    fill("yellow");
-    ellipse(width / 2, height / 2, 50, 50); // Middle
-    if (millis() >= lastSwitchedTime + waitTime / 2) {
-      lastSwitchedTime = millis();
       state = "green";
     }
   } else if (state === "green") {
@@ -49,7 +42,15 @@ function changeLight() {
     ellipse(width / 2, height / 2 + 65, 50, 50); // Bottom
     if (millis() >= lastSwitchedTime + waitTime) {
       lastSwitchedTime = millis();
+      state = "yellow";
+    }
+  } else if (state === "yellow") {
+    fill("yellow");
+    ellipse(width / 2, height / 2, 50, 50); // Middle
+    if (millis() >= lastSwitchedTime + waitTime / 1.5) {
+      lastSwitchedTime = millis();
       state = "red";
     }
   }
-}
+
+  } 
