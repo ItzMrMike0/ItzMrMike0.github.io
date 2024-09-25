@@ -7,6 +7,7 @@
 // Variables
 let gameState = "title"; // Possible states: "title", "select", "timerIns", "timer", "numberins", "number"
 let thunderImg;
+let numberImg;
 
 //Canvas Setup
 function setup() {
@@ -16,7 +17,7 @@ function setup() {
 // Images
 function preload() {
   thunderImg = loadImage("thunderbolt.png");
-  numberImg = loadImage("numbers.png")
+  numberImg = loadImage("numbers.png");
 }
 
 // Handle Window Resizing
@@ -30,20 +31,25 @@ function mouseClicked() {
   if (gameState === "title") {
     gameState = "select";
   }
-  // Timing Game
+  // Game Mode Selection to Timing Game Instruction 
   else if (gameState === "select") {
     if (mouseY > height / 3.5) {
       if (mouseX < width / 2) {
         gameState = "timerIns";
-      } else {
+      }
+      // Game Mode Selection to Number Game Instruction 
+      else { 
         gameState = "numberIns";
       }
     }
-  } else if (gameState === "timerIns") {
-    gameState = "timer"
   }
+  // timerIns to Timing Game  
+  else if (gameState === "timerIns") {
+    gameState = "timerG";
+  }
+  // numberIns to Number Game
   else if (gameState === "numberIns") {
-    gameState = "number"
+    gameState = "numberG";
   }
 }
 
@@ -71,7 +77,7 @@ function titleScreen() {
   drawCenteredText("Human Benchmark Ripoff", width * 0.05, height *0.25);
 
   // Start Button Text
-  drawCenteredText("Click to Start", width * 0.03, height * 0.8)
+  drawCenteredText("Click to Start", width * 0.03, height * 0.8);
 }
 
 // Game Started Function
@@ -116,30 +122,52 @@ function timerGameInstruction() {
 function numberGameInstruction() {
   background(51, 153, 255);
 
-   // Title Text
-   drawCenteredText("Number Memorization Test", width * 0.04, height * 0.2); 
+  // Title Text
+  drawCenteredText("Number Memorization Test", width * 0.04, height * 0.2); 
 
-   // Thunder Image
-   let imgWidth = width * 0.15;
-   let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
-   image(numberImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
+  // Thunder Image
+  let imgWidth = width * 0.15;
+  let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
+  image(numberImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
  
-   // Instructions Text
-   drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
+  // Instructions Text
+  drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
  
-   // Start Button Text
-   drawCenteredText("Click to Start", width* 0.015, height * 0.8); 
+  // Start Button Text
+  drawCenteredText("Click to Start", width* 0.015, height * 0.8); 
 }
 
-// Draw function to manage game screens
-function draw() {
+function timerGame() { 
+  
+}
+
+
+function numberGame() {
+  background("black");
+}
+
+// Checks and Updates Screen Based off of State variable
+function changeScreenState() {
   if (gameState === "title") {
     titleScreen();
-  } else if (gameState === "select") {
-    gameStarted();
-  } else if (gameState === "timerIns") {
-    timerGameInstruction();
-  }else if (gameState === "numberIns") {
-    numberGameInstruction();
   }
+  else if (gameState === "select") {
+    gameStarted();
+  }
+  else if (gameState === "timerIns") {
+    timerGameInstruction();
+  }
+  else if (gameState === "numberIns") {
+    numberGameInstruction();
+  }  
+  else if (gameState === "timerG") {
+    timerGame();
+  }
+  else if (gameState === "numberG") {
+    numberGame();
+  }
+}
+
+function draw() {
+  changeScreenState();
 }
