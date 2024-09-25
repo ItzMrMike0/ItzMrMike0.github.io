@@ -43,6 +43,15 @@ function mouseClicked() {
   }
 }
 
+// // Function to draw centered text
+// function drawCenteredText(text, size, y, color, font = "Verdana") {
+//   textSize(size);
+//   fill(color);
+//   textFont(font);
+//   let x = width / 2 - textWidth(text) / 2;
+//   text(text, x, y); 
+// }
+
 // Title Screen Function
 function titleScreen() {
   background(51, 153, 255);
@@ -53,13 +62,13 @@ function titleScreen() {
   textFont("Verdana");
   let titleText = "Human Benchmark Ripoff";
   let titleX = width/2 - textWidth(titleText) / 2; // Center text horizontally
-  text(titleText, titleX, height/2- height * 0.15); // Center text vertically
+  text(titleText, titleX, height * 0.25); // Center text vertically
 
   // Start Button Text
   textSize(width * 0.03);
   let startText = "Click to Start";
   let startX = width / 2 - textWidth(startText) / 2; 
-  text(startText, startX, height / 2 + height * 0.15); 
+  text(startText, startX, height * 0.80); 
 }
 
 // Game Started Function
@@ -71,7 +80,7 @@ function gameStarted() {
   fill("white");
   let pickGameText = "Pick Game!";
   let pickGameX = width/2 - textWidth(pickGameText) / 2; 
-  text(pickGameText, pickGameX, height / 2 - height * 0.35);
+  text(pickGameText, pickGameX, height * 0.15);
 
   // Game Name Text
   textSize(width * 0.02);
@@ -81,8 +90,8 @@ function gameStarted() {
   let reactionX = width / 2 - width * 0.32
   let numberX = width / 2 + width * 0.17
 
-  text(reactionTimeText, reactionX, height/2 - height * 0.25);
-  text(numberMemoryText, numberX, height/2 - height * 0.25);
+  text(reactionTimeText, reactionX, height * 0.25);
+  text(numberMemoryText, numberX, height * 0.25);
 
   // Red Rectangle for Timer Game
   fill("red");
@@ -97,26 +106,28 @@ function timerGameInstruction() {
   background(51, 153, 255);
 
   // Title Text
-  textSize(height * 0.08); 
+  textSize(width * 0.04); 
   fill("white");
   let timerText = "Reaction Time Test";
   let timerX = width / 2 - textWidth(timerText) / 2;
-  text(timerText, timerX, height / 2 - height * 0.3); 
+  text(timerText, timerX, height * 0.2); 
 
-  // image scalablity needs to be added
-  image(thunderImg, width / 2 - thunderImg.width / 8.5, height / 2 - thunderImg.height / 6, thunderImg.width / 4, thunderImg.height / 4);
+  // Thunder Image
+  let imgWidth = width * 0.15;
+  let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
+  image(thunderImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
 
   // Instructions Text
-  textSize(height * 0.04); // 4% of height
+  textSize(width * 0.02); 
   let instructionText = "When the red screen turns green, click as quickly as you can.";
   let instructionX = width / 2 - textWidth(instructionText) / 2; 
-  text(instructionText, instructionX, height / 2 + height * 0.2); 
+  text(instructionText, instructionX, height * 0.7); // Position below the image
 
   // Start Button Text
-  textSize(height * 0.03); // 4% of height
+  textSize(width * 0.015);
   let startButtonText = "Click to Start";
   let startButtonX = width / 2 - textWidth(startButtonText) / 2; 
-  text(startButtonText, startButtonX, height / 2 + height * 0.3);
+  text(startButtonText, startButtonX, height * 0.8); // Position at 75% of height
 }
 
 function numberGameIns() {
