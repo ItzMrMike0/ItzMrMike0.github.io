@@ -13,10 +13,14 @@ let waitTime;
 let colorBackground = "red";
 let greenShowUpTime;
 let reactionTime;
+let randomNumbers;
+let userInput;
 
 //Canvas setup.
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  userInput = createInput("");
+  userInput.position(100, 100);
 }
 
 // Images.
@@ -250,26 +254,60 @@ function numberGameInstruction() {
 }
 
 function numberGame() {
-  background("black");
+  background(51, 153, 255);
+
+  // Variables for how long the number should be on 
+  if (startTime === undefined) {
+    startTime = millis();
+    waitTime = 3000;
+  }
+
+  // Sets a number with X amount of digits.
+  if (randomNumbers === undefined) {
+    randomNumbers = Math.floor(random(0, 10));
+  }
+  // Numbers Text
+  drawCenteredText(randomNumbers, width * 0.04, height * 0.5);
+
+  if (millis() - startTime > waitTime) {
+    background(51, 153,255);
+  }
+  keyTyped();
+}
+
+function keyTyped() {
+  let userInputNumber = userInput.value();
+  if (keyCode === 13) {
+    if (userInputNumber === randomNumbers) {
+      background("green");
+    }
+  }
 }
 
 // Updates what function is being ran based off of state variable.
 function changeScreenState() {
   if (gameState === "title") {
     titleScreen();
-  } else if (gameState === "select") {
+  }
+  else if (gameState === "select") {
     gameStarted();
-  } else if (gameState === "timerIns") {
+  }
+  else if (gameState === "timerIns") {
     timerGameInstruction();
-  } else if (gameState === "numberIns") {
+  }
+  else if (gameState === "numberIns") {
     numberGameInstruction();
-  } else if (gameState === "timerG") {
+  }
+  else if (gameState === "timerG") {
     timerGame();
-  } else if (gameState === "stillRed") {
+  }
+  else if (gameState === "stillRed") {
     clickedTooEarly();
-  } else if (gameState === "notRed") {
+  }
+  else if (gameState === "notRed") {
     clickedOnGreen();
-  } else if (gameState === "numberG") {
+  }
+  else if (gameState === "numberG") {
     numberGame();
   }
 }
@@ -280,3 +318,4 @@ function draw() {
   text(gameState, width - width + 100, height / 5); // GAME STATE CHECKER
   text(millis(), width - width + 200, height / 5); // TIME CHECKER
 }
+
