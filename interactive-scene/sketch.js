@@ -5,7 +5,7 @@
 // Made program scale if user resizes window.
 
 // Variables.
-let gameState = "title"; // Possible states: "title", "select", "timerIns", "timer", "red", "green" "numberins", "number".
+let gameState = "title"; // Possible states: "title", "select", "timerIns", "timerG", "stillRed", "notRed" "numberins", "numberG".
 let thunderImg;
 let numberImg;
 let startTime;
@@ -14,13 +14,11 @@ let colorBackground = "red";
 let greenShowUpTime;
 let reactionTime;
 let randomNumbers;
-let userInput;
+let userInputNumber;
 
 //Canvas setup.
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  userInput = createInput("");
-  userInput.position(100, 100);
 }
 
 // Images.
@@ -155,7 +153,7 @@ function timerGame() {
     startTime = millis();
     waitTime = random(5000, 10000);
     reactionTime = undefined;
-    greenShowUpTime = undefined;
+    greenShowUpTime = undefined; 
   }
 
   timerGameBackground();
@@ -270,19 +268,20 @@ function numberGame() {
   drawCenteredText(randomNumbers, width * 0.04, height * 0.5);
 
   if (millis() - startTime > waitTime) {
-    background(51, 153,255);
+    background(51, 153,255);    gameState = "numberInput";
   }
-  keyTyped();
 }
 
-function keyTyped() {
-  let userInputNumber = userInput.value();
-  if (keyCode === 13) {
-    if (userInputNumber === randomNumbers) {
-      background("green");
-    }
+function userInputScene() {
+  let userInputedNumber = Number(prompt("Enter the number that was on the screen."));
+  if (userInputedNumber === randomNumbers) {
+    background("green");
+    gameState = "numberG";
+    startTime = undefined;
+    randomNumbers = undefined;
   }
 }
+
 
 // Updates what function is being ran based off of state variable.
 function changeScreenState() {
@@ -301,7 +300,7 @@ function changeScreenState() {
   else if (gameState === "timerG") {
     timerGame();
   }
-  else if (gameState === "stillRed") {
+  else if (gameState === "stillRed") {  
     clickedTooEarly();
   }
   else if (gameState === "notRed") {
@@ -310,12 +309,15 @@ function changeScreenState() {
   else if (gameState === "numberG") {
     numberGame();
   }
+  else if (gameState === "numberInput") {
+    userInputScene();
+  }
 }
 
 // First Call.
 function draw() {
   changeScreenState();
+  console.log(gameState);
   text(gameState, width - width + 100, height / 5); // GAME STATE CHECKER
   text(millis(), width - width + 200, height / 5); // TIME CHECKER
 }
-
