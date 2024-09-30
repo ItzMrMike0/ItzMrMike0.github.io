@@ -5,24 +5,23 @@
 // Made program scale if user resizes window.
 
 // Variables.
-let gameState = "title"; // Possible states: "title", "select", "timerIns", "timerG", "stillRed", "notRed" "numberins", "numberG".
+let gameState = "title"; // Possible states: "title", "select", "timerIns", "timerG", "stillRed", "notRed", "numberIns", "numberG", "numberInput", "wrongNumber".
 let thunderImg;
 let numberImg;
-let startTime;
-let waitTime;
-let colorBackground = "red";
-let greenShowUpTime;
-let reactionTime;
-let randomNumbers;
-let userInputNumber;
-let digitCounter = 1;
+let startTime; // For tracking game start time
+let waitTime; // Random wait time before the game starts
+let colorBackground = "red"; // Background color, initially set to red for reaction game
+let greenShowUpTime; // Tracks when the green screen appears
+let reactionTime; // Stores user reaction time
+let randomNumbers; // Stores the random number for the memory game
+let digitCounter = 1; // Tracks how many digits user has to remember
 
 //Canvas setup.
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth, windowHeight); // Canvas adjusts to window size
 }
 
-// Images.
+// Loads images.
 function preload() {
   thunderImg = loadImage("thunderbolt.png");
   numberImg = loadImage("numbers.png");
@@ -30,64 +29,64 @@ function preload() {
 
 // Updates window resizing.
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight); 
 }
 
-// Changing state variable when mouse is clicked depending on the current state.
+// Changing state variable when mouse is clicked depending on the current state
 function mouseClicked() {
-  // Title Screen to Game Mode Selection.
+  // Title Screen to Game Mode Selection
   if (gameState === "title") {
     gameState = "select";
   }
-  // Game Mode Selection to Timing Game Instruction.
+  // Game Mode Selection to Timing Game Instruction
   else if (gameState === "select") {
     if (mouseY > height / 3.5) {
       if (mouseX < width / 2) {
         gameState = "timerIns";
       }
-      // Game Mode Selection to Number Game Instruction.
+      // Game Mode Selection to Number Game Instruction
       else {
         gameState = "numberIns";
       }
     }
   }
-  // Timing Game Instruction to Timing Game.
+  // Timing Game Instruction to Timing Game
   else if (gameState === "timerIns") {
     gameState = "timerG";
   }
 
-  // Timing Game to Fail Screen.
+  // Timing Game to Fail Screen
   else if (gameState === "timerG") {
     if (colorBackground === "red") {
       gameState = "stillRed";
     }
-    // Timing Game to Results Screen.
+    // Timing Game to Results Screen
     else if (colorBackground === "green") {
       gameState = "notRed";
     }
   }
-  // Fail Screen Back to Title Screen.
+  // Fail Screen Back to Title Screen
   else if (gameState === "stillRed") {
     gameState = "title";
   }
 
-  // Reaction Time Results Screen to Title Screen.
+  // Reaction Time Results Screen to Title Screen
   else if (gameState === "notRed") {
     gameState = "title";
   }
 
-  // Number Game Instructions to Number Game.
+  // Number Game Instructions to Number Game
   else if (gameState === "numberIns") {
     gameState = "numberG";
   }
 
-  // Wrong Number Screen to Title Screen.
+  // Wrong Number Screen to Title Screen
   else if (gameState === "wrongNumber") {
     gameState = "title";
   }
 }
 
-// Function to draw centered text.
+// Function to draw centered text
 function drawCenteredText(textSentence, size, y, color = "white", font = "Verdana") {
   textSize(size);
   fill(color);
@@ -96,7 +95,7 @@ function drawCenteredText(textSentence, size, y, color = "white", font = "Verdan
   text(textSentence, x, y); 
 }
 
-// Function to draw non-centered text.
+// Function to draw non-centered text
 function drawOffCenteredText(textSentence, size, x, y, color = "white", font = "Verdana") {
   textSize(size);
   fill(color);
@@ -104,23 +103,24 @@ function drawOffCenteredText(textSentence, size, x, y, color = "white", font = "
   text(textSentence, x, y); 
 }
 
-// Title Screen.
+// Title Screen
 function titleScreen() {
+  // Background colour
   background(51, 153, 255);
-  // Title text.
+
+  // Title text
   drawCenteredText("Human Benchmark Ripoff", width * 0.05, height * 0.25);
 
-  // Start button text.
+  // Start button text
   drawCenteredText("Click to Start", width * 0.03, height * 0.8);
 }
 
-// Game Started screen.
+// Game Started screen
 function gameStarted() {
   background(51, 153, 255);
-  // Title text.
   drawCenteredText("Pick Game!", width * 0.04, height * 0.15);
 
-  // Games' name text.
+  // Game option text
   drawOffCenteredText("Reaction Time", width * 0.02, width / 2 - width * 0.32 ,height * 0.25);
   drawOffCenteredText("Number Memory", width * 0.02, width / 2 + width * 0.17 ,height * 0.25); 
 
@@ -128,25 +128,19 @@ function gameStarted() {
   fill("red");
   rect(0, height / 3.5, width / 2, height);
 
-  // Blue Rectangle for number game.
+  // Blue Rectangle for number game
   fill("blue");
   rect(width / 2, height / 3.5, width / 2, height);
 }
 
-// Timer Game Instructions page.
+// Timer Game Instructions page
 function timerGameInstruction() {
   background(51, 153, 255);
-
-  // Title text.
   drawCenteredText("Reaction Time Test", width * 0.04, height * 0.2);
-
-  // Instructions text.
   drawCenteredText("When the red screen turns green, click as quickly as you can.", width * 0.02, height * 0.7);
-
-  // Start Button text.
   drawCenteredText("Click to Start", width * 0.015, height * 0.8);
 
-  // Thunder image.
+  // Thunder image
   let imgWidth = width * 0.15;
   let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
   image(thunderImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
@@ -154,66 +148,60 @@ function timerGameInstruction() {
 
 // Timing Game.
 function timerGame() {
-  // Setting up timers & resetting variables.
+  // Setting up timers & resetting variables
   if (startTime === undefined) {
     startTime = millis();
     waitTime = random(5000, 10000);
     reactionTime = undefined;
     greenShowUpTime = undefined; 
   }
-
   timerGameBackground();
 }
 
-// Red-Green Background Change.
+// Background colour change for timing game
 function timerGameBackground() {
   // Sets background to red.
   if (colorBackground === "red") {
     background("red");
-    text(waitTime + startTime, width / 2, height / 2); // SHOWS TIME OF WHEN BG WILL CHANGE
   }
-  // Once millis - startTime is greater than waitTime, the background will change to green.
+
+  // Once millis - startTime is greater than waitTime, the background will change to green
   if (millis() - startTime > waitTime) {
     background("green");
     colorBackground = "green";
-    // Stores time of when the screen changes to green.
+    // Stores time of when the screen changes to green
     if (greenShowUpTime === undefined) {
       greenShowUpTime = millis();
     }
   }
 }
 
-// Fail Screen if the screen was clicked while it was still red.
+// Fail Screen if the screen was clicked while it was still red
 function clickedTooEarly() {
   background("black");
   drawCenteredText("You clicked too early! Try Again!", width * 0.03, height * 0.5);
-
-  // Reset Button text.
   drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
-  startTime = undefined;
+  // Reset timer
+  startTime = undefined; 
 }
 
-// Results Screen if the screen was clicked once it was green.
+// Results Screen if the screen was clicked once it was green
 function clickedOnGreen() {
-  const REACTIONTIMEVALUE = Math.round(abs(greenShowUpTime - reactionTime));
-
-  // Stores time of click.
+  background(51, 153, 255);
+  // Stores time of click
   if (reactionTime === undefined) {
     reactionTime = millis();
   }
-  background(51, 153, 255);
+  
+  // Calculate reaction time
+  const REACTIONTIMEVALUE = Math.round(abs(greenShowUpTime - reactionTime));
 
-  // Title text.
   drawCenteredText("The average reaction time is 273 milliseconds", width * 0.03, height * 0.1);
-
-  // Results text.
   drawCenteredText(`Your reaction time is ${REACTIONTIMEVALUE} ms!`, width * 0.03, height * 0.5);
-
-  // Tip/note text.
   drawCenteredText("Using a fast computer and low latency / high framerate monitor will improve your score.", width * 0.02, height * 0.9);
-
-  // Start Button text.
   drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
+
+  // Reseting timer and background colour.
   startTime = undefined;
   colorBackground = "red";
 }
@@ -221,20 +209,14 @@ function clickedOnGreen() {
 // Numbers Game Instruction Page.
 function numberGameInstruction() {
   background(51, 153, 255);
-
-  // Title text.
   drawCenteredText("Number Memorization Test", width * 0.04, height * 0.2);
+  drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
+  drawCenteredText("Click to Start", width * 0.015, height * 0.8);
 
   // Thunder image.
   let imgWidth = width * 0.15;
   let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
   image(numberImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
-
-  // Instructions text.
-  drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
-
-  // Start Button text.
-  drawCenteredText("Click to Start", width * 0.015, height * 0.8);
 }
 
 function numberGame() {
@@ -243,10 +225,11 @@ function numberGame() {
   // Variables for timing
   if (startTime === undefined) {
     startTime = millis();
+    // Calculate how long the number will display for
     waitTime = 1000 + (digitCounter * 500);
   }
 
-  // Generate a number with X amount of digits based on digitCounter.
+  // Generate a number with X amount of digits based on digitCounter
   if (randomNumbers === undefined) {
     let minNumber = Math.pow(10, digitCounter - 1); 
     let maxNumber = Math.pow(10, digitCounter) - 1;  
@@ -262,15 +245,16 @@ function numberGame() {
   // Calculate the fraction of time left
   let timeLeftRatio = constrain((waitTime - timePassed) / waitTime, 0, 1);
 
-  // Draws white rectangle showing time left 
+  // Sets rectangle variable 
   let rectWidth = width * 0.6; 
   let rectHeight = height * 0.05;
   let filledArea = rectWidth * timeLeftRatio;
 
+  // Draws white rectangle showing time left 
   fill(255);
   rect(width * 0.2, height * 0.9, filledArea, rectHeight);
 
-  // Transition to the input phase after the waitTime.
+  // Transition to the input phase after the waitTime
   if (millis() - startTime > waitTime) {
     background(51, 153, 255);
     gameState = "numberInput";
@@ -278,10 +262,10 @@ function numberGame() {
 }
 
 function userInputScene() {
-  // Set userinput 
+  // Ask for input from user 
   let userInputedNumber = Number(prompt("Enter the number that was on the screen."));
 
-  // If userinput is the same as the number shown on screen.
+  // If userinput is the same as the number shown on screen
   if (userInputedNumber === randomNumbers) {
     gameState = "numberG";
 
@@ -290,21 +274,13 @@ function userInputScene() {
     startTime = undefined;
     randomNumbers = undefined;
   }
-  // If the userinput is not the same as the number shown on screen.
+  // If the userinput is not the same as the number shown on screen
   else {
     background(51, 153, 255);
     gameState = "wrongNumber";
-
-    // Title text.
     drawCenteredText("You put the wrong numbers in!", width * 0.03, height * 0.1);
-
-    // Results text.
     drawCenteredText(`You can remember up to ${digitCounter - 1} digits at once!`,width* 0.03, height * 0.5);
-
-    // Reset Button text.
     drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
-
-    // Fun Fact text.
     drawCenteredText("The average person can remember 7 numbers at once. Can you do more?", width * 0.02, height * 0.9);
 
     // Resets variables 
@@ -314,8 +290,7 @@ function userInputScene() {
   }
 }
 
-
-// Updates what function is being ran based off of state variable.
+// Changes what function is being ran based off of state variable.
 function changeScreenState() {
   if (gameState === "title") {
     titleScreen();
@@ -346,10 +321,7 @@ function changeScreenState() {
   }
 }
 
-// First Call.
 function draw() {
   changeScreenState();
   console.log(gameState);
-  text(gameState, width - width + 100, height / 5); // GAME STATE CHECKER
-  text(millis(), width - width + 200, height / 5); // TIME CHECKER
 }
