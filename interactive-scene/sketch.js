@@ -15,6 +15,7 @@ let greenShowUpTime;
 let reactionTime;
 let randomNumbers;
 let userInputNumber;
+let digitCounter = 1;
 
 //Canvas setup.
 function setup() {
@@ -78,6 +79,11 @@ function mouseClicked() {
   // Number Game Instructions to Number Game.
   else if (gameState === "numberIns") {
     gameState = "numberG";
+  }
+
+  // Wrong Number Screen to Title Screen.
+  else if (gameState === "wrongNumber") {
+    gameState = "title";
   }
 }
 
@@ -180,13 +186,9 @@ function timerGameBackground() {
 // Fail Screen if the screen was clicked while it was still red.
 function clickedTooEarly() {
   background("black");
-  drawCenteredText(
-    "You clicked too early! Try Again!",
-    width * 0.03,
-    height * 0.5
-  );
+  drawCenteredText("You clicked too early! Try Again!", width * 0.03, height * 0.5);
 
-  // Start Button text.
+  // Reset Button text.
   drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
   startTime = undefined;
 }
@@ -202,25 +204,13 @@ function clickedOnGreen() {
   background(51, 153, 255);
 
   // Title text.
-  drawCenteredText(
-    "The average reaction time is 273 milliseconds",
-    width * 0.03,
-    height * 0.1
-  );
+  drawCenteredText("The average reaction time is 273 milliseconds", width * 0.03, height * 0.1);
 
   // Results text.
-  drawCenteredText(
-    `Your reaction time is ${REACTIONTIMEVALUE} ms!`,
-    width * 0.03,
-    height * 0.5
-  );
+  drawCenteredText(`Your reaction time is ${REACTIONTIMEVALUE} ms!`, width * 0.03, height * 0.5);
 
   // Tip/note text.
-  drawCenteredText(
-    "Using a fast computer and low latency / high framerate monitor will improve your score.",
-    width * 0.02,
-    height * 0.9
-  );
+  drawCenteredText("Using a fast computer and low latency / high framerate monitor will improve your score.", width * 0.02, height * 0.9);
 
   // Start Button text.
   drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
@@ -241,11 +231,7 @@ function numberGameInstruction() {
   image(numberImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
 
   // Instructions text.
-  drawCenteredText(
-    "Remember the number shown on screen before the timer ends, and type it out.",
-    width * 0.02,
-    height * 0.7
-  );
+  drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
 
   // Start Button text.
   drawCenteredText("Click to Start", width * 0.015, height * 0.8);
@@ -254,29 +240,75 @@ function numberGameInstruction() {
 function numberGame() {
   background(51, 153, 255);
 
-  // Variables for how long the number should be on 
+  // Variables for timing
   if (startTime === undefined) {
     startTime = millis();
-    waitTime = 3000;
+    waitTime = 1000 + (digitCounter * 500);
   }
 
-  // Sets a number with X amount of digits.
+  // Generate a number with X amount of digits based on digitCounter.
   if (randomNumbers === undefined) {
-    randomNumbers = Math.floor(random(0, 10));
+    let minNumber = Math.pow(10, digitCounter - 1); 
+    let maxNumber = Math.pow(10, digitCounter) - 1;  
+    randomNumbers = Math.floor(random(minNumber, maxNumber + 1));  
   }
-  // Numbers Text
+
+  // Display the number
   drawCenteredText(randomNumbers, width * 0.04, height * 0.5);
 
+  // Calculate how much time has passed
+  let timePassed = millis() - startTime;
+
+  // Calculate the fraction of time left
+  let timeLeftRatio = constrain((waitTime - timePassed) / waitTime, 0, 1);
+
+  // Draws white rectangle showing time left 
+  let rectWidth = width * 0.6; 
+  let rectHeight = height * 0.05;
+  let filledArea = rectWidth * timeLeftRatio;
+
+  fill(255);
+  rect(width * 0.2, height * 0.9, filledArea, rectHeight);
+
+  // Transition to the input phase after the waitTime.
   if (millis() - startTime > waitTime) {
-    background(51, 153,255);    gameState = "numberInput";
+    background(51, 153, 255);
+    gameState = "numberInput";
   }
 }
 
 function userInputScene() {
+  // Set userinput 
   let userInputedNumber = Number(prompt("Enter the number that was on the screen."));
+
+  // If userinput is the same as the number shown on screen.
   if (userInputedNumber === randomNumbers) {
-    background("green");
     gameState = "numberG";
+
+  // Sets variables 
+    digitCounter += 1;
+    startTime = undefined;
+    randomNumbers = undefined;
+  }
+  // If the userinput is not the same as the number shown on screen.
+  else {
+    background(51, 153, 255);
+    gameState = "wrongNumber";
+
+    // Title text.
+    drawCenteredText("You put the wrong numbers in!", width * 0.03, height * 0.1);
+
+    // Results text.
+    drawCenteredText(`You can remember up to ${digitCounter - 1} digits at once!`,width* 0.03, height * 0.5);
+
+    // Reset Button text.
+    drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
+
+    // Fun Fact text.
+    drawCenteredText("The average person can remember 7 numbers at once. Can you do more?", width * 0.02, height * 0.9);
+
+    // Resets variables 
+    digitCounter = 1;
     startTime = undefined;
     randomNumbers = undefined;
   }
