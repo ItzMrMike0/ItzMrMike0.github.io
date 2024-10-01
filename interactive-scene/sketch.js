@@ -105,13 +105,8 @@ function drawOffCenteredText(textSentence, size, x, y, color = "white", font = "
 
 // Title Screen
 function titleScreen() {
-  // Background colour
   background(51, 153, 255);
-
-  // Title text
   drawCenteredText("Human Benchmark Ripoff", width * 0.05, height * 0.25);
-
-  // Start button text
   drawCenteredText("Click to Start", width * 0.03, height * 0.8);
 }
 
@@ -151,7 +146,7 @@ function timerGame() {
   // Setting up timers & resetting variables
   if (startTime === undefined) {
     startTime = millis();
-    waitTime = random(5000, 10000);
+    waitTime = random(3000, 8000);
     reactionTime = undefined;
     greenShowUpTime = undefined; 
   }
@@ -187,17 +182,17 @@ function clickedTooEarly() {
 
 // Results Screen if the screen was clicked once it was green
 function clickedOnGreen() {
-  background(51, 153, 255);
   // Stores time of click
   if (reactionTime === undefined) {
     reactionTime = millis();
   }
   
   // Calculate reaction time
-  const REACTIONTIMEVALUE = Math.round(abs(greenShowUpTime - reactionTime));
+  let reactionTimeValue = Math.round(abs(greenShowUpTime - reactionTime));
 
+  background(51, 153, 255);
   drawCenteredText("The average reaction time is 273 milliseconds", width * 0.03, height * 0.1);
-  drawCenteredText(`Your reaction time is ${REACTIONTIMEVALUE} ms!`, width * 0.03, height * 0.5);
+  drawCenteredText(`Your reaction time is ${reactionTimeValue} ms!`, width * 0.03, height * 0.5);
   drawCenteredText("Using a fast computer and low latency / high framerate monitor will improve your score.", width * 0.02, height * 0.9);
   drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
 
@@ -226,7 +221,7 @@ function numberGame() {
   if (startTime === undefined) {
     startTime = millis();
     // Calculate how long the number will display for
-    waitTime = 1000 + (digitCounter * 500);
+    waitTime = 1000 + digitCounter * 500;
   }
 
   // Generate a number with X amount of digits based on digitCounter
@@ -269,7 +264,7 @@ function userInputScene() {
   if (userInputedNumber === randomNumbers) {
     gameState = "numberG";
 
-  // Sets variables 
+    // Sets variables 
     digitCounter += 1;
     startTime = undefined;
     randomNumbers = undefined;
