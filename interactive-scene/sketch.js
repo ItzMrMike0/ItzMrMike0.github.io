@@ -1,6 +1,6 @@
 // Interactive Scene
 // Michael Yang
-// Date
+// 10/1/2024
 // Extra for Experts:
 // Made program scale if user resizes window.
 
