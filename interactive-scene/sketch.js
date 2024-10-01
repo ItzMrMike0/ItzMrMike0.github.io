@@ -318,5 +318,4 @@ function changeScreenState() {
 
 function draw() {
   changeScreenState();
-  console.log(gameState);
 }
