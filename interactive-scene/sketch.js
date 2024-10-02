@@ -86,38 +86,32 @@ function mouseClicked() {
   }
 }
 
-// Function to draw centered text
-function drawCenteredText(textSentence, size, y, color = "white", font = "Verdana") {
+// Function to draw text
+function drawCenteredText(textSentence, size, x, y, centered, color = "white", font = "Verdana",) {
   textSize(size);
   fill(color);
   textFont(font);
-  let x = width / 2 - textWidth(textSentence) / 2;
-  text(textSentence, x, y); 
-}
-
-// Function to draw non-centered text
-function drawOffCenteredText(textSentence, size, x, y, color = "white", font = "Verdana") {
-  textSize(size);
-  fill(color);
-  textFont(font);
+  if (centered) {
+    x = width / 2 - textWidth(textSentence) / 2;
+  }
   text(textSentence, x, y); 
 }
 
 // Title Screen
 function titleScreen() {
   background(51, 153, 255);
-  drawCenteredText("Human Benchmark Ripoff", width * 0.05, height * 0.25);
-  drawCenteredText("Click to Start", width * 0.03, height * 0.8);
+  drawCenteredText("Human Benchmark Ripoff", width * 0.05, 0, height * 0.25,  true);
+  drawCenteredText("Click to Start", width * 0.03, 0, height * 0.8,  true);
 }
 
 // Game Started screen
 function gameStarted() {
   background(51, 153, 255);
-  drawCenteredText("Pick Game!", width * 0.04, height * 0.15);
+  drawCenteredText("Pick Game!", width * 0.04, 0, height * 0.15, true);
 
   // Game option text
-  drawOffCenteredText("Reaction Time", width * 0.02, width / 2 - width * 0.32 ,height * 0.25);
-  drawOffCenteredText("Number Memory", width * 0.02, width / 2 + width * 0.17 ,height * 0.25); 
+  drawCenteredText("Reaction Time", width * 0.02, width / 2 - width * 0.32 ,height * 0.25, false);
+  drawCenteredText("Number Memory", width * 0.02, width / 2 + width * 0.17 ,height * 0.25, false); 
 
   // Red rectangle for reaction time
   fill("red");
@@ -131,13 +125,13 @@ function gameStarted() {
 // Timer Game Instructions page
 function timerGameInstruction() {
   background(51, 153, 255);
-  drawCenteredText("Reaction Time Test", width * 0.04, height * 0.2);
-  drawCenteredText("When the red screen turns green, click as quickly as you can.", width * 0.02, height * 0.7);
-  drawCenteredText("Click to Start", width * 0.015, height * 0.8);
+  drawCenteredText("Reaction Time Test", width * 0.04, 0, height * 0.2, true);
+  drawCenteredText("When the red screen turns green, click as quickly as you can.", width * 0.02, 0, height * 0.7, true);
+  drawCenteredText("Click to Start", width * 0.015, 0, height * 0.8, true);
 
   // Thunder image
   let imgWidth = width * 0.15;
-  let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
+  let imgHeight = height * 0.25;
   image(thunderImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
 }
 
@@ -173,8 +167,8 @@ function timerGameBackground() {
 // Fail Screen if the screen was clicked while it was still red
 function clickedTooEarly() {
   background("black");
-  drawCenteredText("You clicked too early! Try Again!", width * 0.03, height * 0.5);
-  drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
+  drawCenteredText("You clicked too early! Try Again!", width * 0.03, 0, height * 0.5, true);
+  drawCenteredText("Click to Reset", width * 0.015, 0, height * 0.8, true);
   // Reset timer
   startTime = 0; 
 }
@@ -190,10 +184,10 @@ function clickedOnGreen() {
   let reactionTimeValue = Math.round(abs(greenShowUpTime - reactionTime));
 
   background(51, 153, 255);
-  drawCenteredText("The average reaction time is 273 milliseconds", width * 0.03, height * 0.1);
-  drawCenteredText(`Your reaction time is ${reactionTimeValue} ms!`, width * 0.03, height * 0.5);
-  drawCenteredText("Using a fast computer and low latency / high framerate monitor will improve your score.", width * 0.02, height * 0.9);
-  drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
+  drawCenteredText("The average reaction time is 273 milliseconds", width * 0.03, 0, height * 0.1, true);
+  drawCenteredText(`Your reaction time is ${reactionTimeValue} ms!`, width * 0.03, 0, height * 0.5, true);
+  drawCenteredText("Using a fast computer and low latency / high framerate monitor will improve your score.", width * 0.02, 0, height * 0.9, true);
+  drawCenteredText("Click to Reset", width * 0.015, 0, height * 0.8, true);
 
   // Reseting timer and background colour
   startTime = 0;
@@ -203,13 +197,13 @@ function clickedOnGreen() {
 // Numbers Game Instruction Page
 function numberGameInstruction() {
   background(51, 153, 255);
-  drawCenteredText("Number Memorization Test", width * 0.04, height * 0.2);
-  drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
-  drawCenteredText("Click to Start", width * 0.015, height * 0.8);
+  drawCenteredText("Number Memorization Test", width * 0.04, 0, height * 0.2, true);
+  drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, 0, height * 0.7, true);
+  drawCenteredText("Click to Start", width * 0.015, 0, height * 0.8, true);
 
   // Number image
   let imgWidth = width * 0.15;
-  let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
+  let imgHeight = height * 0.25;
   image(numberImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
 }
 
@@ -232,7 +226,7 @@ function numberGame() {
   }
 
   // Display the random number
-  drawCenteredText(randomNumbers, width * 0.04, height * 0.5);
+  drawCenteredText(randomNumbers, width * 0.04, 0, height * 0.5, true);
 
   // Calculate how much time has passed
   let timePassed = millis() - startTime;
@@ -273,10 +267,10 @@ function userInputScene() {
   else {
     background(51, 153, 255);
     gameState = "wrongNumber";
-    drawCenteredText("You put the wrong numbers in!", width * 0.03, height * 0.1);
-    drawCenteredText(`You can remember up to ${digitCounter - 1} digits at once!`,width* 0.03, height * 0.5);
-    drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
-    drawCenteredText("The average person can remember 7 numbers at once. Can you do more?", width * 0.02, height * 0.9);
+    drawCenteredText("You put the wrong numbers in!", width * 0.03, 0, height * 0.1, true);
+    drawCenteredText(`You can remember up to ${digitCounter - 1} digits at once!`, width* 0.03, 0, height * 0.5, true);
+    drawCenteredText("Click to Reset", width * 0.015, 0, height * 0.8, true);
+    drawCenteredText("The average person can remember 7 numbers at once. Can you do more?", width * 0.02, 0, height * 0.9, true);
 
     // Resets variables 
     digitCounter = 1;
