@@ -4,30 +4,30 @@
 // Extra for Experts:
 // Made program scale if user resizes window.
 
-// Variables.
+// Variables
 let gameState = "title"; // Possible states: "title", "select", "timerIns", "timerG", "stillRed", "notRed", "numberIns", "numberG", "numberInput", "wrongNumber".
 let thunderImg;
 let numberImg;
-let startTime; // For tracking game start time
-let waitTime; // Random wait time before the game starts
+let startTime = 0; // For tracking game start time
+let waitTime = 0; // Random wait time before the game starts for both timer game and numbers game
 let colorBackground = "red"; // Background color, initially set to red for reaction game
-let greenShowUpTime; // Tracks when the green screen appears
-let reactionTime; // Stores user reaction time
-let randomNumbers; // Stores the random number for the memory game
+let greenShowUpTime = 0; // Tracks when the green screen appears
+let reactionTime = 0; // Stores user reaction time
+let randomNumbers = 0; // Stores the random number for the memory game
 let digitCounter = 1; // Tracks how many digits user has to remember
 
-//Canvas setup.
+//Canvas setup
 function setup() {
-  createCanvas(windowWidth, windowHeight); // Canvas adjusts to window size
+  createCanvas(windowWidth, windowHeight); 
 }
 
-// Loads images.
+// Loads images
 function preload() {
   thunderImg = loadImage("thunderbolt.png");
   numberImg = loadImage("numbers.png");
 }
 
-// Updates window resizing.
+// Updates window resizing
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight); 
 }
@@ -40,21 +40,21 @@ function mouseClicked() {
   }
   // Game Mode Selection to Timing Game Instruction
   else if (gameState === "select") {
-    if (mouseY > height / 3.5) {
-      if (mouseX < width / 2) {
-        gameState = "timerIns";
-      }
-      // Game Mode Selection to Number Game Instruction
-      else {
-        gameState = "numberIns";
-      }
+    if (mouseY <= height / 3.5) {
+      return; }
+
+    if (mouseX < width / 2) {
+      gameState = "timerIns";
+    }
+    // Game Mode Selection to Number Game Instruction
+    else {
+      gameState = "numberIns";
     }
   }
   // Timing Game Instruction to Timing Game
   else if (gameState === "timerIns") {
     gameState = "timerG";
   }
-
   // Timing Game to Fail Screen
   else if (gameState === "timerG") {
     if (colorBackground === "red") {
@@ -144,28 +144,27 @@ function timerGameInstruction() {
 // Timing Game.
 function timerGame() {
   // Setting up timers & resetting variables
-  if (startTime === undefined) {
+  if (startTime === 0) {
     startTime = millis();
     waitTime = random(3000, 8000);
-    reactionTime = undefined;
-    greenShowUpTime = undefined; 
+    reactionTime = 0;
+    greenShowUpTime = 0; 
   }
   timerGameBackground();
 }
 
 // Background colour change for timing game
 function timerGameBackground() {
-  // Sets background to red.
   if (colorBackground === "red") {
     background("red");
   }
 
   // Once millis - startTime is greater than waitTime, the background will change to green
-  if (millis() - startTime > waitTime) {
+  if (millis() - startTime >= waitTime) {
     background("green");
     colorBackground = "green";
     // Stores time of when the screen changes to green
-    if (greenShowUpTime === undefined) {
+    if (greenShowUpTime === 0) {
       greenShowUpTime = millis();
     }
   }
@@ -177,13 +176,13 @@ function clickedTooEarly() {
   drawCenteredText("You clicked too early! Try Again!", width * 0.03, height * 0.5);
   drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
   // Reset timer
-  startTime = undefined; 
+  startTime = 0; 
 }
 
 // Results Screen if the screen was clicked once it was green
 function clickedOnGreen() {
   // Stores time of click
-  if (reactionTime === undefined) {
+  if (reactionTime === 0) {
     reactionTime = millis();
   }
   
@@ -196,42 +195,43 @@ function clickedOnGreen() {
   drawCenteredText("Using a fast computer and low latency / high framerate monitor will improve your score.", width * 0.02, height * 0.9);
   drawCenteredText("Click to Reset", width * 0.015, height * 0.8);
 
-  // Reseting timer and background colour.
-  startTime = undefined;
+  // Reseting timer and background colour
+  startTime = 0;
   colorBackground = "red";
 }
 
-// Numbers Game Instruction Page.
+// Numbers Game Instruction Page
 function numberGameInstruction() {
   background(51, 153, 255);
   drawCenteredText("Number Memorization Test", width * 0.04, height * 0.2);
   drawCenteredText("Remember the number shown on screen before the timer ends, and type it out.", width * 0.02, height * 0.7);
   drawCenteredText("Click to Start", width * 0.015, height * 0.8);
 
-  // Thunder image.
+  // Number image
   let imgWidth = width * 0.15;
   let imgHeight = imgWidth * (thunderImg.height / thunderImg.width);
   image(numberImg, width / 2 - imgWidth / 2, height * 0.3, imgWidth, imgHeight);
 }
 
+// Number Game
 function numberGame() {
   background(51, 153, 255);
 
   // Variables for timing
-  if (startTime === undefined) {
+  if (startTime === 0) {
     startTime = millis();
     // Calculate how long the number will display for
     waitTime = 1000 + digitCounter * 500;
   }
 
   // Generate a number with X amount of digits based on digitCounter
-  if (randomNumbers === undefined) {
+  if (randomNumbers === 0) {
     let minNumber = Math.pow(10, digitCounter - 1); 
     let maxNumber = Math.pow(10, digitCounter) - 1;  
     randomNumbers = Math.floor(random(minNumber, maxNumber + 1));  
   }
 
-  // Display the number
+  // Display the random number
   drawCenteredText(randomNumbers, width * 0.04, height * 0.5);
 
   // Calculate how much time has passed
@@ -260,16 +260,16 @@ function userInputScene() {
   // Ask for input from user 
   let userInputedNumber = Number(prompt("Enter the number that was on the screen."));
 
-  // If userinput is the same as the number shown on screen
+  // If user input is the same as the number shown on screen
   if (userInputedNumber === randomNumbers) {
     gameState = "numberG";
 
     // Sets variables 
     digitCounter += 1;
-    startTime = undefined;
-    randomNumbers = undefined;
+    startTime = 0;
+    randomNumbers = 0;
   }
-  // If the userinput is not the same as the number shown on screen
+  // If the user input is not the same as the number shown on screen
   else {
     background(51, 153, 255);
     gameState = "wrongNumber";
@@ -280,42 +280,38 @@ function userInputScene() {
 
     // Resets variables 
     digitCounter = 1;
-    startTime = undefined;
-    randomNumbers = undefined;
+    startTime = 0;
+    randomNumbers = 0;
   }
 }
 
 // Changes what function is being ran based off of state variable.
-function changeScreenState() {
-  if (gameState === "title") {
-    titleScreen();
-  }
-  else if (gameState === "select") {
-    gameStarted();
-  }
-  else if (gameState === "timerIns") {
-    timerGameInstruction();
-  }
-  else if (gameState === "numberIns") {
-    numberGameInstruction();
-  }
-  else if (gameState === "timerG") {
-    timerGame();
-  }
-  else if (gameState === "stillRed") {  
-    clickedTooEarly();
-  }
-  else if (gameState === "notRed") {
-    clickedOnGreen();
-  }
-  else if (gameState === "numberG") {
-    numberGame();
-  }
-  else if (gameState === "numberInput") {
-    userInputScene();
-  }
-}
-
 function draw() {
-  changeScreenState();
+if (gameState === "title") {
+  titleScreen();
+}
+else if (gameState === "select") {
+  gameStarted();
+}
+else if (gameState === "timerIns") {
+  timerGameInstruction();
+}
+else if (gameState === "numberIns") {
+  numberGameInstruction();
+}
+else if (gameState === "timerG") {
+  timerGame();
+}
+else if (gameState === "stillRed") {  
+  clickedTooEarly();
+}
+else if (gameState === "notRed") {
+  clickedOnGreen();
+}
+else if (gameState === "numberG") {
+  numberGame();
+}
+else if (gameState === "numberInput") {
+  userInputScene();
+}
 }
