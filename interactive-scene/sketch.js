@@ -41,7 +41,8 @@ function mouseClicked() {
   // Game Mode Selection to Timing Game Instruction
   else if (gameState === "select") {
     if (mouseY <= height / 3.5) {
-      return; }
+      return; 
+    }
 
     if (mouseX < width / 2) {
       gameState = "timerIns";
@@ -281,31 +282,31 @@ function userInputScene() {
 
 // Changes what function is being ran based off of state variable.
 function draw() {
-if (gameState === "title") {
-  titleScreen();
-}
-else if (gameState === "select") {
-  gameStarted();
-}
-else if (gameState === "timerIns") {
-  timerGameInstruction();
-}
-else if (gameState === "numberIns") {
-  numberGameInstruction();
-}
-else if (gameState === "timerG") {
-  timerGame();
-}
-else if (gameState === "stillRed") {  
-  clickedTooEarly();
-}
-else if (gameState === "notRed") {
-  clickedOnGreen();
-}
-else if (gameState === "numberG") {
-  numberGame();
-}
-else if (gameState === "numberInput") {
-  userInputScene();
-}
+  if (gameState === "title") {
+    titleScreen();
+  }
+  else if (gameState === "select") {
+    gameStarted();
+  }
+  else if (gameState === "timerIns") {
+    timerGameInstruction();
+  }
+  else if (gameState === "numberIns") {
+    numberGameInstruction();
+  }
+  else if (gameState === "timerG") {
+    timerGame();
+  }
+  else if (gameState === "stillRed") {  
+    clickedTooEarly();
+  }
+  else if (gameState === "notRed") {
+    clickedOnGreen();
+  }
+  else if (gameState === "numberG") {
+    numberGame();
+  }
+  else if (gameState === "numberInput") {
+    userInputScene();
+  }
 }
