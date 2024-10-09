@@ -4,6 +4,8 @@
 // Extra for Experts:
 // Sound and Window Resizing
 
+
+let gameState = "title"; // Can be "title", "gameStarted",
 let suits = ["spades", "clubs", "hearts", "diamonds"];
 let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king" , "ace"];
 let deck = [];
@@ -21,6 +23,21 @@ function setup() {
   }
 }
 
+// Title screen to game 
+function mouseClicked() {
+  if (gameState === "title") {
+    gameState = "gameStarted";
+  }
+}
+
+// Title screen
+function titleScreen() {
+  background(51, 153, 255);
+  textSize(50);
+  text("Blackjack", width/2.2, height/2);
+  text("Click to Start", width/2.3, height/1.1);
+}
+
 // Draw a new card
 function playerDraw() {
   if (drawCard === true) {
@@ -33,7 +50,7 @@ function playerDraw() {
     deck.splice(randomIndex, 1);  
     drawCard = false;
   }
-  text(randomCard, width / 2, height / 2); 
+  text(randomCard, width / 2.2, height / 2); 
 }
 
 // If user hits h for "hit" to draw another card
@@ -41,7 +58,7 @@ function hitCard() {
   keyPressed();
 }
 
-// Hit or Stand
+// Hit or stand
 function keyPressed() {
   if (key === 'h') {
     drawCard = true;
@@ -49,9 +66,23 @@ function keyPressed() {
   }
 }
 
+// Game state function
+function stateChange() {
+  if (gameState === "title") {
+    titleScreen();
+  }
+  else if (gameState === "gameStarted") {
+    background(220);
+    playerDraw();
+  }
+}
+
 function draw() {
+  // Debugging logs
+  console.log(gameState);
   console.log(deck);
   console.log(playerHand);
-  background(220);
-  playerDraw();
+
+  // Starts Game
+  stateChange();
 }
