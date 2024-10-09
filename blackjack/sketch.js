@@ -8,10 +8,13 @@
 let gameState = "title"; // Can be "title", "gameStarted",
 let suits = ["spades", "clubs", "hearts", "diamonds"];
 let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king" , "ace"];
-let deck = [];
+let deck = []; // All cards are stored here unless removed
 let drawCard = true;
 let randomCard = [];
-let playerHand = [];
+let playerHandAndScore = {
+  playerHand: [],
+  playerScore: [],
+};
 
 // Creates a deck with all 52 possible cards
 function setup() {
@@ -34,8 +37,10 @@ function mouseClicked() {
 function titleScreen() {
   background(51, 153, 255);
   textSize(50);
-  text("Blackjack", width/2.2, height/2);
-  text("Click to Start", width/2.3, height/1.1);
+  textAlign(CENTER);
+
+  text("Blackjack", width/2, height/2);
+  text("Click to Start", width/2, height * 0.9);
 }
 
 // Draw a new card
@@ -44,14 +49,23 @@ function playerDraw() {
     let randomIndex = round(random(0, deck.length - 1)); 
     // Pick a random card
     randomCard = deck[randomIndex];
-    playerHand.push(randomCard);  
+    playerHandAndScore.playerHand.push(randomCard);  
+    updatePlayerScore();
 
     // Remove picked card from deck array
     deck.splice(randomIndex, 1);  
     drawCard = false;
   }
-  text(randomCard, width / 2.2, height / 2); 
+
+  text(randomCard, width / 2, height / 2); 
+  text(playerHandAndScore.playerScore, width/2, height * 0.9);
 }
+
+function updatePlayerScore() {
+  let randomCardValue = randomCard.slice(-1); 
+  playerHandAndScore.playerScore += "" + randomCardValue +",";
+}
+
 
 // If user hits h for "hit" to draw another card
 function hitCard() {
@@ -60,9 +74,11 @@ function hitCard() {
 
 // Hit or stand
 function keyPressed() {
-  if (key === 'h') {
-    drawCard = true;
-    playerDraw();
+  if (gameState !== "title") {
+    if (key === 'h') {
+      drawCard = true;
+      playerDraw();
+    }
   }
 }
 
@@ -81,7 +97,8 @@ function draw() {
   // Debugging logs
   console.log(gameState);
   console.log(deck);
-  console.log(playerHand);
+  console.log(playerHandAndScore);
+  console.log(randomCard);
 
   // Starts Game
   stateChange();
