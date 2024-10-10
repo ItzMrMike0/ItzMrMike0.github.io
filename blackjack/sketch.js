@@ -5,15 +5,15 @@
 // Sound and Window Resizing
 
 
-let gameState = "title"; // Can be "title", "gameStarted",
-let suits = ["spades", "clubs", "hearts", "diamonds"];
-let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king" , "ace"];
-let deck = []; // All cards are stored here unless removed
-let drawCard = true;
-let randomCard = {};
-let playerHandAndScore = {
-  playerHand: [],
-  playerScore: 0, // Will store total score as a number
+let gameState = "title"; // Current state of the game, can be "title" or "gameStarted"
+let suits = ["spades", "clubs", "hearts", "diamonds"]; // Possible suits for cards
+let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king" , "ace"]; // Possible ranks for cards
+let deck = []; // All cards are stored here unless removed from play
+let drawCard = true; // Flag to control card drawing
+let randomCard = {}; // Stores the most recently drawn card
+let playerHandAndScore = { // Stores player's hand and score
+  playerHand: [], // Array to hold the player's cards
+  playerScore: 0, // Total score of the player's hand
 };
 
 // Creates a deck with all 52 possible cards
@@ -21,13 +21,15 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   for (let s of suits) {
     for (let r of ranks) {
+      // Create an object for each card with suit and rank
       deck.push({suit: s, rank: r});
     }
   }
 }
 
-// Title screen to game 
+// Game State Changer
 function mouseClicked() {
+  // Title to game
   if (gameState === "title") {
     gameState = "gameStarted";
   }
@@ -47,22 +49,27 @@ function titleScreen() {
 function playerDraw() {
   if (drawCard === true) {
     let randomIndex = round(random(0, deck.length - 1)); 
-    // Pick a random card
+
+    // Pick a random card from the deck
     randomCard = deck[randomIndex];
     playerHandAndScore.playerHand.push(randomCard);  
 
-    // Update score based on the drawn card
+    // Update the player's score based on the drawn card's rank
     updatePlayerScore(randomCard.rank);
 
-    // Remove picked card from deck array
+    // Remove picked card from deck array to avoid drawing it again
     deck.splice(randomIndex, 1);  
+
+    // Reset drawCard flag
     drawCard = false;
   }
 
+  // Display the drawn card and current score
   text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
   text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
 }
 
+// Adds and updates score based on drawn cards
 function updatePlayerScore(rank) {
   let randomCardValue = 0;
 
@@ -78,7 +85,7 @@ function updatePlayerScore(rank) {
     // Ace is worth 1
     randomCardValue = 1;
   }
-  // Add up score
+  // Add the value of the drawn card to the total score
   playerHandAndScore.playerScore += randomCardValue;
 }
 
@@ -88,29 +95,32 @@ function hitCard() {
   keyPressed();
 }
 
-// Hit or stand
+// Checks for player input to draw or stand
 function keyPressed() {
-  // Hit 
+  // H for "hit", draws another card
   if (gameState !== "title") {
     if (key === 'h') {
+      // Set flag to allow drawing a new card
       drawCard = true;
       playerDraw();
     }
   }
 }
 
-// Game state function
+// Handles state changes in the game
 function stateChange() {
   //Title screen to game
   if (gameState === "title") {
     titleScreen();
   }
+  // If the game has started, display game state
   else if (gameState === "gameStarted") {
     background(220);
     playerDraw();
   }
 }
 
+// Loop for entire project
 function draw() {
   // Debugging logs
   console.log(gameState);
@@ -118,6 +128,6 @@ function draw() {
   console.log(playerHandAndScore);
   console.log(randomCard);
 
-  // Starts Game
+  // Updates game state and visuals
   stateChange();
 }
