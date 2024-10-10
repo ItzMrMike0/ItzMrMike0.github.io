@@ -60,7 +60,7 @@ function playerDraw() {
     // Remove picked card from deck array to avoid drawing it again
     deck.splice(randomIndex, 1);  
 
-    // Reset drawCard flag
+    // Set drawCard flag
     drawCard = false;
   }
 
@@ -100,7 +100,7 @@ function keyPressed() {
   // H for "hit", draws another card
   if (gameState !== "title") {
     if (key === 'h') {
-      // Set flag to allow drawing a new card
+      // Reset drawCard flag
       drawCard = true;
       playerDraw();
     }
