@@ -10,10 +10,10 @@ let suits = ["spades", "clubs", "hearts", "diamonds"];
 let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king" , "ace"];
 let deck = []; // All cards are stored here unless removed
 let drawCard = true;
-let randomCard = [];
+let randomCard = {};
 let playerHandAndScore = {
   playerHand: [],
-  playerScore: [],
+  playerScore: 0, // Will store total score as a number
 };
 
 // Creates a deck with all 52 possible cards
@@ -21,7 +21,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   for (let s of suits) {
     for (let r of ranks) {
-      deck.push(s + " " + r);
+      deck.push({suit: s, rank: r});
     }
   }
 }
@@ -50,20 +50,36 @@ function playerDraw() {
     // Pick a random card
     randomCard = deck[randomIndex];
     playerHandAndScore.playerHand.push(randomCard);  
-    updatePlayerScore();
+
+    // Update score based on the drawn card
+    updatePlayerScore(randomCard.rank);
 
     // Remove picked card from deck array
     deck.splice(randomIndex, 1);  
     drawCard = false;
   }
 
-  text(randomCard, width / 2, height / 2); 
-  text(playerHandAndScore.playerScore, width/2, height * 0.9);
+  text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
+  text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
 }
 
-function updatePlayerScore() {
-  let randomCardValue = randomCard.slice(-1); 
-  playerHandAndScore.playerScore += "" + randomCardValue +",";
+function updatePlayerScore(rank) {
+  let randomCardValue = 0;
+
+  if (typeof rank === "number") {
+    // For number cards (2-10)
+    randomCardValue = rank; 
+  } 
+  else if (rank === "jack" || rank === "queen" || rank === "king") {
+    // Face cards are worth 10
+    randomCardValue = 10; 
+  } 
+  else if (rank === "ace") {
+    // Ace is worth 1
+    randomCardValue = 1;
+  }
+  // Add up score
+  playerHandAndScore.playerScore += randomCardValue;
 }
 
 
@@ -74,6 +90,7 @@ function hitCard() {
 
 // Hit or stand
 function keyPressed() {
+  // Hit 
   if (gameState !== "title") {
     if (key === 'h') {
       drawCard = true;
@@ -84,6 +101,7 @@ function keyPressed() {
 
 // Game state function
 function stateChange() {
+  //Title screen to game
   if (gameState === "title") {
     titleScreen();
   }
