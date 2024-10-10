@@ -12,4 +12,4 @@
 
 ## Projects
 - [Interactive Scene](interactive-scene)
-- [Arrays and Object Notation](blackjack)
+- [Arrays and Object Notation](array-object)
