@@ -11,7 +11,7 @@ let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king" , "ace"]; // Po
 let deck = []; // All cards are stored here unless removed from play
 let drawCard = true; // Flag to control card drawing
 let randomCard = {}; // Stores the most recently drawn card
-let playerHandAndScore = { // Stores player's hand and score
+let playerHandAndScore = { // Stores player's hand and   score
   playerHand: [], // Array to hold the player's cards
   playerScore: 0, // Total score of the player's hand
 };
@@ -47,26 +47,37 @@ function titleScreen() {
 
 // Draw a new card
 function playerDraw() {
-  if (drawCard === true) {
-    let randomIndex = round(random(0, deck.length - 1)); 
-
-    // Pick a random card from the deck
-    randomCard = deck[randomIndex];
-    playerHandAndScore.playerHand.push(randomCard);  
-
-    // Update the player's score based on the drawn card's rank
-    updatePlayerScore(randomCard.rank);
-
-    // Remove picked card from deck array to avoid drawing it again
-    deck.splice(randomIndex, 1);  
-
-    // Set drawCard flag
+  background(51, 153, 255);
+  if (playerHandAndScore.playerScore < 21) {
+    if (drawCard === true) {
+      let randomIndex = round(random(0, deck.length - 1)); 
+  
+      // Pick a random card from the deck
+      randomCard = deck[randomIndex];
+      playerHandAndScore.playerHand.push(randomCard);  
+  
+      // Update the player's score based on the drawn card's rank
+      updatePlayerScore(randomCard.rank);
+  
+      // Remove picked card from deck array to avoid drawing it again
+      deck.splice(randomIndex, 1);  
+  
+      // Set drawCard flag
+      drawCard = false;
+    }
+  
+    // Display the drawn card and current score
+    text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
+    text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
+  }
+  else if (playerHandAndScore.playerScore === 21) {
+    // Dealer Draw
+  }
+  else {
+    // Went over 21 BUSTED
+    bustScreen();
     drawCard = false;
   }
-
-  // Display the drawn card and current score
-  text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
-  text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
 }
 
 // Adds and updates score based on drawn cards
@@ -107,6 +118,14 @@ function keyPressed() {
   }
 }
 
+function bustScreen() {
+  background("red");
+  text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
+  text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
+  text("BUST!", width/2, height *0.1);
+}
+
+
 // Handles state changes in the game
 function stateChange() {
   //Title screen to game
@@ -131,3 +150,8 @@ function draw() {
   // Updates game state and visuals
   stateChange();
 }
+
+
+
+
+
