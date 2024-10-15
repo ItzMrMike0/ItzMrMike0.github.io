@@ -6,12 +6,12 @@
 
 
 let gameState = "title"; // Current state of the game, can be "title" or "gameStarted"
-let suits = ["spades", "clubs", "hearts", "diamonds"]; // Possible suits for cards
-let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "jack", "queen", "king" , "ace"]; // Possible ranks for cards
+let suits = ["Spades", "Clubs", "Hearts", "Diamonds"]; // Possible suits for cards
+let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King" , "Ace"]; // Possible ranks for cards
 let deck = []; // All cards are stored here unless removed from play
 let drawCard = true; // Flag to control card drawing
 let randomCard = {}; // Stores the most recently drawn card
-let playerHandAndScore = { // Stores player's hand and   score
+let playerHandAndScore = {// Stores player's hand and   score
   playerHand: [], // Array to hold the player's cards
   playerScore: 0, // Total score of the player's hand
 };
@@ -25,6 +25,8 @@ function setup() {
       deck.push({suit: s, rank: r});
     }
   }
+  // Draw 2 cards for player and 2 for dealer at the start
+  startingHands();
 }
 
 // Game State Changer
@@ -43,6 +45,14 @@ function titleScreen() {
 
   text("Blackjack", width/2, height/2);
   text("Click to Start", width/2, height * 0.9);
+}
+
+// Draws the four cards needed at the start of the game
+function startingHands() {
+  for (x = 0; x < 1; x++) {
+    playerDraw();
+    drawCard = true;
+  }
 }
 
 // Draw a new card
@@ -67,11 +77,11 @@ function playerDraw() {
     }
   
     // Display the drawn card and current score
-    text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
-    text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
-  }
-  else if (playerHandAndScore.playerScore === 21) {
-    // Dealer Draw
+    text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height * 0.6);
+    text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.7);
+    text("Hand: " + playerHandAndScore.playerHand.map( card => {
+      return `${card.rank} of ${card.suit} `;
+    }), width * 0.3,   height * 0.9);
   }
   else {
     // Went over 21 BUSTED
@@ -88,11 +98,11 @@ function updatePlayerScore(rank) {
     // For number cards (2-10)
     randomCardValue = rank; 
   } 
-  else if (rank === "jack" || rank === "queen" || rank === "king") {
+  else if (rank === "Jack" || rank === "Queen" || rank === "King") {
     // Face cards are worth 10
     randomCardValue = 10; 
   } 
-  else if (rank === "ace") {
+  else if (rank === "Ace") {
     // Ace is worth 1
     randomCardValue = 1;
   }
@@ -118,13 +128,13 @@ function keyPressed() {
   }
 }
 
+// If user hand goes over 21
 function bustScreen() {
   background("red");
   text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
   text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
   text("BUST!", width/2, height *0.1);
 }
-
 
 // Handles state changes in the game
 function stateChange() {
