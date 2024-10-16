@@ -15,6 +15,40 @@ let playerHandAndScore = {// Stores player's hand and   score
   playerHand: [], // Array to hold the player's cards
   playerScore: 0, // Total score of the player's hand
 };
+let cardImages = {};
+
+
+// Preload function to load all card images
+function preload() {
+  for (let s of suits) {
+    for (let r of ranks) {
+      // Determine the suit character based on the suit name
+      let suitChar = '';
+      if (s === "Clubs") suitChar = 'C';
+      else if (s === "Diamonds") suitChar = 'D';
+      else if (s === "Hearts") suitChar = 'H';
+      else if (s === "Spades") suitChar = 'S';
+
+      // Create a file name based on the rank and suit
+      let cardName;
+      if (typeof r === 'number') {
+        cardName = `${r}${suitChar}`; 
+      } 
+      // Face Cards
+      else {
+        cardName = `${r.charAt(0)}${suitChar}`; 
+      }
+      cardImages[`${r} of ${s}`] = loadImage(`assets/cards/${cardName}.svg`);
+    }
+  }
+}
+
+// Use this function to display a card image
+function displayCard(card) {
+  let cardKey = `${card.rank} of ${card.suit}`;
+  image(cardImages[cardKey], width * 0.45, height * 0.3); // Adjust position as needed
+}
+
 // Creates a deck with all 52 possible cards
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -52,40 +86,30 @@ function startingHands() {
   }
 }
 
-// Draw a new card
+// Update playerDraw function to use the card images
 function playerDraw() {
   background(51, 153, 255);
   if (playerHandAndScore.playerScore < 21) {
     if (drawCard === true) {
       let randomIndex = round(random(0, deck.length - 1)); 
-  
-      // Pick a random card from the deck
       randomCard = deck[randomIndex];
       playerHandAndScore.playerHand.push(randomCard);  
-  
-      // Update the player's score based on the drawn card's rank
       updatePlayerScore(randomCard.rank);
-  
-      // Remove picked card from deck array to avoid drawing it again
       deck.splice(randomIndex, 1);  
-  
-      // Set drawCard flag
       drawCard = false;
     }
 
-    // Display the drawn card and current score
-    text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height * 0.6);
-    text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.7);
-    text("Hand: " + playerHandAndScore.playerHand.map( card => {
-      return `${card.rank} of ${card.suit} `;
-    }), width * 0.3,   height * 0.9);
+    // Display the drawn card image
+    displayCard(randomCard);
+    text("Score: " + playerHandAndScore.playerScore, width / 2, height * 0.7);
+    text("Hand: " + playerHandAndScore.playerHand.map(card => `${card.rank} of ${card.suit}`).join(', '), width * 0.3, height * 0.9);
   }
   else {
-    // Went over 21 BUSTED
     bustScreen();
     drawCard = false;
   }
 }
+
 // Adds and updates score based on drawn cards
 function updatePlayerScore(rank) {
   let randomCardValue = 0;
@@ -147,6 +171,7 @@ function draw() {
   console.log(deck);
   console.log(playerHandAndScore);
   console.log(randomCard);
+  
   // Updates game state and visuals
   stateChange();
 }
