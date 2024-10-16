@@ -2,7 +2,7 @@
 // Michael Yang
 // 10/8/2024
 // Extra for Experts:
-// Sound and Window Resizing
+// Added CSS background and centered window using CSS.
 
 
 let gameState = "title"; // Current state of the game, can be "title" or "gameStarted"
@@ -52,7 +52,7 @@ function preload() {
 
 // Creates a deck with all 52 possible cards
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(windowWidth* 0.9, windowHeight * 0.8);
   for (let s of suits) {
     for (let r of ranks) {
       // Create an object for each card with suit and rank
@@ -64,6 +64,7 @@ function setup() {
 }
 
 
+
 // Game State Changer
 function mouseClicked() {
   // Title to game
@@ -73,7 +74,7 @@ function mouseClicked() {
 }
 // Title screen
 function titleScreen() {
-  background(51, 153, 255);
+  background(102, 155, 188);
   textSize(50);
   textAlign(CENTER);
   text("Blackjack", width/2, height/2);

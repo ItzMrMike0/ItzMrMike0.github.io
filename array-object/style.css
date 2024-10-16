@@ -1,8 +1,7 @@
 html, body {
-  margin: 0;
-  padding: 0;
-}
-
-canvas {
-  display: block;
+  height: 100%;
+  background-color: rgb(193, 18, 31);
+  display:flex;
+  justify-content: center;
+  align-items:center;
 }
