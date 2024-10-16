@@ -17,17 +17,24 @@ let playerHandAndScore = {// Stores player's hand and   score
 };
 let cardImages = {};
 
-
 // Preload function to load all card images
 function preload() {
   for (let s of suits) {
     for (let r of ranks) {
       // Determine the suit character based on the suit name
       let suitChar = '';
-      if (s === "Clubs") suitChar = 'C';
-      else if (s === "Diamonds") suitChar = 'D';
-      else if (s === "Hearts") suitChar = 'H';
-      else if (s === "Spades") suitChar = 'S';
+      if (s === "Clubs") {
+        suitChar = 'C';
+      }
+      else if (s === "Diamonds") {
+        suitChar = 'D';
+      }
+      else if (s === "Hearts") {
+        suitChar = 'H';
+      }
+      else if (s === "Spades") {
+        suitChar = 'S';
+      }
 
       // Create a file name based on the rank and suit
       let cardName;
@@ -43,12 +50,6 @@ function preload() {
   }
 }
 
-// Use this function to display a card image
-function displayCard(card) {
-  let cardKey = `${card.rank} of ${card.suit}`;
-  image(cardImages[cardKey], width * 0.45, height * 0.3); // Adjust position as needed
-}
-
 // Creates a deck with all 52 possible cards
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -61,6 +62,7 @@ function setup() {
   // Draw 2 cards for player and 2 for dealer at the start
   startingHands();
 }
+
 
 // Game State Changer
 function mouseClicked() {
@@ -84,6 +86,12 @@ function startingHands() {
     playerDraw();
     drawCard = true;
   }
+}
+
+// Use this function to display a card image
+function displayCard(card) {
+  let cardKey = `${card.rank} of ${card.suit}`;
+  image(cardImages[cardKey], width * 0.45, height * 0.3); // Adjust position as needed
 }
 
 // Update playerDraw function to use the card images
@@ -128,10 +136,7 @@ function updatePlayerScore(rank) {
   // Add the value of the drawn card to the total score
   playerHandAndScore.playerScore += randomCardValue;
 }
-// If user hits h for "hit" to draw another card
-function hitCard() {
-  keyPressed();
-}
+
 // Checks for player input to draw or stand
 function keyPressed() {
   // H for "hit", draws another card
@@ -164,6 +169,7 @@ function stateChange() {
     playerDraw();
   }
 }
+
 // Loop for entire project
 function draw() {
   // Debugging logs
