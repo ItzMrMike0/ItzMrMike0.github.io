@@ -12,9 +12,13 @@ let deck = []; // All cards are stored here unless removed from play
 let drawCard = true; // Flag to control card drawing
 let justStarted = true;
 let randomCard = {}; // Stores the most recently drawn card
-let playerHandAndScore = {// Stores player's hand and   score
+let playerHandAndScore = {// Stores player's hand and score
   playerHand: [], // Array to hold the player's cards
   playerScore: 0, // Total score of the player's hand
+};
+let dealerHandAndScore = {// Stores dealers's hand and score
+  dealerHand: [], // Array to hold the dealers's cards
+  dealerScore: 0, // Total score of the dealer's hand
 };
 let cardImages = {};
 
@@ -23,23 +27,23 @@ function preload() {
   for (let s of suits) {
     for (let r of ranks) {
       // Determine the suit character based on the suit name
-      let suitChar = '';
+      let suitChar = "";
       if (s === "Clubs") {
-        suitChar = 'C';
+        suitChar = "C";
       }
       else if (s === "Diamonds") {
-        suitChar = 'D';
+        suitChar = "D";
       }
       else if (s === "Hearts") {
-        suitChar = 'H';
+        suitChar = "H";
       }
       else if (s === "Spades") {
-        suitChar = 'S';
+        suitChar = "S";
       }
 
       // Create a file name based on the rank and suit
       let cardName;
-      if (typeof r === 'number') {
+      if (typeof r === "number") {
         cardName = `${r}${suitChar}`; 
       } 
       // Face Cards
@@ -88,6 +92,7 @@ function startingHands() {
     playerDraw();
     drawCard = true;
   }
+  dealerDraw();
 }
 
 // Use this function to display a card image
@@ -98,9 +103,9 @@ function displayCard(card, x, y) {
 
 // Update playerDraw function to use the card images
 function playerDraw() {
-  background(51, 153, 255);
+  background(45, 153, 255);
   // Checks if player score isn't over 21 or else bust
-  if (playerHandAndScore.playerScore < 21) {
+  if (playerHandAndScore.playerScore <= 21) {
     if (drawCard === true) {
       let randomIndex = round(random(0, deck.length - 1)); 
       randomCard = deck[randomIndex];
@@ -124,6 +129,22 @@ function playerDraw() {
   }
 }
 
+function dealerDraw() {
+  if (dealerHandAndScore.dealerScore < 17) {
+    let randomIndex = round(random(0, deck.length - 1)); 
+    randomCard = deck[randomIndex];
+    dealerHandAndScore.dealerHand.push(randomCard);  
+    updateDealerScore(randomCard.rank);
+    deck.splice(randomIndex, 1);  
+  }
+  // Display the drawn card image
+  for (let i = 0; i < dealerHandAndScore.dealerHand.length; i++) {
+    let card = dealerHandAndScore.dealerHand[i];
+    //Puts cards to the right of each other
+    displayCard(card, width * 0.9 + i * 50, height * 0.25);
+  }
+}
+
 // Adds and updates score based on drawn cards
 function updatePlayerScore(rank) {
   let randomCardValue = 0;
@@ -143,14 +164,35 @@ function updatePlayerScore(rank) {
   playerHandAndScore.playerScore += randomCardValue;
 }
 
+// Adds and updates score based on drawn cards
+function updateDealerScore(rank) {
+  let randomCardValue = 0;
+  if (typeof rank === "number") {
+    // For number cards (2-10)
+    randomCardValue = rank; 
+  } 
+  else if (rank === "Jack" || rank === "Queen" || rank === "King") {
+    // Face cards are worth 10
+    randomCardValue = 10; 
+  } 
+  else if (rank === "Ace") {
+    // Ace is worth 1
+    randomCardValue = 1;
+  }
+  // Add the value of the drawn card to the total score
+  dealerHandAndScore.dealerScore += randomCardValue;
+}
+
 // Checks for player input to draw or stand
 function keyPressed() {
   // H for "hit", draws another card
   if (gameState !== "title") {
-    if (key === 'h') {
-      // Reset drawCard flag
+    if (key === "h") {
+      // Reset drawCard flag 
       drawCard = true;
-      playerDraw();
+    }
+    if (key === "s") {
+      
     }
   }
 }
@@ -158,8 +200,15 @@ function keyPressed() {
 // If user hand goes over 21
 function bustScreen() {
   background("red");
-  text(`${randomCard.rank} of ${randomCard.suit}`, width/2, height /2 );
-  text("Score: " + playerHandAndScore.playerScore, width/2, height * 0.9);
+
+
+  for (let i = 0; i < playerHandAndScore.playerHand.length; i++) {
+    let card = playerHandAndScore.playerHand[i];
+    //Puts cards to the right of each other
+    displayCard(card, width * 0.43 + i * 50, height * 0.25);
+  }
+
+  text("Score: " + playerHandAndScore.playerScore, width / 2, height * 0.9);
   text("BUST!", width/2, height *0.1);
 }
 
@@ -183,6 +232,7 @@ function draw() {
   console.log(deck);
   console.log(playerHandAndScore);
   console.log(randomCard);
+  console.log(dealerHandAndScore);
   
   // Updates game state and visuals
   stateChange();
