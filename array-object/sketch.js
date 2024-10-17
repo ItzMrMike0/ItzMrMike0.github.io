@@ -72,9 +72,10 @@ function mouseClicked() {
     gameState = "gameStarted";
   }
 }
+
 // Title screen
 function titleScreen() {
-  background(102, 155, 188);
+  background(51, 153, 255, 7);
   textSize(50);
   textAlign(CENTER);
   text("Blackjack", width/2, height/2);
@@ -90,9 +91,9 @@ function startingHands() {
 }
 
 // Use this function to display a card image
-function displayCard(card) {
+function displayCard(card, x, y) {
   let cardKey = `${card.rank} of ${card.suit}`;
-  image(cardImages[cardKey], width * 0.45, height * 0.3); // Adjust position as needed
+  image(cardImages[cardKey], x, y); // Adjust position as needed
 }
 
 // Update playerDraw function to use the card images
@@ -109,15 +110,19 @@ function playerDraw() {
     }
 
     // Display the drawn card image
-    displayCard(randomCard);
-    text("Score: " + playerHandAndScore.playerScore, width / 2, height * 0.7);
-    text("Hand: " + playerHandAndScore.playerHand.map(card => `${card.rank} of ${card.suit}`).join(', '), width * 0.3, height * 0.9);
+    for (let i = 0; i < playerHandAndScore.playerHand.length; i++) {
+      let card = playerHandAndScore.playerHand[i];
+      displayCard(card, width * 0.45 + (i * 30), height * 0.3);
+    }
+    text("Score: " + playerHandAndScore.playerScore, width / 2, height * 0.9);
   }
   else {
     bustScreen();
     drawCard = false;
   }
 }
+
+
 
 // Adds and updates score based on drawn cards
 function updatePlayerScore(rank) {
