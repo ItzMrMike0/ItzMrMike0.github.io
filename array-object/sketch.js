@@ -10,6 +10,7 @@ let suits = ["Spades", "Clubs", "Hearts", "Diamonds"]; // Possible suits for car
 let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King" , "Ace"]; // Possible ranks for cards
 let deck = []; // All cards are stored here unless removed from play
 let drawCard = true; // Flag to control card drawing
+let justStarted = true;
 let randomCard = {}; // Stores the most recently drawn card
 let playerHandAndScore = {// Stores player's hand and   score
   playerHand: [], // Array to hold the player's cards
@@ -59,23 +60,22 @@ function setup() {
       deck.push({suit: s, rank: r});
     }
   }
-  // Draw 2 cards for player and 2 for dealer at the start
-  startingHands();
 }
-
-
 
 // Game State Changer
 function mouseClicked() {
   // Title to game
   if (gameState === "title") {
+    // Gives starting hands for dealer and player
+    startingHands();
     gameState = "gameStarted";
   }
 }
 
 // Title screen
 function titleScreen() {
-  background(51, 153, 255, 7);
+  // The alpha value makes it fade in which is cool
+  background(45, 153, 255, 3.5);
   textSize(50);
   textAlign(CENTER);
   text("Blackjack", width/2, height/2);
@@ -99,6 +99,7 @@ function displayCard(card, x, y) {
 // Update playerDraw function to use the card images
 function playerDraw() {
   background(51, 153, 255);
+  // Checks if player score isn't over 21 or else bust
   if (playerHandAndScore.playerScore < 21) {
     if (drawCard === true) {
       let randomIndex = round(random(0, deck.length - 1)); 
@@ -112,7 +113,8 @@ function playerDraw() {
     // Display the drawn card image
     for (let i = 0; i < playerHandAndScore.playerHand.length; i++) {
       let card = playerHandAndScore.playerHand[i];
-      displayCard(card, width * 0.45 + (i * 30), height * 0.3);
+      //Puts cards to the right of each other
+      displayCard(card, width * 0.43 + i * 50, height * 0.25);
     }
     text("Score: " + playerHandAndScore.playerScore, width / 2, height * 0.9);
   }
@@ -121,8 +123,6 @@ function playerDraw() {
     drawCard = false;
   }
 }
-
-
 
 // Adds and updates score based on drawn cards
 function updatePlayerScore(rank) {
