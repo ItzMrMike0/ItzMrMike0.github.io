@@ -5,7 +5,7 @@
 // Added CSS background and centered window using CSS.
 
 
-let gameState = "title"; // Current state of the game, can be "title" or "gameStarted"
+let gameState = "title"; // Can be "title", "gameStarted", "userStand", "busted"
 let suits = ["Spades", "Clubs", "Hearts", "Diamonds"]; // Possible suits for cards
 let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King" , "Ace"]; // Possible ranks for cards
 let deck = []; // All cards are stored here unless removed from play
@@ -96,12 +96,32 @@ function startingHands() {
 }
 
 // Use this function to display a card image
-function displayCard(card, x, y) {
+function displayIndividualCard(card, x, y) {
   let cardKey = `${card.rank} of ${card.suit}`;
   image(cardImages[cardKey], x, y); // Adjust position as needed
 }
 
-// Update playerDraw function to use the card images
+function displayAllCards() {
+  // Display the player drawn card images
+  for (let i = 0; i < playerHandAndScore.playerHand.length; i++) {
+    let card = playerHandAndScore.playerHand[i];
+    //Puts cards to the right of each other
+    displayIndividualCard(card, width * 0.1 + i * 50, height * 0.25);
+  }
+
+  // Display the dealer drawn card images
+  for (let i = 0; i < dealerHandAndScore.dealerHand.length; i++) {
+    let card = dealerHandAndScore.dealerHand[i];
+    //Puts cards to the right of each other
+    displayIndividualCard(card, width * 0.7 + i * 50, height * 0.25);
+  }
+  text("Score: " + playerHandAndScore.playerScore, width * 0.2, height * 0.9);
+  text("Score: " + dealerHandAndScore.dealerScore, width * 0.8, height * 0.9);
+  text("Player Hand", width * 0.2, height * 0.175);
+  text("Dealer Hand", width * 0.80, height * 0.175);
+}
+
+// Draws a random card from the deck, gives it to the player, and displays it
 function playerDraw() {
   background(45, 153, 255);
   // Checks if player score isn't over 21 or else bust
@@ -110,43 +130,29 @@ function playerDraw() {
       let randomIndex = round(random(0, deck.length - 1)); 
       randomCard = deck[randomIndex];
       playerHandAndScore.playerHand.push(randomCard);  
-      updatePlayerScore(randomCard.rank);
+      updatePlayerScore(randomCard.rank, true);
       deck.splice(randomIndex, 1);  
       drawCard = false;
     }
-
-    // Display the drawn card image
-    for (let i = 0; i < playerHandAndScore.playerHand.length; i++) {
-      let card = playerHandAndScore.playerHand[i];
-      //Puts cards to the right of each other
-      displayCard(card, width * 0.43 + i * 50, height * 0.25);
-    }
-    text("Score: " + playerHandAndScore.playerScore, width / 2, height * 0.9);
+    displayAllCards();
   }
   else {
-    bustScreen();
+    bustScreen(true);
     drawCard = false;
   }
 }
 
+// Draws a random card from the deck, gives it to the dealer, and displays it
 function dealerDraw() {
-  if (dealerHandAndScore.dealerScore < 17) {
-    let randomIndex = round(random(0, deck.length - 1)); 
-    randomCard = deck[randomIndex];
-    dealerHandAndScore.dealerHand.push(randomCard);  
-    updateDealerScore(randomCard.rank);
-    deck.splice(randomIndex, 1);  
-  }
-  // Display the drawn card image
-  for (let i = 0; i < dealerHandAndScore.dealerHand.length; i++) {
-    let card = dealerHandAndScore.dealerHand[i];
-    //Puts cards to the right of each other
-    displayCard(card, width * 0.9 + i * 50, height * 0.25);
-  }
+  let randomIndex = round(random(0, deck.length - 1)); 
+  randomCard = deck[randomIndex];
+  dealerHandAndScore.dealerHand.push(randomCard);  
+  updatePlayerScore(randomCard.rank, false);
+  deck.splice(randomIndex, 1);  
 }
 
 // Adds and updates score based on drawn cards
-function updatePlayerScore(rank) {
+function updatePlayerScore(rank, player) {
   let randomCardValue = 0;
   if (typeof rank === "number") {
     // For number cards (2-10)
@@ -161,55 +167,66 @@ function updatePlayerScore(rank) {
     randomCardValue = 1;
   }
   // Add the value of the drawn card to the total score
-  playerHandAndScore.playerScore += randomCardValue;
-}
-
-// Adds and updates score based on drawn cards
-function updateDealerScore(rank) {
-  let randomCardValue = 0;
-  if (typeof rank === "number") {
-    // For number cards (2-10)
-    randomCardValue = rank; 
-  } 
-  else if (rank === "Jack" || rank === "Queen" || rank === "King") {
-    // Face cards are worth 10
-    randomCardValue = 10; 
-  } 
-  else if (rank === "Ace") {
-    // Ace is worth 1
-    randomCardValue = 1;
+  if (player) {
+    playerHandAndScore.playerScore += randomCardValue;
   }
-  // Add the value of the drawn card to the total score
-  dealerHandAndScore.dealerScore += randomCardValue;
+  else {
+    dealerHandAndScore.dealerScore += randomCardValue;
+  }
 }
 
 // Checks for player input to draw or stand
 function keyPressed() {
   // H for "hit", draws another card
-  if (gameState !== "title") {
+  if (gameState === "gameStarted") {
     if (key === "h") {
       // Reset drawCard flag 
       drawCard = true;
     }
     if (key === "s") {
-      
+      gameState = "userStand"
+    }
+  }
+  if (gameState === "busted") {
+    if (key === "r") {
+      resetGame();
     }
   }
 }
 
 // If user hand goes over 21
-function bustScreen() {
+function bustScreen(player) {
   background("red");
+  displayAllCards();
+  if (player) {
+    text("YOU WENT OVER 21! BUST!", width/2, height *0.1);
+  }
+  else {
+    text("THE DEALER WENT OVER 21! BUST!" , width/2, height * 0.1);
+  }
+  gameState = "busted"
+}
 
+// Reset game state
+function resetGame() {
+  gameState = "title"; 
 
-  for (let i = 0; i < playerHandAndScore.playerHand.length; i++) {
-    let card = playerHandAndScore.playerHand[i];
-    //Puts cards to the right of each other
-    displayCard(card, width * 0.43 + i * 50, height * 0.25);
+  // Clear player and dealer hands and scores
+  playerHandAndScore.playerHand = [];
+  playerHandAndScore.playerScore = 0;
+  dealerHandAndScore.dealerHand = [];
+  dealerHandAndScore.dealerScore = 0;
+  
+  // Reset the deck
+  deck = [];
+  for (let s of suits) {
+    for (let r of ranks) {
+      deck.push({ suit: s, rank: r });
+    }
   }
 
-  text("Score: " + playerHandAndScore.playerScore, width / 2, height * 0.9);
-  text("BUST!", width/2, height *0.1);
+  // Reset the drawCard flag
+  drawCard = true; 
 }
 
 // Handles state changes in the game
@@ -222,6 +239,12 @@ function stateChange() {
   else if (gameState === "gameStarted") {
     background(220);
     playerDraw();
+  }
+  else if (gameState === "userStand") {
+    playerDraw();
+    while (dealerHandAndScore.dealerScore < 17) {
+      dealerDraw();
+    }    
   }
 }
 
