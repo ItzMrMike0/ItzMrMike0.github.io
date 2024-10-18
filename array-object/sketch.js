@@ -144,12 +144,21 @@ function playerDraw() {
 
 // Draws a random card from the deck, gives it to the dealer, and displays it
 function dealerDraw() {
-  let randomIndex = round(random(0, deck.length - 1)); 
-  randomCard = deck[randomIndex];
-  dealerHandAndScore.dealerHand.push(randomCard);  
-  updatePlayerScore(randomCard.rank, false);
-  deck.splice(randomIndex, 1);  
+  // Only draw if dealer score is less than 21
+  if (dealerHandAndScore.dealerScore < 21) {
+    let randomIndex = round(random(0, deck.length - 1)); 
+    randomCard = deck[randomIndex];
+    dealerHandAndScore.dealerHand.push(randomCard);  
+    updatePlayerScore(randomCard.rank, false);
+    deck.splice(randomIndex, 1);  
+
+    // Check if the dealer busts after drawing
+    if (dealerHandAndScore.dealerScore > 21) {
+      bustScreen(false);
+    }
+  }
 }
+
 
 // Adds and updates score based on drawn cards
 function updatePlayerScore(rank, player) {
@@ -244,6 +253,10 @@ function stateChange() {
     playerDraw();
     while (dealerHandAndScore.dealerScore < 17) {
       dealerDraw();
+      // If the dealer busts, break the loop 
+      if (dealerHandAndScore.dealerScore > 21) {
+        break;
+      }
     }    
   }
 }
