@@ -16,6 +16,9 @@ let fadeAlpha = 0; // Variable for fade-in effect
 let fadeSpeed = 0.5; // Speed of the fade-in effect
 let isPlayer; // Variable for who busted
 let bgMusic;
+let cardDrawSoundFx;
+let cardGivingSoundFx;
+let cardShuffleSoundFx;
 let playerHandAndScore = {// Stores player's hand and score
   playerHand: [], // Array to hold the player's cards
   playerScore: 0, // Total score of the player's hand
@@ -29,6 +32,9 @@ let dealerHandAndScore = {// Stores dealers's hand and score
 // Preload function to load all card images
 function preload() {
   bgMusic = loadSound("bgmusic.mp3");
+  cardDrawSoundFx = loadSound("carddraw.ogg");
+  cardGivingSoundFx = loadSound("cardgiving.ogg");
+  cardShuffleSoundFx = loadSound("cardshuffle.ogg");
   for (let s of suits) {
     for (let r of ranks) {
       // Determine the suit character based on the suit name
@@ -63,6 +69,7 @@ function preload() {
 // Creates a deck with all 52 possible cards
 function setup() {
   bgMusic.loop();
+  bgMusic.amp(0.1);
   createCanvas(windowWidth* 0.9, windowHeight * 0.8);
   for (let s of suits) {
     for (let r of ranks) {
@@ -94,6 +101,7 @@ function titleScreen() {
 
 // Draws the four cards needed at the start of the game
 function startingHands() {
+  cardGivingSoundFx.play(0, 1, 1, 0, 1.2);
   for (x = 0; x < 1; x++) {
     playerDraw();
     drawCard = true;
@@ -133,6 +141,7 @@ function playerDraw() {
   // Checks if player score isn't over 21
   if (playerHandAndScore.playerScore <= 21) {
     if (drawCard === true) {
+      cardDrawSoundFx.play();
       let randomIndex = round(random(0, deck.length - 1)); 
       randomCard = deck[randomIndex];
       playerHandAndScore.playerHand.push(randomCard);  
@@ -154,6 +163,7 @@ function playerDraw() {
 function dealerDraw() {
   // Only draw if dealer score is less than 21
   if (dealerHandAndScore.dealerScore < 21) {
+    cardDrawSoundFx.play();
     let randomIndex = round(random(0, deck.length - 1)); 
     randomCard = deck[randomIndex];
     dealerHandAndScore.dealerHand.push(randomCard);  
@@ -231,6 +241,8 @@ function bustScreen() {
 
 // Reset game state
 function resetGame() {
+  cardShuffleSoundFx.play(0, 1, 1, 0, 1.5);
+
   gameState = "title"; 
   fadeAlpha = 0;
   fadeSpeed = 0.5;
