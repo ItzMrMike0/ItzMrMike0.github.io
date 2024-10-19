@@ -11,6 +11,11 @@ let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King" , "Ace"]; // Po
 let deck = []; // All cards are stored here unless removed from play
 let drawCard = true; // Flag to control card drawing
 let randomCard = {}; // Stores the most recently drawn card
+let cardImages = {}; // Stores all card images
+let fadeAlpha = 0; // Variable for fade-in effect
+let fadeSpeed = 0.5; // Speed of the fade-in effect
+let isPlayer; // Variable for who busted
+let bgMusic;
 let playerHandAndScore = {// Stores player's hand and score
   playerHand: [], // Array to hold the player's cards
   playerScore: 0, // Total score of the player's hand
@@ -19,10 +24,11 @@ let dealerHandAndScore = {// Stores dealers's hand and score
   dealerHand: [], // Array to hold the dealers's cards
   dealerScore: 0, // Total score of the dealer's hand
 };
-let cardImages = {}; // Stores all card images
+
 
 // Preload function to load all card images
 function preload() {
+  bgMusic = loadSound("bgmusic.mp3");
   for (let s of suits) {
     for (let r of ranks) {
       // Determine the suit character based on the suit name
@@ -56,6 +62,7 @@ function preload() {
 
 // Creates a deck with all 52 possible cards
 function setup() {
+  bgMusic.loop();
   createCanvas(windowWidth* 0.9, windowHeight * 0.8);
   for (let s of suits) {
     for (let r of ranks) {
@@ -78,7 +85,7 @@ function mouseClicked() {
 // Title screen
 function titleScreen() {
   // The alpha value makes it fade in which is cool
-  background(45, 153, 255, 3.5);
+  background(45, 153, 255, fadeAlpha);
   textSize(50);
   textAlign(CENTER);
   text("Blackjack", width/2, height/2);
@@ -119,9 +126,10 @@ function displayAllCards() {
   text("Dealer Hand", width * 0.80, height * 0.175);
 }
 
+
 // Draws a random card from the deck, gives it to the player, and displays it
 function playerDraw() {
-  background(45, 153, 255);
+  background(45, 153, 255, fadeAlpha);
   // Checks if player score isn't over 21
   if (playerHandAndScore.playerScore <= 21) {
     if (drawCard === true) {
@@ -136,8 +144,9 @@ function playerDraw() {
   }
   // If player score is over 21
   else {
-    bustScreen(true);
     drawCard = false;
+    isPlayer = true;
+    gameState = "busted";
   }
 }
 
@@ -153,7 +162,8 @@ function dealerDraw() {
 
     // Check if the dealer busts after drawing
     if (dealerHandAndScore.dealerScore > 21) {
-      bustScreen(false);
+      isPlayer = false;
+      gameState = "busted"
     }
   }
 }
@@ -205,22 +215,25 @@ function keyPressed() {
 }
 
 // If user hand goes over 21
-function bustScreen(player) {
-  if (player) {
-    background("red");
-    text("YOU WENT OVER 21! BUST!", width/2, height *0.1);
+function bustScreen() {
+  if (isPlayer === true) {
+    background(255, 0, 0, fadeAlpha);
+    text("YOU WENT OVER 21!", width/2, height *0.1);
+    text("PRESS R TO RESET", width/2, height * 0.9);
   }
   else {
-    background("green");
-    text("THE DEALER WENT OVER 21! BUST!" , width/2, height * 0.1);
+    background(0, 255, 0, fadeAlpha);
+    text("THE DEALER WENT OVER 21!" , width/2, height * 0.1);
+    text("PRESS R TO RESET", width/2, height * 0.9);
   }
   displayAllCards();
-  gameState = "busted";
 }
 
 // Reset game state
 function resetGame() {
   gameState = "title"; 
+  fadeAlpha = 0;
+  fadeSpeed = 0.5;
 
   // Clear player and dealer hands and scores
   playerHandAndScore.playerHand = [];
@@ -264,27 +277,36 @@ function stateChange() {
       resultsCalculation();
     }
   }
+  else if (gameState === "busted") {
+    bustScreen();
+  }
 }
 
 // Determines the winner between the player and dealer
 function resultsCalculation() {
   // If player hand is bigger than dealers
   if (playerHandAndScore.playerScore > dealerHandAndScore.dealerScore) {
-    background("green");
+    fadeSpeed = 2.5;
+    background(0, 255, 0, fadeAlpha);
     displayAllCards();
     text("YOU WON!", width/2, height/2);
+    text("PRESS R TO RESET", width/2, height * 0.8);
   }
   // If dealer hand is bigger than players
   else if (playerHandAndScore.playerScore < dealerHandAndScore.dealerScore) {
-    background("red");
+    fadeSpeed = 2.5;
+    background(255, 0, 0, fadeAlpha);
     displayAllCards();
     text("DEALER WON!", width/2, height/2);
+    text("PRESS R TO RESET", width/2, height * 0.8);
   }
   // If both player and dealer have the same hand
   else {
-    background(45, 153, 255);
+    fadeSpeed = 1.5;
+    background(45, 153, 255, fadeAlpha);
     displayAllCards();
     text("TIE!", width/2, height/2);
+    text("PRESS R TO RESET", width/2, height * 0.6);
   }
 }
 
@@ -297,6 +319,17 @@ function draw() {
   console.log(randomCard);
   console.log(dealerHandAndScore);
   
+  // Update fade effect for title screen
+  if (gameState === "title" && fadeAlpha < 255) {
+    fadeAlpha += fadeSpeed; // Increase alpha for fade-in
+  } 
+  else if (gameState === "gameStarted" && fadeAlpha < 255) {
+    fadeAlpha += fadeSpeed; // Increase alpha for fade-in
+  }
+  else if (gameState === "userStand" && fadeAlpha < 255) {
+    fadeAlpha += fadeSpeed;
+  } 
+
   // Updates game state and visuals
   stateChange();
 }
