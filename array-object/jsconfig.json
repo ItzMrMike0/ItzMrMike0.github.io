@@ -3,9 +3,5 @@
     "*.js",
     "libraries/*.js",
     "c:\\Users\\micha\\.vscode\\extensions\\wmcicompsci.cs30-p5-1.8.2\\p5types\\global.d.ts"
-<<<<<<< HEAD
-, "assets/cards/cards/sketch.js", "assets/cards/sketch.js"  ]
-=======
   ]
->>>>>>> parent of 975c8e9 (Finished logic of game with a results function to determine winner. Optimized code further and added more comments for clarity.)
 }

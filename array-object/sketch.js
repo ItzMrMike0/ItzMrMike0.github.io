@@ -10,7 +10,6 @@ let suits = ["Spades", "Clubs", "Hearts", "Diamonds"]; // Possible suits for car
 let ranks = [2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King" , "Ace"]; // Possible ranks for cards
 let deck = []; // All cards are stored here unless removed from play
 let drawCard = true; // Flag to control card drawing
-let justStarted = true;
 let randomCard = {}; // Stores the most recently drawn card
 let cardImages = {}; // Stores all card images
 let fadeAlpha = 0; // Variable for fade-in effect
@@ -25,11 +24,7 @@ let dealerHandAndScore = {// Stores dealers's hand and score
   dealerHand: [], // Array to hold the dealers's cards
   dealerScore: 0, // Total score of the dealer's hand
 };
-<<<<<<< HEAD
 
-=======
-let cardImages = {};
->>>>>>> parent of 975c8e9 (Finished logic of game with a results function to determine winner. Optimized code further and added more comments for clarity.)
 
 // Preload function to load all card images
 function preload() {
@@ -119,7 +114,6 @@ function displayAllCards() {
     //Puts cards to the right of each other
     displayIndividualCard(card, width * 0.1 + i * 50, height * 0.25);
   }
-
   // Display the dealer drawn card images
   for (let i = 0; i < dealerHandAndScore.dealerHand.length; i++) {
     let card = dealerHandAndScore.dealerHand[i];
@@ -135,13 +129,8 @@ function displayAllCards() {
 
 // Draws a random card from the deck, gives it to the player, and displays it
 function playerDraw() {
-<<<<<<< HEAD
   background(45, 153, 255, fadeAlpha);
   // Checks if player score isn't over 21
-=======
-  background(45, 153, 255);
-  // Checks if player score isn't over 21 or else bust
->>>>>>> parent of 975c8e9 (Finished logic of game with a results function to determine winner. Optimized code further and added more comments for clarity.)
   if (playerHandAndScore.playerScore <= 21) {
     if (drawCard === true) {
       let randomIndex = round(random(0, deck.length - 1)); 
@@ -153,6 +142,7 @@ function playerDraw() {
     }
     displayAllCards();
   }
+  // If player score is over 21
   else {
     drawCard = false;
     isPlayer = true;
@@ -211,11 +201,13 @@ function keyPressed() {
       // Reset drawCard flag 
       drawCard = true;
     }
+    // S for "stand", dealer draws cards and results are given
     if (key === "s") {
-      gameState = "userStand"
+      gameState = "userStand";
     }
   }
-  if (gameState === "busted") {
+  // Reset game if user or dealer has bust or if the game is over after userStand
+  if (gameState === "busted" || gameState === "userStand") {
     if (key === "r") {
       resetGame();
     }
@@ -223,7 +215,6 @@ function keyPressed() {
 }
 
 // If user hand goes over 21
-<<<<<<< HEAD
 function bustScreen() {
   if (isPlayer === true) {
     background(255, 0, 0, fadeAlpha);
@@ -236,18 +227,6 @@ function bustScreen() {
     text("PRESS R TO RESET", width/2, height * 0.9);
   }
   displayAllCards();
-=======
-function bustScreen(player) {
-  background("red");
-  displayAllCards();
-  if (player) {
-    text("YOU WENT OVER 21! BUST!", width/2, height *0.1);
-  }
-  else {
-    text("THE DEALER WENT OVER 21! BUST!" , width/2, height * 0.1);
-  }
-  gameState = "busted"
->>>>>>> parent of 975c8e9 (Finished logic of game with a results function to determine winner. Optimized code further and added more comments for clarity.)
 }
 
 // Reset game state
@@ -261,7 +240,6 @@ function resetGame() {
   playerHandAndScore.playerScore = 0;
   dealerHandAndScore.dealerHand = [];
   dealerHandAndScore.dealerScore = 0;
-  
   // Reset the deck
   deck = [];
   for (let s of suits) {
@@ -269,31 +247,30 @@ function resetGame() {
       deck.push({ suit: s, rank: r });
     }
   }
-
   // Reset the drawCard flag
   drawCard = true; 
 }
 
 // Handles state changes in the game
 function stateChange() {
-  //Title screen to game
+  //Title screen
   if (gameState === "title") {
     titleScreen();
   }
-  // If the game has started, display game state
+  // Starts the game 
   else if (gameState === "gameStarted") {
-    background(220);
     playerDraw();
   }
+  // If the user pressed S and has stood
   else if (gameState === "userStand") {
-    playerDraw();
+    background(45, 153, 255);
+    displayAllCards();
     while (dealerHandAndScore.dealerScore < 17) {
       dealerDraw();
       // If the dealer busts, break the loop 
       if (dealerHandAndScore.dealerScore > 21) {
         break;
       }
-<<<<<<< HEAD
     }
     // Only show winner if neither player or dealer busted
     if (playerHandAndScore.playerScore <= 21 && dealerHandAndScore.dealerScore <= 21) {
@@ -330,9 +307,6 @@ function resultsCalculation() {
     displayAllCards();
     text("TIE!", width/2, height/2);
     text("PRESS R TO RESET", width/2, height * 0.6);
-=======
-    }    
->>>>>>> parent of 975c8e9 (Finished logic of game with a results function to determine winner. Optimized code further and added more comments for clarity.)
   }
 }
 
