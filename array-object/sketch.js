@@ -15,10 +15,10 @@ let cardImages = {}; // Stores all card images
 let fadeAlpha = 0; // Variable for fade-in effect
 let fadeSpeed = 0.5; // Speed of the fade-in effect
 let isPlayer; // Variable for who busted
-let bgMusic;
-let cardDrawSoundFx;
-let cardGivingSoundFx;
-let cardShuffleSoundFx;
+let bgMusic; // Background music
+let cardDrawSoundFx; // Drawing a card sound fx
+let cardGivingSoundFx; // Starting hand sound fx
+let cardShuffleSoundFx; // Shuffle cards sound fx
 let playerHandAndScore = {// Stores player's hand and score
   playerHand: [], // Array to hold the player's cards
   playerScore: 0, // Total score of the player's hand
@@ -31,10 +31,12 @@ let dealerHandAndScore = {// Stores dealers's hand and score
 
 // Preload function to load all card images
 function preload() {
+  // Preloading all sounds
   bgMusic = loadSound("bgmusic.mp3");
   cardDrawSoundFx = loadSound("carddraw.ogg");
   cardGivingSoundFx = loadSound("cardgiving.ogg");
   cardShuffleSoundFx = loadSound("cardshuffle.ogg");
+
   for (let s of suits) {
     for (let r of ranks) {
       // Determine the suit character based on the suit name
@@ -66,11 +68,12 @@ function preload() {
   }
 }
 
-// Creates a deck with all 52 possible cards
 function setup() {
-  bgMusic.loop();
-  bgMusic.amp(0.1);
   createCanvas(windowWidth* 0.9, windowHeight * 0.8);
+  // Background music setup
+  bgMusic.loop(0, 1, 1, 0.5);
+  bgMusic.amp(0.1);
+  // Creates a deck with all 52 possible cards
   for (let s of suits) {
     for (let r of ranks) {
       // Create an object for each card with suit and rank
@@ -177,7 +180,6 @@ function dealerDraw() {
     }
   }
 }
-
 
 // Adds and updates score based on drawn cards
 function updatePlayerScore(rank, player) {
