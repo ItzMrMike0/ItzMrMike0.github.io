@@ -249,12 +249,12 @@ function updateHandScore(rank, player) {
   // Ace is worth 1 or 10 
   else if (rank === "Ace") {
     // If adding 10 makes hand go over 21 add 1 instead
-    if (player && playerHandAndScore.playerScore + 10 > 21 || !player && dealerHandAndScore.dealerScore + 10 > 21 ){
+    if (player && playerHandAndScore.playerScore + 11 > 21 || !player && dealerHandAndScore.dealerScore + 11 > 21 ){
       randomCardValue = 1;
     }
     // If adding 10 does nto make hand go over 21 add 10
     else {
-      randomCardValue = 10;
+      randomCardValue = 11;
     }
   }
   // Add the value of the drawn card to the total score
