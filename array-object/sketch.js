@@ -332,7 +332,7 @@ function resetGame() {
   
   // Reset alpha values
   fadeAlpha = 0;
-  fadeSpeed = 0.5;
+  fadeSpeed = 1.4;
 
   // Clear player and dealer hands and scores
   playerHandAndScore.playerHand = [];
