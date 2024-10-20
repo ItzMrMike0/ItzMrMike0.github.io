@@ -34,14 +34,11 @@ function preload() {
       let suitChar = "";
       if (s === "Clubs") {
         suitChar = "C";
-      }
-      else if (s === "Diamonds") {
+      } else if (s === "Diamonds") {
         suitChar = "D";
-      }
-      else if (s === "Hearts") {
+      } else if (s === "Hearts") {
         suitChar = "H";
-      }
-      else if (s === "Spades") {
+      } else if (s === "Spades") {
         suitChar = "S";
       }
 
@@ -218,7 +215,7 @@ function dealerDrawUntilStand() {
     
     // Timeout so dealer takes time between draws
     setTimeout(() => {
-      dealerDrawUntilStand(); // Call to keep drawing if score is still below  17
+      dealerDrawUntilStand(); // Call to keep drawing if score is still below 17
     }, 500); 
     // If the dealer has more than 17 but is not more than 21
   } else if (dealerHandAndScore.dealerScore <= 21) {
@@ -238,19 +235,16 @@ function updateHandScore(rank, isPlayer) {
   if (typeof rank === "number") {
     // For number cards (2-10)
     randomCardValue = rank; 
-  } 
-  else if (rank === "Jack" || rank === "Queen" || rank === "King") {
+  } else if (rank === "Jack" || rank === "Queen" || rank === "King") {
     // Face cards are worth 10
     randomCardValue = 10; 
-  } 
-  // Ace is worth 1 or 11 
-  else if (rank === "Ace") {
+  } else if (rank === "Ace") {
+    // Ace is worth 1 or 11 
     // If adding 11 makes hand go over 21 add 1 instead
-    if (isPlayer && playerHandAndScore.playerScore + 11 > 21 || !isPlayer && dealerHandAndScore.dealerScore + 11 > 21 ){
+    if (isPlayer && playerHandAndScore.playerScore + 11 > 21 || !isPlayer && dealerHandAndScore.dealerScore + 11 > 21) {
       randomCardValue = 1;
-    } 
-    // If adding 11 does not make hand go over 21 add 11
-    else {
+    } else {
+      // If adding 11 does not make hand go over 21 add 11
       randomCardValue = 11;
     }
   }
@@ -384,8 +378,7 @@ function gameChanges() {
       // Calculates and displays results
       resultsCalculation();
     }
-  }
-  else if (gameState === "busted") {
+  } else if (gameState === "busted") {
     bustScreen();
   }
 }
