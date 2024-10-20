@@ -330,9 +330,11 @@ function resetGame() {
   // Reset game state
   gameState = "title";
   
-  // Reset alpha values
+  // Reset alpha value
   fadeAlpha = 0;
-  fadeSpeed = 1.4;
+
+  // Setting fadeSpeed high so reseting fade in is fast
+  fadeSpeed = 30;
 
   // Clear player and dealer hands and scores
   playerHandAndScore.playerHand = [];
@@ -362,6 +364,8 @@ function gameChanges() {
 
   // Title screen
   if (gameState === "title") {
+    // Resets fadeSpeed 
+    fadeSpeed = 0.5;
     titleScreen();
   }
   // Starts the game 
