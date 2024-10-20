@@ -1,8 +1,7 @@
 // Arrays and Object Notation - BLACKJACK
 // Michael Yang
 // 10/21/2024
-// Extra for Experts:
-// Added CSS background and centered window using CSS.
+// Extra for Experts: Added CSS background and centered window using CSS.
 
 let gameState = "title"; // Can be "title", "gameStarted", "userStand", "busted"
 let suits = ["Spades", "Clubs", "Hearts", "Diamonds"]; // Possible suits for cards
@@ -16,25 +15,17 @@ let fadeAlpha = 0; // Variable for fade-in effect
 let fadeSpeed = 0.5; // Speed of the fade-in effect
 let isPlayer; // Variable to determine if the player or dealer busted
 let bgMusic; // Background music
-let cardDrawSoundFx; // Sound effect for drawing a card
-let cardGivingSoundFx; // Sound effect for starting hand
-let cardShuffleSoundFx; // Sound effect for shuffling cards
-let playerHandAndScore = { // Stores player's hand and score
-  playerHand: [], // Array to hold the player's cards
-  playerScore: 0, // Total score of the player's hand
-};
-let dealerHandAndScore = { // Stores dealer's hand and score
-  dealerHand: [], // Array to hold the dealer's cards
-  dealerScore: 0, // Total score of the dealer's hand
-};
+let sounds = {}; // Store all sound effects
+let playerHandAndScore = { playerHand: [], playerScore: 0 }; // Player's hand and score
+let dealerHandAndScore = { dealerHand: [], dealerScore: 0 }; // Dealer's hand and score
 
 // Preload function to load all card images
 function preload() {
   // Preloading all sounds
-  bgMusic = loadSound("bgmusic.mp3");
-  cardDrawSoundFx = loadSound("carddraw.ogg");
-  cardGivingSoundFx = loadSound("cardgiving.ogg");
-  cardShuffleSoundFx = loadSound("cardshuffle.ogg");
+  sounds.bgMusic = loadSound("bgmusic.mp3");
+  sounds.cardDrawSoundFx = loadSound("carddraw.ogg");
+  sounds.cardGivingSoundFx = loadSound("cardgiving.ogg");
+  sounds.cardShuffleSoundFx = loadSound("cardshuffle.ogg");
 
   // Load images for all cards in the deck
   for (let s of suits) {
@@ -71,8 +62,8 @@ function preload() {
 function setup() {
   createCanvas(windowWidth * 0.9, windowHeight * 0.8);
   // Background music setup
-  bgMusic.loop(0, 1, 1, 0.5);
-  bgMusic.amp(0.1);
+  sounds.bgMusic.loop(0, 1, 1, 0.5);
+  sounds.bgMusic.amp(0.1);
   // Creates a deck with all 52 possible cards
   for (let s of suits) {
     for (let r of ranks) {
@@ -103,7 +94,7 @@ function titleScreen() {
 
 // Gives the initial hands for the player and dealer one card at a time
 function startingHands() {
-  cardGivingSoundFx.play(0, 1, 1, 0, 1.2);
+  sounds.cardGivingSoundFx.play(0, 1, 1, 0, 1.2);
 
   // Gives the first card for the player
   playerDraw(0); 
@@ -152,8 +143,8 @@ function displayAllCardsAndText() {
 
 // Drawing card sound effect
 function drawCardSfx(howLoud) {
-  cardDrawSoundFx.amp(howLoud);
-  cardDrawSoundFx.play();
+  sounds.cardDrawSoundFx.amp(howLoud);
+  sounds.cardDrawSoundFx.play();
 }
 
 // Card Logic
@@ -161,6 +152,12 @@ function cardLogic(player) {
   // Picks a random card from deck
   let randomIndex = Math.floor(random(0, deck.length)); 
   randomCard = deck[randomIndex];
+
+  // Set isAdjusted only for Aces
+  if (randomCard.rank === "Ace") {
+    randomCard.isAdjusted = false; // Initialize only Aces
+  }
+
   // If player is drawing a new card
   if (player) {
     // Push random card into player's hand
@@ -235,7 +232,7 @@ function dealerDrawUntilStand() {
 }
 
 // Adds and updates score based on drawn cards
-function updateHandScore(rank, player) {
+function updateHandScore(rank, isPlayer) {
   let randomCardValue = 0;
 
   if (typeof rank === "number") {
@@ -249,23 +246,44 @@ function updateHandScore(rank, player) {
   // Ace is worth 1 or 11 
   else if (rank === "Ace") {
     // If adding 11 makes hand go over 21 add 1 instead
-    if (player && playerHandAndScore.playerScore + 11 > 21 || !player && dealerHandAndScore.dealerScore + 11 > 21 ){
+    if (isPlayer && playerHandAndScore.playerScore + 11 > 21 || !isPlayer && dealerHandAndScore.dealerScore + 11 > 21 ){
       randomCardValue = 1;
-    }
+    } 
     // If adding 11 does not make hand go over 21 add 11
     else {
       randomCardValue = 11;
     }
   }
-  // Add the value of the drawn card to the total score
-  if (player) {
+  // Update scores
+  if (isPlayer) {
     // Update player score
     playerHandAndScore.playerScore += randomCardValue;
-  }
-  else {
+
+    // If user went over 21 and has any aces in hand it will adjust
+    playerHandAndScore.playerScore = adjustAcesIfNeeded(playerHandAndScore.playerHand, playerHandAndScore.playerScore);
+  } else {
     // Update dealer score
     dealerHandAndScore.dealerScore += randomCardValue;
+
+    // If dealer went over 21 and has any aces in hand it will adjust
+    dealerHandAndScore.dealerScore = adjustAcesIfNeeded(dealerHandAndScore.dealerHand, dealerHandAndScore.dealerScore);
   }
+}
+
+// Adjusts aces that are set to 11 to 1
+function adjustAcesIfNeeded(hand, score) {
+  if (score > 21) {
+    for (let card of hand) {
+      // Check if the card is an Ace with value 11 and hasn't been adjusted
+      if (card.rank === "Ace" && card.value === 11 && !card.isAdjusted) {
+        score -= 10; // Change Ace from 11 to 1
+        card.value = 1; // Adjust the Ace's value
+        card.isAdjusted = true; // Mark the Ace as adjusted
+        break; // Adjust one Ace only
+      }
+    }
+  }
+  return score;
 }
 
 // Checks for player input to draw, stand, or reset
@@ -313,7 +331,7 @@ function bustScreen() {
 
 // Reset everything
 function resetGame() {
-  cardShuffleSoundFx.play(0, 1, 1, 0, 1.5);
+  sounds.cardShuffleSoundFx.play(0, 1, 1, 0, 1.5);
 
   // Reset game state
   gameState = "title";
