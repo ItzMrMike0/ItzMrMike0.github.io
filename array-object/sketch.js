@@ -14,7 +14,6 @@ let cardImages = {}; // Stores all card images
 let fadeAlpha = 0; // Variable for fade-in effect
 let fadeSpeed = 0.5; // Speed of the fade-in effect
 let isPlayer; // Variable to determine if the player or dealer busted
-let bgMusic; // Background music
 let sounds = {}; // Store all sound effects
 let playerHandAndScore = { playerHand: [], playerScore: 0 }; // Player's hand and score
 let dealerHandAndScore = { dealerHand: [], dealerScore: 0 }; // Dealer's hand and score
@@ -34,11 +33,14 @@ function preload() {
       let suitChar = "";
       if (s === "Clubs") {
         suitChar = "C";
-      } else if (s === "Diamonds") {
+      }
+      else if (s === "Diamonds") {
         suitChar = "D";
-      } else if (s === "Hearts") {
+      }
+      else if (s === "Hearts") {
         suitChar = "H";
-      } else if (s === "Spades") {
+      }
+      else if (s === "Spades") {
         suitChar = "S";
       }
 
@@ -57,10 +59,22 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth * 0.9, windowHeight * 0.8);
+  // Made minimum size for canvas
+  let x = windowWidth - 150;
+  let y = windowHeight - 150;
+  // If window width is less than 1400 set it to 1400
+  if (windowWidth  < 1400) {
+    x = 1400;
+  }
+  // If window height is less than 650 set it to 650
+  if (windowHeight < 650) {
+    y = 650;
+  }
+  createCanvas(x, y);
+
   // Background music setup
   sounds.bgMusic.loop(0, 1, 1, 0.5);
-  sounds.bgMusic.amp(0.1);
+  sounds.bgMusic.amp(0.2);
   // Creates a deck with all 52 possible cards
   for (let s of suits) {
     for (let r of ranks) {
@@ -218,7 +232,8 @@ function dealerDrawUntilStand() {
       dealerDrawUntilStand(); // Call to keep drawing if score is still below 17
     }, 500); 
     // If the dealer has more than 17 but is not more than 21
-  } else if (dealerHandAndScore.dealerScore <= 21) {
+  }
+  else if (dealerHandAndScore.dealerScore <= 21) {
     // If the dealer stands, update game state
     gameState = "userStand";
   }
@@ -235,23 +250,26 @@ function updateHandScore(rank, isPlayer) {
   if (typeof rank === "number") {
     // For number cards (2-10)
     randomCardValue = rank; 
-  } else if (rank === "Jack" || rank === "Queen" || rank === "King") {
+  }
+  else if (rank === "Jack" || rank === "Queen" || rank === "King") {
     // Face cards are worth 10
     randomCardValue = 10; 
-  } else if (rank === "Ace") {
+  }
+  else if (rank === "Ace") {
     // Ace is worth 1 or 11 
     // If adding 11 makes hand go over 21 add 1 instead
     if (isPlayer && playerHandAndScore.playerScore + 11 > 21 || !isPlayer && dealerHandAndScore.dealerScore + 11 > 21) {
       randomCardValue = 1;
       
       // Adjust the Ace in the hand
-      for (let card of (isPlayer ? playerHandAndScore.playerHand : dealerHandAndScore.dealerHand)) {
+      for (let card of isPlayer ? playerHandAndScore.playerHand : dealerHandAndScore.dealerHand) {
         if (card.rank === "Ace" && !card.isAdjusted) {
           card.isAdjusted = true; // Mark the Ace as adjusted
           break; // Adjust only the first Ace found
         }
       }
-    } else {
+    }
+    else {
       // If adding 11 does not make hand go over 21 add 11
       randomCardValue = 11;
     }
@@ -264,7 +282,8 @@ function updateHandScore(rank, isPlayer) {
 
     // If user went over 21 and has any aces in hand it will adjust
     playerHandAndScore.playerScore = adjustAcesIfNeeded(playerHandAndScore.playerHand, playerHandAndScore.playerScore);
-  } else {
+  }
+  else {
     // Update dealer score
     dealerHandAndScore.dealerScore += randomCardValue;
 
@@ -328,7 +347,7 @@ function bustScreen() {
     text("THE DEALER WENT OVER 21!", width / 2, height * 0.1);
   }
   // Instructions
-  text("PRESS R TO RESET", width / 2, height * 0.9);
+  text("PRESS R TO RESET", width/2, height * 0.9);
   displayAllCardsAndText();
 }
 
@@ -391,7 +410,8 @@ function gameChanges() {
       // Calculates and displays results
       resultsCalculation();
     }
-  } else if (gameState === "busted") {
+  }
+  else if (gameState === "busted") {
     bustScreen();
   }
 }
@@ -418,7 +438,7 @@ function resultsCalculation() {
   }
   // Show results and instructions
   displayAllCardsAndText();
-  text("PRESS R TO RESET", width / 2, height * 0.8);
+  text("PRESS R TO RESET", width / 2, height * 0.9);
 }
 
 // Loop for entire project
