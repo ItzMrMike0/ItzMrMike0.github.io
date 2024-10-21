@@ -243,11 +243,20 @@ function updateHandScore(rank, isPlayer) {
     // If adding 11 makes hand go over 21 add 1 instead
     if (isPlayer && playerHandAndScore.playerScore + 11 > 21 || !isPlayer && dealerHandAndScore.dealerScore + 11 > 21) {
       randomCardValue = 1;
+      
+      // Adjust the Ace in the hand
+      for (let card of (isPlayer ? playerHandAndScore.playerHand : dealerHandAndScore.dealerHand)) {
+        if (card.rank === "Ace" && !card.isAdjusted) {
+          card.isAdjusted = true; // Mark the Ace as adjusted
+          break; // Adjust only the first Ace found
+        }
+      }
     } else {
       // If adding 11 does not make hand go over 21 add 11
       randomCardValue = 11;
     }
   }
+  
   // Update scores
   if (isPlayer) {
     // Update player score
@@ -269,7 +278,7 @@ function adjustAcesIfNeeded(hand, score) {
   if (score > 21) {
     for (let card of hand) {
       // Check if the card is an Ace with value 11 and hasn't been adjusted
-      if (card.rank === "Ace" && card.value === 11 && !card.isAdjusted) {
+      if (card.rank === "Ace" && !card.isAdjusted) {
         score -= 10; // Change Ace from 11 to 1
         card.value = 1; // Adjust the Ace's value
         card.isAdjusted = true; // Mark the Ace as adjusted
