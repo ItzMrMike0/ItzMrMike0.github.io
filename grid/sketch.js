@@ -6,8 +6,9 @@
 // let grid = [[1, 0, 1, 0], [0, 0, 1 ,1],[1, 1, 1, 0], [0, 1, 1, 0]];
 
 let grid;
-const GRID_SIZE = 4;
+const GRID_SIZE = 10;
 let cellSize;
+let shouldToggleNeighbours = true;
 
 function setup() {
   if (windowWidth < windowHeight) {
@@ -18,6 +19,16 @@ function setup() {
   }
   cellSize = height/GRID_SIZE;
   grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
+}
+
+function windowResized() {
+  if (windowWidth < windowHeight) {
+    resizeCanvas(windowWidth, windowWidth);
+  }
+  else {
+    resizeCanvas(windowHeight, windowHeight);
+  }
+  cellSize = height/GRID_SIZE;
 }
 
 function draw() {
@@ -31,6 +42,9 @@ function keyPressed() {
   }
   if (key === "e") {
     grid = generateEmptyGrid(GRID_SIZE, GRID_SIZE);
+  }
+  if (key === "n") {
+    shouldToggleNeighbours = !shouldToggleNeighbours;
   }
 }
 
@@ -79,13 +93,29 @@ function generateEmptyGrid(cols, rows) {
 }
 
 function mousePressed() {
-  let squareX = mouseX/cellSize;
-  let squareY = mouseY/cellSize;
+  let cordX = Math.floor(mouseX/cellSize);
+  let cordY = Math.floor(mouseY/cellSize);
 
-  if (grid[squareY][squareX] === 0) {
-    grid[squareY][squareX] = 1;
+  // toggle self
+  toggleCell(cordX, cordY);
+
+  // toggle neighbours
+  if (shouldToggleNeighbours) {
+    toggleCell(cordX + 1, cordY);
+    toggleCell(cordX - 1, cordY);
+    toggleCell(cordX, cordY + 1);
+    toggleCell(cordX, cordY - 1);
   }
-  else if (grid[squareY][squareX] === 1) {
-    grid[squareY][squareX] = 0;    
+}
+
+function toggleCell(cordX, cordY) {
+  // make sure cell you're toggling is in the grid
+  if (cordX >= 0 && cordY>= 0 && cordX < GRID_SIZE && cordY < GRID_SIZE) {
+    if (grid[cordY][cordX] === 0) {
+      grid[cordY][cordX] = 1;
+    }
+    else {
+      grid[cordY][cordX] = 0;    
+    } 
   } 
 }
