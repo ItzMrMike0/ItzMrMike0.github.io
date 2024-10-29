@@ -4,10 +4,11 @@
 // - describe what you did to take this project "above and beyond"
 
 let logo;
-let gameState = "titleScreen"
+let gameState = "titleScreen";
 let pos;
 let room; // Variable to hold the room code
 let shared; // Variable for shared data
+let guests;
 
 function preload() {
   logo = loadImage("battleshiplogo.webp");
@@ -21,6 +22,7 @@ function preload() {
   // Load shared position data
   pos = partyLoadShared("pos", { x: width / 2, y: height / 2 });
   shared = partyLoadShared("shared", { x: 0, y: 0 });
+  guests = partyLoadGuestShareds();
 }
 
 function setup() {
@@ -39,10 +41,11 @@ function draw() {
   }
 
   // If a room is created/joined, display the shared ellipse; otherwise, bring back to titleScreen
-  if (room) {
+  if (room && guests.length >= 2) {
     fill("red");
     ellipse(shared.x, shared.y, 100, 100);
-  } else {
+  }
+  else {
     titleScreen();
   }
 }
