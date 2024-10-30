@@ -29,14 +29,9 @@ function setup() {
   // Create canvas
   createCanvas(windowWidth, windowHeight);
 
-  // if window width is less than height make circleSize use width
-  if (windowWidth < windowHeight) {
-    circleSize = width/GRIDX;
-  }
-  // if window height is less than height make circleSize use height
-  else {
-    circleSize = height/GRIDX;
-  }
+  // Set circleSize based on the smaller dimension of the window
+  circleSize = min(width / GRIDX, height / GRIDY);
+
   // Create an empty grid
   gridBoard = generateEmptyGrid(GRIDY, GRIDX);
 }
@@ -89,7 +84,6 @@ function changeGameStates() {
     noLobby();
   }
   if (gameState === "inGame") {
-    generateEmptyGrid();
     displayGrid();
   }
 }
