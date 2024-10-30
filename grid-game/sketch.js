@@ -3,16 +3,17 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let logo;
-let gameState = "titleScreen";
+let gameState = ""; // noLobby, inGame
+let whoseTurn = "red"; // Flag to determine whose turn it is
 let pos;
 let room; // Variable to hold the room code
 let shared; // Variable for shared data
-let guests;
+let gridBoard; // Grid for the game
+let circleSize; // Variable for circle size
+const GRIDX = 7; // Cols
+const GRIDY = 6; // Rows
 
 function preload() {
-  logo = loadImage("battleshiplogo.webp");
-  
   // Prompt user for room code
   room = prompt("Enter room code to create/join a party");
   
@@ -22,31 +23,86 @@ function preload() {
   // Load shared position data
   pos = partyLoadShared("pos", { x: width / 2, y: height / 2 });
   shared = partyLoadShared("shared", { x: 0, y: 0 });
-  guests = partyLoadGuestShareds();
 }
 
 function setup() {
+  // Create canvas
   createCanvas(windowWidth, windowHeight);
+
+  // if window width is less than height make circleSize use width
+  if (windowWidth < windowHeight) {
+    circleSize = width/GRIDX;
+  }
+  // if window height is less than height make circleSize use height
+  else {
+    circleSize = height/GRIDX;
+  }
+  // Create an empty grid
+  gridBoard = generateEmptyGrid(GRIDY, GRIDX);
 }
 
-function titleScreen() {
+// Creates an empty grid that is 7 by 6
+function generateEmptyGrid(cols, rows) {
+  let newGrid = [];
+  for (let y = 0; y < cols; y++) {
+    newGrid.push([]);
+    for (let x = 0; x < rows; x++) {
+      newGrid[y].push(0);
+    }
+  }
+  return newGrid;
+}
+
+// Show the grid and the colour that the circle is
+function displayGrid() {
+  // 
+  background("black");
+  for (let y = 0; y < GRIDY; y++) {
+    for (let x = 0; x < GRIDX; x++) {
+      if (gridBoard[y][x] === 2) {
+        fill("yellow");
+      }
+      else if (gridBoard[y][x] === 1) {
+        fill("red");
+      }
+      else {
+        gridBoard[y][x] === 0; {
+          fill("white");
+        }
+      } 
+      ellipse(circleSize * x + circleSize / 2, circleSize * y + circleSize / 2, circleSize);
+    }
+  }
+}
+
+// If no code is typed in during prompt
+function noLobby() {
   background(237, 237, 249);
   textAlign(CENTER, CENTER);
-  image(logo, width / 2.6, height * 0.1, logo.width / 2, logo.height / 2);
+  textSize(100);
+  text("Please refresh and type in a code!", width/2, height/2);
 }
 
-function draw() {
-  if (gameState === "titleScreen") {
-    titleScreen();
+// Calls functions depending on gameState
+function changeGameStates() {
+  if (gameState === "noLobby") {
+    noLobby();
   }
+  if (gameState === "inGame") {
+    generateEmptyGrid();
+    displayGrid();
+  }
+}
 
-  // If a room is created/joined, display the shared ellipse; otherwise, bring back to titleScreen
-  if (room && guests.length >= 2) {
+function createAndJoinRoom() {
+  // If a room is created/joined, display the shared ellipse; otherwise, bring back to noLobby
+  if (room) {
     fill("red");
+    gameState = "inGame";
     ellipse(shared.x, shared.y, 100, 100);
   }
   else {
-    titleScreen();
+    gameState = "noLobby";
   }
 }
 
@@ -56,4 +112,12 @@ function mousePressed() {
     shared.x = mouseX;
     shared.y = mouseY;
   }
+}
+
+function draw() {
+  // Change game states
+  changeGameStates();
+
+  // Create or join a room with another player through p5party
+  createAndJoinRoom();
 }
