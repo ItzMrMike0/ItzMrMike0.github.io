@@ -22,7 +22,7 @@ function preload() {
 
   // Load shared position data
   pos = partyLoadShared("pos", { x: width / 2, y: height / 2 });
-  shared = partyLoadShared("shared", { x: 0, y: 0 });
+  shared = partyLoadShared("grid", {gridBoard});
 }
 
 function setup() {
@@ -50,7 +50,6 @@ function generateEmptyGrid(cols, rows) {
 
 // Show the grid and the colour that the circle is
 function displayGrid() {
-  // 
   background("black");
   for (let y = 0; y < GRIDY; y++) {
     for (let x = 0; x < GRIDX; x++) {
@@ -69,6 +68,28 @@ function displayGrid() {
     }
   }
 }
+
+// Show the grid and the colour that the circle is
+function displaySharedGrid() {
+  background("black");
+  for (let y = 0; y < GRIDY; y++) {
+    for (let x = 0; x < GRIDX; x++) {
+      if (shared.board[y][x] === 2) {
+        fill("yellow");
+      }
+      else if (shared.board[y][x] === 1) {
+        fill("red");
+      }
+      else {
+        shared.board[y][x] === 0; {
+          fill("white");
+        }
+      } 
+      ellipse(circleSize * x + circleSize / 2, circleSize * y + circleSize / 2, circleSize);
+    }
+  }
+}
+
 
 // If no code is typed in during prompt
 function noLobby() {
@@ -93,7 +114,7 @@ function createAndJoinRoom() {
   if (room) {
     fill("red");
     gameState = "inGame";
-    ellipse(shared.x, shared.y, 100, 100);
+    ellipse(pos.x, pos.y, 100, 100);
   }
   else {
     gameState = "noLobby";
@@ -101,11 +122,33 @@ function createAndJoinRoom() {
 }
 
 function mousePressed() {
+  let cordX = Math.floor(mouseX/circleSize);
+  let cordY = Math.floor(mouseY/circleSize);
+
+  // toggle self
+  placePiece(cordX, cordY);
+
   if (room) {
     // Update the shared position when mouse is pressed
-    shared.x = mouseX;
-    shared.y = mouseY;
+    pos.x = mouseX;
+    pos .y = mouseY;
+
+    // Update board
+    shared.board = gridBoard;
   }
+}
+
+function placePiece(cordX, cordY) {
+  console.log("woohoo");  
+  // make sure cell you're toggling is in the grid
+  if (cordX >= 0 && cordY>= 0 && cordX < GRIDX && cordY < GRIDY) {
+    if (gridBoard[cordY][cordX] === 0) {
+      gridBoard[cordY][cordX] = 1;
+    }
+    else {
+      gridBoard[cordY][cordX] = 0;    
+    } 
+  } 
 }
 
 function draw() {
