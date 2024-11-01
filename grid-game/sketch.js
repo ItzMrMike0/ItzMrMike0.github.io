@@ -48,28 +48,12 @@ function generateEmptyGrid(cols, rows) {
 }
 
 // Show the grid and the colour that the circle is
-function displayGrid() {
-  background("black");
-  for (let y = 0; y < GRIDY; y++) {
-    for (let x = 0; x < GRIDX; x++) {
-      if (gridBoard[y][x] === 2) {
-        fill("yellow");
-      }
-      else if (gridBoard[y][x] === 1) {
-        fill("red");
-      }
-      else {
-        fill("white");
-      }
-      ellipse(circleSize * x + circleSize / 2, circleSize * y + circleSize / 2, circleSize);
-    }
-  }
-}
-
-// Show the grid and the colour that the circle is
 function displaySharedGrid() {
   // Check if shared.board exists before accessing it
-  if (!shared.board) return; 
+  if (!shared.board) {
+    return; 
+  }
+  
   background("black");
 
   // Sets colour of circles in grid
@@ -128,6 +112,7 @@ function mousePressed() {
 
   // Update local board with click on circle
   placePiece(cordX, cordY);
+  // bruh();
 
   if (room) {
     // Sync local grid with shared grid using partySetShared
@@ -146,6 +131,15 @@ function placePiece(cordX, cordY) {
     }
   }
 }
+
+// function bruh(cordX, cordY) {
+//   let xcoord = floor(mouseX / circleSize);
+//   for (let i = 6; i > 0; i--) {
+//     if (gridBoard[i - 1][xcoord] === 0) {
+//       gridBoard[i - 1][xcoord] = 1;
+//     }
+//   }
+// }
 
 function draw() {
   // Synchronize local grid with shared grid so it stays updated
