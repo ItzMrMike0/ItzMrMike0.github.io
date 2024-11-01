@@ -8,7 +8,7 @@ let whoseTurn = "red"; // Flag to determine whose turn it is
 let pos;
 let room; // Variable to hold the room code
 let shared; // Variable for shared data
-let gridBoard; // Grid for the game
+let gridBoard; // Local grid for the game
 let circleSize; // Variable for circle size
 const GRIDX = 7; // Cols
 const GRIDY = 6; // Rows
@@ -16,13 +16,12 @@ const GRIDY = 6; // Rows
 function preload() {
   // Prompt user for room code
   room = prompt("Enter room code to create/join a party");
-  
+
   // Connect to the p5.party server and the specific room
   partyConnect("wss://demoserver.p5party.org", room);
 
-  // Load shared position data
-  pos = partyLoadShared("pos", { x: width / 2, y: height / 2 });
-  shared = partyLoadShared("grid", {gridBoard});
+  // Initialize shared grid if not already initialized
+  shared = partyLoadShared("grid", { board: generateEmptyGrid(GRIDY, GRIDX) });
 }
 
 function setup() {
@@ -32,7 +31,7 @@ function setup() {
   // Set circleSize based on the smaller dimension of the window
   circleSize = min(width / GRIDX, height / GRIDY);
 
-  // Create an empty grid
+  // Create an empty local grid
   gridBoard = generateEmptyGrid(GRIDY, GRIDX);
 }
 
@@ -60,10 +59,8 @@ function displayGrid() {
         fill("red");
       }
       else {
-        gridBoard[y][x] === 0; {
-          fill("white");
-        }
-      } 
+        fill("white");
+      }
       ellipse(circleSize * x + circleSize / 2, circleSize * y + circleSize / 2, circleSize);
     }
   }
@@ -71,7 +68,11 @@ function displayGrid() {
 
 // Show the grid and the colour that the circle is
 function displaySharedGrid() {
+  // Check if shared.board exists before accessing it
+  if (!shared.board) return; 
   background("black");
+
+  // Sets colour of circles in grid
   for (let y = 0; y < GRIDY; y++) {
     for (let x = 0; x < GRIDX; x++) {
       if (shared.board[y][x] === 2) {
@@ -81,15 +82,12 @@ function displaySharedGrid() {
         fill("red");
       }
       else {
-        shared.board[y][x] === 0; {
-          fill("white");
-        }
-      } 
+        fill("white");
+      }
       ellipse(circleSize * x + circleSize / 2, circleSize * y + circleSize / 2, circleSize);
     }
   }
 }
-
 
 // If no code is typed in during prompt
 function noLobby() {
@@ -105,7 +103,11 @@ function changeGameStates() {
     noLobby();
   }
   if (gameState === "inGame") {
-    displayGrid();
+    if (room) {
+      if (shared.board) { // Check if shared.board is defined
+        displaySharedGrid(); // Display the shared board for all players
+      }
+    }
   }
 }
 
@@ -114,7 +116,6 @@ function createAndJoinRoom() {
   if (room) {
     fill("red");
     gameState = "inGame";
-    ellipse(pos.x, pos.y, 100, 100);
   }
   else {
     gameState = "noLobby";
@@ -125,36 +126,36 @@ function mousePressed() {
   let cordX = Math.floor(mouseX/circleSize);
   let cordY = Math.floor(mouseY/circleSize);
 
-  // toggle self
+  // Update local board with click on circle
   placePiece(cordX, cordY);
 
   if (room) {
-    // Update the shared position when mouse is pressed
-    pos.x = mouseX;
-    pos .y = mouseY;
-
-    // Update board
-    shared.board = gridBoard;
+    // Sync local grid with shared grid using partySetShared
+    partySetShared(shared, { board: gridBoard }); 
   }
 }
 
 function placePiece(cordX, cordY) {
-  console.log("woohoo");  
-  // make sure cell you're toggling is in the grid
-  if (cordX >= 0 && cordY>= 0 && cordX < GRIDX && cordY < GRIDY) {
+  // Make sure cell you're toggling is in the grid
+  if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
     if (gridBoard[cordY][cordX] === 0) {
       gridBoard[cordY][cordX] = 1;
     }
     else {
-      gridBoard[cordY][cordX] = 0;    
-    } 
-  } 
+      gridBoard[cordY][cordX] = 0;
+    }
+  }
 }
 
 function draw() {
+  // Synchronize local grid with shared grid so it stays updated
+  if (shared.board) {
+    gridBoard = shared.board;
+  }
+
   // Change game states
   changeGameStates();
 
-  // Create or join a room with another player through p5party
+  // Handle room connection logic
   createAndJoinRoom();
 }
