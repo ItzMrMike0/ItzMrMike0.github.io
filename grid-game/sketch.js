@@ -112,7 +112,6 @@ function mousePressed() {
 
   // Update local board with click on circle
   placePiece(cordX, cordY);
-  // bruh();
 
   if (room) {
     // Sync local grid with shared grid using partySetShared
@@ -123,23 +122,20 @@ function mousePressed() {
 function placePiece(cordX, cordY) {
   // Make sure cell you're toggling is in the grid
   if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
-    if (gridBoard[cordY][cordX] === 0) {
-      gridBoard[cordY][cordX] = 1;
-    }
-    else {
-      gridBoard[cordY][cordX] = 0;
+    for (let i = GRIDY - 1; i >= 0; i--) {
+      if (gridBoard[i][cordX] === 0) {
+        // Place the piece for the current player's turn
+        if (whoseTurn === "red") {
+          gridBoard[i][cordX] = 1;
+        }
+        else {
+          gridBoard[i][cordX] = 2;       
+        }
+        break; // Exit the loop after placing the piece
+      }
     }
   }
 }
-
-// function bruh(cordX, cordY) {
-//   let xcoord = floor(mouseX / circleSize);
-//   for (let i = 6; i > 0; i--) {
-//     if (gridBoard[i - 1][xcoord] === 0) {
-//       gridBoard[i - 1][xcoord] = 1;
-//     }
-//   }
-// }
 
 function draw() {
   // Synchronize local grid with shared grid so it stays updated
