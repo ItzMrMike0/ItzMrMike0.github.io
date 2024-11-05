@@ -112,7 +112,7 @@ function mousePressed() {
   let cordY = Math.floor(mouseY/circleSize);
 
   // Update local board with click on circle
-  if (partyIsHost && playerTurn || !partyIsHost) {
+  if (partyIsHost() && playerTurn || !partyIsHost() && !playerTurn) {
     placePiece(cordX, cordY);
     playerTurn = !playerTurn;
   }
