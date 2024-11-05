@@ -15,6 +15,7 @@
 - [Game of Life](game-of-life)
 - [Rectangle Grid](rectangle-grid)
 - [Character in Grid](character-in-grid)
+- [Text File Reading](platformer)
 
 ## Projects
 - [Interactive Scene](interactive-scene)

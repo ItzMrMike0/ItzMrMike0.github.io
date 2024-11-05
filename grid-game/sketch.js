@@ -4,12 +4,13 @@
 // - describe what you did to take this project "above and beyond"
 
 let gameState = ""; // noLobby, inGame
-let whoseTurn = "red"; // Flag to determine whose turn it is
+let whatColour = "red"; // Variable to determine colour
 let pos;
 let room; // Variable to hold the room code
 let shared; // Variable for shared data
-let gridBoard; // Local grid for the game
+let gridBoard; // Local grid for the  game
 let circleSize; // Variable for circle size
+let playerTurn = true; // Flag to determine players' turns
 const GRIDX = 7; // Cols
 const GRIDY = 6; // Rows
 
@@ -111,7 +112,10 @@ function mousePressed() {
   let cordY = Math.floor(mouseY/circleSize);
 
   // Update local board with click on circle
-  placePiece(cordX, cordY);
+  if (partyIsHost && playerTurn || !partyIsHost) {
+    placePiece(cordX, cordY);
+    playerTurn = !playerTurn;
+  }
 
   if (room) {
     // Sync local grid with shared grid using partySetShared
@@ -122,16 +126,19 @@ function mousePressed() {
 function placePiece(cordX, cordY) {
   // Make sure cell you're toggling is in the grid
   if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
+    // Places piece at lowest possible cell
     for (let i = GRIDY - 1; i >= 0; i--) {
       if (gridBoard[i][cordX] === 0) {
         // Place the piece for the current player's turn
-        if (whoseTurn === "red") {
+        if (whatColour === "red") {
           gridBoard[i][cordX] = 1;
+          whatColour = "yellow";
         }
         else {
-          gridBoard[i][cordX] = 2;       
+          gridBoard[i][cordX] = 2;   
+          whatColour = "red";    
         }
-        break; // Exit the loop after placing the piece
+        break;
       }
     }
   }
@@ -148,4 +155,4 @@ function draw() {
 
   // Handle room connection logic
   createAndJoinRoom();
-}
+}    
