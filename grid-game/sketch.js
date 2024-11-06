@@ -28,11 +28,12 @@ function preload() {
 }
 
 function setup() {
+  
   // Create canvas
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1400, windowHeight);
 
   // Set circleSize based on the smaller dimension of the window
-  circleSize = min(width / GRIDX, height / GRIDY);
+  circleSize = min(1400 / GRIDX, windowHeight / GRIDY);
 
   // Create an empty local grid
   gridBoard = generateEmptyGrid(GRIDY, GRIDX);
@@ -74,13 +75,30 @@ function displaySharedGrid() {
       ellipse(circleSize * x + circleSize / 2, circleSize * y + circleSize / 2, circleSize);
     }
   }
+  // Text showing if it's your turn
+  currentPlayerTurnText();
+}
+
+// Show text to either the Host or the guest if it's their turn
+function currentPlayerTurnText() {
+  textSize(50);
+  fill("white");
+
+  // Host (player 1)
+  if (partyIsHost() && shared.currentTurn) {
+    text("Your turn!", width * 0.8, height * 0.1);
+  }
+  // Guest (player 2)
+  else if (!partyIsHost() && !shared.currentTurn) {
+    text("Your turn!", width * 0.8, height * 0.1);
+  }
 }
 
 // If no code is typed in during prompt
 function noLobby() {
-  background(237, 237, 249);
+  background("red");
   textAlign(CENTER, CENTER);
-  textSize(100);
+  textSize(70);
   text("Please refresh and type in a code!", width / 2, height / 2);
 }
 
@@ -114,23 +132,27 @@ function mousePressed() {
   let cordX = Math.floor(mouseX / circleSize);
   let cordY = Math.floor(mouseY / circleSize);
 
-  // Host (Player 1) can only place a piece if it's their turn
-  if (partyIsHost() && shared.currentTurn) {
-    // Host colour is red (1)
-    placePiece(cordX, cordY, 1);
-    // Switch to guest's turn
-    shared.currentTurn = false; 
-  }
-  // Guest (Player 2) can only place a piece if it's their turn
-  else if (!partyIsHost() && !shared.currentTurn) {
-    // Host colour is yellow (2)
-    placePiece(cordX, cordY, 2);
-    // Switch to host's turn 
-    shared.currentTurn = true; 
-  }
 
-  // Sync local grid with shared grid using partySetShared
-  partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
+  // Checks if mouse is clicked on grid
+  if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
+    // Host (Player 1) can only place a piece if it's their turn
+    if (partyIsHost() && shared.currentTurn) {
+      // Host colour is red (1)
+      placePiece(cordX, cordY, 1);
+      // Switch to guest's turn
+      shared.currentTurn = false; 
+    }
+    // Guest (Player 2) can only place a piece if it's their turn
+    else if (!partyIsHost() && !shared.currentTurn) {
+      // Host colour is yellow (2)
+      placePiece(cordX, cordY, 2);
+      // Switch to host's turn 
+      shared.currentTurn = true; 
+    }
+
+    // Sync local grid with shared grid using partySetShared
+    partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
+  }
 }
 
 function placePiece(cordX, cordY, playerColor) {
@@ -156,6 +178,7 @@ function draw() {
 
   // Change game states
   changeGameStates();
+
 
   // Handle room connection logic
   createAndJoinRoom();
