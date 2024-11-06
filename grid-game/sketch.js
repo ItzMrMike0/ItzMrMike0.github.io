@@ -4,13 +4,12 @@
 // - describe what you did to take this project "above and beyond"
 
 let gameState = ""; // noLobby, inGame
-let whatColour = "red"; // Variable to determine colour
 let pos;
 let room; // Variable to hold the room code
 let shared; // Variable for shared data
-let gridBoard; // Local grid for the  game
+let gridBoard; // Local grid for the game
 let circleSize; // Variable for circle size
-let playerTurn = true; // Flag to determine players' turns
+let playerTurn; // Player turn (true for player 1, false for player 2)
 const GRIDX = 7; // Cols
 const GRIDY = 6; // Rows
 
@@ -21,8 +20,11 @@ function preload() {
   // Connect to the p5.party server and the specific room
   partyConnect("wss://demoserver.p5party.org", room);
 
-  // Initialize shared grid if not already initialized
-  shared = partyLoadShared("grid", { board: generateEmptyGrid(GRIDY, GRIDX) });
+  // Initialize shared grid and turn if not already initialized
+  shared = partyLoadShared("grid", {board: generateEmptyGrid(GRIDY, GRIDX),
+    // true for player 1's turn (host), false for player 2's turn (guest)
+    currentTurn: true 
+  });
 }
 
 function setup() {
@@ -52,7 +54,7 @@ function generateEmptyGrid(cols, rows) {
 function displaySharedGrid() {
   // Check if shared.board exists before accessing it
   if (!shared.board) {
-    return; 
+    return;
   }
   
   background("black");
@@ -79,7 +81,7 @@ function noLobby() {
   background(237, 237, 249);
   textAlign(CENTER, CENTER);
   textSize(100);
-  text("Please refresh and type in a code!", width/2, height/2);
+  text("Please refresh and type in a code!", width / 2, height / 2);
 }
 
 // Calls functions depending on gameState
@@ -89,8 +91,10 @@ function changeGameStates() {
   }
   if (gameState === "inGame") {
     if (room) {
-      if (shared.board) { // Check if shared.board is defined
-        displaySharedGrid(); // Display the shared board for all players
+      // Check if shared.board is defined
+      if (shared.board) { 
+        // Display the shared board for all players
+        displaySharedGrid();
       }
     }
   }
@@ -99,7 +103,6 @@ function changeGameStates() {
 function createAndJoinRoom() {
   // If a room is created/joined, display the shared ellipse; otherwise, bring back to noLobby
   if (room) {
-    fill("red");
     gameState = "inGame";
   }
   else {
@@ -108,36 +111,37 @@ function createAndJoinRoom() {
 }
 
 function mousePressed() {
-  let cordX = Math.floor(mouseX/circleSize);
-  let cordY = Math.floor(mouseY/circleSize);
+  let cordX = Math.floor(mouseX / circleSize);
+  let cordY = Math.floor(mouseY / circleSize);
 
-  // Update local board with click on circle
-  if (partyIsHost() && playerTurn || !partyIsHost() && !playerTurn) {
-    placePiece(cordX, cordY);
-    playerTurn = !playerTurn;
+  // Host (Player 1) can only place a piece if it's their turn
+  if (partyIsHost() && shared.currentTurn) {
+    // Host colour is red (1)
+    placePiece(cordX, cordY, 1);
+    // Switch to guest's turn
+    shared.currentTurn = false; 
+  }
+  // Guest (Player 2) can only place a piece if it's their turn
+  else if (!partyIsHost() && !shared.currentTurn) {
+    // Host colour is yellow (2)
+    placePiece(cordX, cordY, 2);
+    // Switch to host's turn 
+    shared.currentTurn = true; 
   }
 
-  if (room) {
-    // Sync local grid with shared grid using partySetShared
-    partySetShared(shared, { board: gridBoard }); 
-  }
+  // Sync local grid with shared grid using partySetShared
+  partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
 }
 
-function placePiece(cordX, cordY) {
+function placePiece(cordX, cordY, playerColor) {
   // Make sure cell you're toggling is in the grid
   if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
     // Places piece at lowest possible cell
     for (let i = GRIDY - 1; i >= 0; i--) {
       if (gridBoard[i][cordX] === 0) {
-        // Place the piece for the current player's turn
-        if (whatColour === "red") {
-          gridBoard[i][cordX] = 1;
-          whatColour = "yellow";
-        }
-        else {
-          gridBoard[i][cordX] = 2;   
-          whatColour = "red";    
-        }
+        // Set piece for the player
+        gridBoard[i][cordX] = playerColor; 
+        // Break after each individual piece or whole col will be filled.
         break;
       }
     }
@@ -155,4 +159,4 @@ function draw() {
 
   // Handle room connection logic
   createAndJoinRoom();
-}    
+}
