@@ -98,16 +98,17 @@ function noLobby() {
   background("red");
   textAlign(CENTER, CENTER);
   textSize(100);
-  fill("black")
+  fill("black");
   text("Please refresh and type in a code!", width / 2, height / 2);
 }
 
 // Calls functions depending on gameState
-function changeGameStates() {
+function callGameStates() {
   if (gameState === "noLobby") {
     noLobby();
   }
   if (gameState === "inGame") {
+    // Show the turn indicator as a circle
     if (room) {
       // Check if shared.board is defined
       if (shared.board) { 
@@ -115,11 +116,12 @@ function changeGameStates() {
         displaySharedGrid();
       }
     }
+    displayTurnCircle();
   }
 }
 
 // If a room is created/joined, display the shared game. Otherwise, bring back to noLobby
-function createAndJoinRoom() {
+function changeGameStates() {
   if (room) {
     gameState = "inGame";
   }
@@ -183,8 +185,49 @@ function displayTurnCircle() {
   noStroke();
 
   // Draw turn indicator circle at top center
-  let turnCircleSize = circleSize * 0.8;  // Make it a bit smaller than the grid pieces
-  ellipse(width * 0.7, height * 0.1, turnCircleSize);
+  let turnCircleSize = circleSize * 0.8; 
+  ellipse(width * 0.65, height * 0.1, turnCircleSize);
+}
+
+// Checks if anyone won horizontally
+function horizontalWin() {
+  for (let y = 0; y < GRIDY; y++) {
+    // Reset previous color for each row
+    let previousColorValue = 0;  
+    // Reset tally for each row
+    let horizontalTally = 0;  
+
+    for (let x = 0; x < GRIDX; x++) {
+      // Finds current color value
+      let currentColorValue = gridBoard[y][x];
+
+      // If the current piece is the same as the previous piece and not empty (0)
+      if (currentColorValue === previousColorValue && currentColorValue !== 0) {
+        horizontalTally += 1;
+      } 
+      // Start a new tally if the piece is different
+      else {
+        horizontalTally = 1;  
+      }
+
+      // If the tally reaches 4, we have a winner
+      if (horizontalTally >= 4) {
+        console.log(`Horizontal win at row ${y}!`);
+        return true;
+      }
+
+      // Update previousColorValue
+      previousColorValue = currentColorValue;  
+    }
+  }
+  // No winner found horizontally
+  return false; 
+}
+
+// Checks if anyone has won
+function determineIfWinner() {
+  horizontalWin();
+
 }
 
 function draw() {
@@ -192,12 +235,12 @@ function draw() {
     gridBoard = shared.board;
   }
 
+  // Changes game state variable
   changeGameStates();
 
-  // Show the turn indicator as a circle
-  if (gameState === "inGame") {
-    displayTurnCircle();
-  }
+  // Calls functions depending on game state
+  callGameStates();
 
-  createAndJoinRoom();
+  // Check if there is a winner
+  determineIfWinner();
 }
