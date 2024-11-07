@@ -32,7 +32,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
   // Set circleSize based on the smaller dimension of the window
-  circleSize = min(width / GRIDX, height / GRIDY);
+  circleSize = min(width * 0.8 / GRIDX, height * 0.8 / GRIDY);
 
   // Create an empty local grid
   gridBoard = generateEmptyGrid(GRIDY, GRIDX);
@@ -61,30 +61,22 @@ function generateEmptyGrid(cols, rows) {
   return newGrid;
 }
 
-
-// Displays board
+// Updates for the board display
 function displaySharedGrid() {
-  // Makes sure grid is shared
   if (!shared.board) {
     return;
   }
 
   background("black");
 
-  // Limit the width of the grid to 80% of the screen width for additional space on the sides
-  let maxGridWidth = width * 0.8;
-  
-  // Set circle size based on the smaller dimension (either width or height)
-  circleSize = min(maxGridWidth / GRIDX, height / GRIDY);
-
-  // Calculate offset to center the grid
+  // Calculate offset to center the grid, in case of resizing
   let offsetX = (width - GRIDX * circleSize) / 2;
   let offsetY = (height - GRIDY * circleSize) / 2;
- 
-  // Center the grid
-  translate(offsetX, offsetY); 
 
-  // Sets colour to each piece
+  // Center the grid
+  translate(offsetX, offsetY);
+
+  // Set colors for each piece
   for (let y = 0; y < GRIDY; y++) {
     for (let x = 0; x < GRIDX; x++) {
       if (shared.board[y][x] === 2) {
@@ -100,7 +92,6 @@ function displaySharedGrid() {
     }
   }
 }
-
 
 // If no code is typed in during prompt
 function noLobby() {
@@ -122,8 +113,6 @@ function changeGameStates() {
       if (shared.board) { 
         // Display the shared board for all players
         displaySharedGrid();
-        // Show which player's turn it is
-        displayTurnText();  
       }
     }
   }
@@ -139,6 +128,7 @@ function createAndJoinRoom() {
   }
 }
 
+// Adjust mousePressed to take the resizing into account
 function mousePressed() {
   // Adjust mouseX to account for the translation (centering)
   let offsetX = (width - GRIDX * circleSize) / 2;
@@ -186,30 +176,28 @@ function placePiece(cordX, cordY, playerColor) {
   }
 }
 
-// Text showing which player's turn it is
-function displayTurnText() {
-  fill("white");
-  textSize(32);
-  textAlign(CENTER, CENTER);
+// Circle showing which player's turn it is
+function displayTurnCircle() {
+  let turnColor = shared.currentTurn ? "red" : "yellow";
+  fill(turnColor);
+  noStroke();
 
-  let turnText;
-
-  // Text variable to whose turn it is
-  if (shared.currentTurn) {
-    turnText = "Player 1's Turn (Red)"
-  }
-  else {
-    turnText = "Player 2's Turn (Yellow)";
-  }
-
-  // Display text at the bottom of the screen
-  text(turnText, width * 0.7, height * 0.1);
+  // Draw turn indicator circle at top center
+  let turnCircleSize = circleSize * 0.8;  // Make it a bit smaller than the grid pieces
+  ellipse(width * 0.7, height * 0.1, turnCircleSize);
 }
 
 function draw() {
   if (shared.board) {
     gridBoard = shared.board;
   }
+
   changeGameStates();
+
+  // Show the turn indicator as a circle
+  if (gameState === "inGame") {
+    displayTurnCircle();
+  }
+
   createAndJoinRoom();
 }
