@@ -224,9 +224,44 @@ function horizontalWin() {
   return false; 
 }
 
+function verticalWin() {
+  for (let y = 7; y < GRIDY; y--) {
+    // Reset previous color for each row
+    let previousColorValue = 0;  
+    // Reset tally for each row
+    let verticalTally = 0;  
+
+    for (let x = 0; x < GRIDX; x++) {
+      // Finds current color value
+      let currentColorValue = gridBoard[y][x];
+
+      // If the current piece is the same as the previous piece and not empty (0)
+      if (currentColorValue === previousColorValue && currentColorValue !== 0) {
+        verticalTally += 1;
+      } 
+      // Start a new tally if the piece is different
+      else {
+        verticalTally = 1;  
+      }
+
+      // If the tally reaches 4, we have a winner
+      if (verticalTally >= 4) {
+        console.log(`Vertical win at row ${y}!`);
+        return true;
+      }
+
+      // Update previousColorValue
+      previousColorValue = currentColorValue;  
+    }
+  }
+  // No winner found vertically
+  return false; 
+}
+
 // Checks if anyone has won
 function determineIfWinner() {
   horizontalWin();
+  verticalWin();
 
 }
 
