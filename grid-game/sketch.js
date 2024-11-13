@@ -5,6 +5,7 @@
 // Used p5party for multiplayer
 
 let gameState = ""; // noLobby, inGame
+let firstLoadIn = true; // Flag to check if it is the inital load in
 let room; // Variable to hold the room code
 let shared; // Variable for shared data
 let gridBoard; // Local grid for the game
@@ -38,15 +39,52 @@ function setup() {
   gridBoard = generateEmptyGrid(GRIDY, GRIDX);
 }
 
-// Window scaling
+// Window resizing
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 
-  // Limit the width of the grid to 80% of the screen width
-  let maxGridWidth = width * 0.8;
-  
   // Set circle size based on the smaller dimension (either width or height)
-  circleSize = min(maxGridWidth / GRIDX, height / GRIDY);
+  circleSize = min(width * 0.8 / GRIDX, height * 0.8 / GRIDY);
+}
+
+
+// Check if in room and change gameState accordingly
+function checkIfInParty() {
+  if (room && firstLoadIn) {
+    gameState = "inGame";
+
+  }
+  else if (firstLoadIn) {
+    gameState = "noLobby";
+  }
+}
+
+// Calls functions depending on gameState
+function callGameStates() {
+  if (gameState === "noLobby") {
+    noLobby();
+  }
+  if (gameState === "inGame") {
+    if (shared.board) { 
+      // Display the shared board for all players
+      displaySharedGrid();
+      // Show the turn indicator as a circle
+      displayTurnCircle();
+    }
+    determineIfWinner();
+  }
+  if (gameState === "winner") {
+
+  }
+}
+
+// If no code is typed in during prompt
+function noLobby() {
+  background("red");
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  fill("black");
+  text("Please refresh and type in a code!", width / 2, height / 2);
 }
 
 // Creates an empty grid that is 7 by 6
@@ -61,7 +99,7 @@ function generateEmptyGrid(cols, rows) {
   return newGrid;
 }
 
-// Updates for the board display
+// Display the grid 
 function displaySharedGrid() {
   if (!shared.board) {
     return;
@@ -76,6 +114,12 @@ function displaySharedGrid() {
   // Center the grid
   translate(offsetX, offsetY);
 
+  // Set colours
+  displayColoursOfPieces();
+}
+
+// Give each eclipse its proper colours
+function displayColoursOfPieces() {
   // Set colors for each piece
   for (let y = 0; y < GRIDY; y++) {
     for (let x = 0; x < GRIDX; x++) {
@@ -93,42 +137,15 @@ function displaySharedGrid() {
   }
 }
 
-// If no code is typed in during prompt
-function noLobby() {
-  background("red");
-  textAlign(CENTER, CENTER);
-  textSize(100);
-  fill("black");
-  text("Please refresh and type in a code!", width / 2, height / 2);
-}
+// Circle showing which player's turn it is
+function displayTurnCircle() {
+  let turnColor = shared.currentTurn ? "red" : "yellow";
+  fill(turnColor);
+  noStroke();
 
-// Calls functions depending on gameState
-function callGameStates() {
-  if (gameState === "noLobby") {
-    noLobby();
-  }
-  if (gameState === "inGame") {
-    // Show the turn indicator as a circle
-    if (room) {
-      // Check if shared.board is defined
-      if (shared.board) { 
-        // Display the shared board for all players
-        displaySharedGrid();
-      }
-    }
-    displayTurnCircle();
-
-  }
-}
-
-// If a room is created/joined, display the shared game. Otherwise, bring back to noLobby
-function changeGameStates() {
-  if (room) {
-    gameState = "inGame";
-  }
-  else {
-    gameState = "noLobby";
-  }
+  // Draw turn indicator circle at top center
+  let turnCircleSize = circleSize * 0.8; 
+  ellipse(width * 0.65, height * 0.1, turnCircleSize);
 }
 
 // Placing pieces down
@@ -169,7 +186,6 @@ function mousePressed() {
   }
 }
 
-
 // Place piece on grid
 function placePiece(cordX, cordY, playerColor) {
   // Make sure cell you're toggling is in the grid
@@ -184,17 +200,6 @@ function placePiece(cordX, cordY, playerColor) {
       }
     }
   }
-}
-
-// Circle showing which player's turn it is
-function displayTurnCircle() {
-  let turnColor = shared.currentTurn ? "red" : "yellow";
-  fill(turnColor);
-  noStroke();
-
-  // Draw turn indicator circle at top center
-  let turnCircleSize = circleSize * 0.8; 
-  ellipse(width * 0.65, height * 0.1, turnCircleSize);
 }
 
 // Checks if anyone won horizontally
@@ -228,7 +233,7 @@ function horizontalWin() {
       previousColorValue = currentColorValue;  
     }
   }
-  // No winner found horizontally
+  // No winner
   return false; 
 }
 
@@ -262,8 +267,7 @@ function verticalWin() {
       previousColorValue = currentColorValue;  
     }
   }
-
-  // No winner found vertically
+  // No winner
   return false; 
 }
 
@@ -285,7 +289,7 @@ function positiveSlopeWin() {
       }
     }
   }
-  // No winner found on the positive slope diagonal
+  // No winner
   return false; 
 }
 
@@ -307,15 +311,16 @@ function negativeSlopeWin() {
       }
     }
   }
-  // No winner found on the negative slope diagonal
+  // No winner
   return false;
 }
-
 
 // Checks if anyone has won
 function determineIfWinner() {
   if (horizontalWin() || verticalWin() || positiveSlopeWin() || negativeSlopeWin()) {
     console.log("We have a winner!");
+    gameState = "winner";
+    firstLoadIn = false;
   }
 }
 
@@ -323,13 +328,9 @@ function draw() {
   if (shared.board) {
     gridBoard = shared.board;
   }
-
   // Changes game state variable
-  changeGameStates();
+  checkIfInParty();
 
   // Calls functions depending on game state
   callGameStates();
-
-  // Check if there is a winner
-  determineIfWinner();
 }
