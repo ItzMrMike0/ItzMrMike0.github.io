@@ -117,6 +117,7 @@ function callGameStates() {
       }
     }
     displayTurnCircle();
+
   }
 }
 
@@ -130,7 +131,7 @@ function changeGameStates() {
   }
 }
 
-// Adjust mousePressed to take the resizing into account
+// Placing pieces down
 function mousePressed() {
   // Adjust mouseX to account for the translation (centering)
   let offsetX = (width - GRIDX * circleSize) / 2;
@@ -142,6 +143,12 @@ function mousePressed() {
 
   // Make sure the click is within the grid bounds
   if (cordX >= 0 && cordX < GRIDX && cordY >= 0 && cordY < GRIDY) {
+    // Check if the column is full (if the top row is filled)
+    if (gridBoard[0][cordX] !== 0) {
+      console.log("This column is full!");
+      return; // Don't place a piece if the column is full
+    }
+
     // Host (Player 1) can only place a piece if it's their turn
     if (partyIsHost() && shared.currentTurn) {
       // Host colour is red (1)
@@ -161,6 +168,7 @@ function mousePressed() {
     partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
   }
 }
+
 
 // Place piece on grid
 function placePiece(cordX, cordY, playerColor) {
@@ -224,15 +232,15 @@ function horizontalWin() {
   return false; 
 }
 
+// Checks if anyone won vertically
 function verticalWin() {
-  for (let y = 7; y < GRIDY; y--) {
-    // Reset previous color for each row
+  for (let x = 0; x < GRIDX; x++) { // Loop through each column
+    // Reset previous color for each column
     let previousColorValue = 0;  
-    // Reset tally for each row
+    // Reset tally for each column
     let verticalTally = 0;  
 
-    for (let x = 0; x < GRIDX; x++) {
-      // Finds current color value
+    for (let y = 0; y < GRIDY; y++) { // Loop from top to bottom of the column
       let currentColorValue = gridBoard[y][x];
 
       // If the current piece is the same as the previous piece and not empty (0)
@@ -246,7 +254,7 @@ function verticalWin() {
 
       // If the tally reaches 4, we have a winner
       if (verticalTally >= 4) {
-        console.log(`Vertical win at row ${y}!`);
+        console.log(`Vertical win at column ${x}!`);
         return true;
       }
 
@@ -254,15 +262,61 @@ function verticalWin() {
       previousColorValue = currentColorValue;  
     }
   }
+
   // No winner found vertically
   return false; 
 }
 
+// Checks if anyone won diagonally with a positive slope
+function positiveSlopeWin() {
+  // Start from row 3 (bottom-most possible for a diagonal)
+  for (let y = GRIDY - 1; y >= 3; y--) { 
+    // Stop at the last possible column for a diagonal
+    for (let x = 0; x < GRIDX - 3; x++) { 
+      let currentColorValue = gridBoard[y][x];
+      
+      // Check if the current piece and the next three diagonal pieces are the same and not empty (0)
+      if (currentColorValue !== 0 &&
+          currentColorValue === gridBoard[y - 1][x + 1] &&
+          currentColorValue === gridBoard[y - 2][x + 2] &&
+          currentColorValue === gridBoard[y - 3][x + 3]) {
+        console.log(`Positive slope diagonal win starting at (${y}, ${x})!`);
+        return true; 
+      }
+    }
+  }
+  // No winner found on the positive slope diagonal
+  return false; 
+}
+
+// Checks if anyone won diagonally with a negative slope
+function negativeSlopeWin() {
+  // Start from row 0 (top-most possible for a diagonal)
+  for (let y = 0; y < GRIDY - 3; y++) { 
+    // Stop at the last possible column for a diagonal
+    for (let x = 0; x < GRIDX - 3; x++) { 
+      let currentColorValue = gridBoard[y][x];
+      
+      // Check if the current piece and the next three diagonal pieces are the same and not empty (0)
+      if (currentColorValue !== 0 &&
+          currentColorValue === gridBoard[y + 1][x + 1] &&
+          currentColorValue === gridBoard[y + 2][x + 2] &&
+          currentColorValue === gridBoard[y + 3][x + 3]) {
+        console.log(`Negative slope diagonal win starting at (${y}, ${x})!`);
+        return true; 
+      }
+    }
+  }
+  // No winner found on the negative slope diagonal
+  return false;
+}
+
+
 // Checks if anyone has won
 function determineIfWinner() {
-  horizontalWin();
-  verticalWin();
-
+  if (horizontalWin() || verticalWin() || positiveSlopeWin() || negativeSlopeWin()) {
+    console.log("We have a winner!");
+  }
 }
 
 function draw() {
