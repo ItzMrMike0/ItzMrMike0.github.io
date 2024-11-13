@@ -16,6 +16,7 @@
 - [Rectangle Grid](rectangle-grid)
 - [Character in Grid](character-in-grid)
 - [Text File Reading](platformer)
+- [Walker OOP](walker-oop)
 
 ## Projects
 - [Interactive Scene](interactive-scene)
