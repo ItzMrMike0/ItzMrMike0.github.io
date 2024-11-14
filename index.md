@@ -17,6 +17,7 @@
 - [Character in Grid](character-in-grid)
 - [Text File Reading](platformer)
 - [Walker OOP](walker-oop)
+- [Walker OOP Array](walker-oop-array)
 
 ## Projects
 - [Interactive Scene](interactive-scene)
