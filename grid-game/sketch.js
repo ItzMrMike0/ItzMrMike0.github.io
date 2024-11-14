@@ -11,6 +11,8 @@ let shared; // Variable for shared data
 let gridBoard; // Local grid for the game
 let circleSize; // Variable for circle size
 let playerTurn; // Player turn (true for player 1, false for player 2)
+let sounds = {}; // Store all sound effects
+let winnerColor = "";  // Track the winning color
 const GRIDX = 7; // Cols
 const GRIDY = 6; // Rows
 
@@ -26,6 +28,9 @@ function preload() {
     // true for player 1's turn (host), false for player 2's turn (guest)
     currentTurn: true 
   });
+
+  // Preloading sounds
+  sounds.bgMusic = loadSound("bgmusic.mp3");
 }
 
 function setup() {
@@ -37,6 +42,10 @@ function setup() {
 
   // Create an empty local grid
   gridBoard = generateEmptyGrid(GRIDY, GRIDX);
+
+  // Background music setup
+  sounds.bgMusic.loop(0, 1, 1, 0.5);
+  sounds.bgMusic.amp(0.2);
 }
 
 // Window resizing
@@ -64,7 +73,7 @@ function callGameStates() {
   if (gameState === "noLobby") {
     noLobby();
   }
-  if (gameState === "inGame") {
+  else if (gameState === "inGame") {
     if (shared.board) { 
       // Display the shared board for all players
       displaySharedGrid();
@@ -73,10 +82,11 @@ function callGameStates() {
     }
     determineIfWinner();
   }
-  if (gameState === "winner") {
-
+  else if (gameState === "winner") {
+    winnerScreen();
   }
 }
+
 
 // If no code is typed in during prompt
 function noLobby() {
@@ -226,6 +236,8 @@ function horizontalWin() {
       // If the tally reaches 4, we have a winner
       if (horizontalTally >= 4) {
         console.log(`Horizontal win at row ${y}!`);
+        // Set winnerColor to current color
+        winnerColor = currentColorValue; 
         return true;
       }
 
@@ -260,6 +272,8 @@ function verticalWin() {
       // If the tally reaches 4, we have a winner
       if (verticalTally >= 4) {
         console.log(`Vertical win at column ${x}!`);
+        // Set winnerColor to current color
+        winnerColor = currentColorValue; 
         return true;
       }
 
@@ -285,6 +299,8 @@ function positiveSlopeWin() {
           currentColorValue === gridBoard[y - 2][x + 2] &&
           currentColorValue === gridBoard[y - 3][x + 3]) {
         console.log(`Positive slope diagonal win starting at (${y}, ${x})!`);
+        // Set winnerColor to current color
+        winnerColor = currentColorValue; 
         return true; 
       }
     }
@@ -307,6 +323,8 @@ function negativeSlopeWin() {
           currentColorValue === gridBoard[y + 2][x + 2] &&
           currentColorValue === gridBoard[y + 3][x + 3]) {
         console.log(`Negative slope diagonal win starting at (${y}, ${x})!`);
+        // Set winnerColor to current color
+        winnerColor = currentColorValue; 
         return true; 
       }
     }
@@ -318,10 +336,28 @@ function negativeSlopeWin() {
 // Checks if anyone has won
 function determineIfWinner() {
   if (horizontalWin() || verticalWin() || positiveSlopeWin() || negativeSlopeWin()) {
-    console.log("We have a winner!");
-    gameState = "winner";
-    firstLoadIn = false;
+  // If there is a winner, change the game state
+    if (winnerColor !== "") {
+      console.log("We have a winner!");
+      gameState = "winner";
+      firstLoadIn = false;
+    }
   }
+}
+
+function winnerScreen() {
+  let winnerColorText;
+  if (winnerColor === 1) {
+    winnerColorText = "Red Wins!";
+  }
+  else {
+    winnerColorText = "Yellow Wins!";
+  }
+
+  textAlign(CENTER, CENTER);
+  textSize(70);
+  fill("green");
+  text(winnerColorText, width / 2, height / 2);
 }
 
 function draw() {
