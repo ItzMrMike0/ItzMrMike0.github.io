@@ -166,36 +166,39 @@ function displayTurnCircle() {
 
 // Placing pieces
 function mousePressed() {
-  // Adjust mouse position to account for the grid's centering
-  let offsetX = (width - GRIDX * circleSize) / 2;
-  let offsetY = (height - GRIDY * circleSize) / 2;
-
-  // Calculate the clicked column and row based on mouse position
-  let cordX = Math.floor((mouseX - offsetX) / circleSize);
-  let cordY = Math.floor((mouseY - offsetY) / circleSize);
-
-  // Prevent placing a piece in a full column
-  if (gridBoard[0][cordX] !== 0) {
-    return; 
+  // Only allows clicking if gameState is inGame
+  if (gameState === "inGame") {
+    // Adjust mouse position to account for the grid's centering
+    let offsetX = (width - GRIDX * circleSize) / 2;
+    let offsetY = (height - GRIDY * circleSize) / 2;
+  
+    // Calculate the clicked column and row based on mouse position
+    let cordX = Math.floor((mouseX - offsetX) / circleSize);
+    let cordY = Math.floor((mouseY - offsetY) / circleSize);
+  
+    // Prevent placing a piece in a full column
+    if (gridBoard[0][cordX] !== 0) {
+      return; 
+    }
+  
+    // Host (Player 1) can only place a piece if it's their turn
+    if (partyIsHost() && shared.currentTurn) {
+      // Host color is red (1)
+      placePiece(cordX, cordY, 1);
+      // Switch to guest's turn
+      shared.currentTurn = false;
+    }
+    // Guest (Player 2) can only place a piece if it's their turn
+    else if (!partyIsHost() && !shared.currentTurn) {
+      // Guest color is yellow (2)
+      placePiece(cordX, cordY, 2);
+      // Switch to host's turn
+      shared.currentTurn = true;
+    }
+  
+    // Sync the local grid with the shared grid
+    partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
   }
-
-  // Host (Player 1) can only place a piece if it's their turn
-  if (partyIsHost() && shared.currentTurn) {
-    // Host color is red (1)
-    placePiece(cordX, cordY, 1);
-    // Switch to guest's turn
-    shared.currentTurn = false;
-  }
-  // Guest (Player 2) can only place a piece if it's their turn
-  else if (!partyIsHost() && !shared.currentTurn) {
-    // Guest color is yellow (2)
-    placePiece(cordX, cordY, 2);
-    // Switch to host's turn
-    shared.currentTurn = true;
-  }
-
-  // Sync the local grid with the shared grid
-  partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
 }
 
 // Place piece on grid
