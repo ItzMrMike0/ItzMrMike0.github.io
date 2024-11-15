@@ -5,12 +5,11 @@
 // Used p5party for multiplayer
 
 let gameState = ""; // noLobby, inGame
-let firstLoadIn = true; // Flag to check if it is the inital load in
+let firstLoadIn = true; // Flag to check if it is the first time you loaded into the room
 let room; // Variable to hold the room code
 let shared; // Variable for shared data
 let gridBoard; // Local grid for the game
 let circleSize; // Variable for circle size
-let playerTurn; // Player turn (true for player 1, false for player 2)
 let sounds = {}; // Store all sound effects
 let winnerColor = "";  // Track the winning color
 const GRIDX = 7; // Cols
@@ -56,7 +55,6 @@ function windowResized() {
   // Set circle size based on the smaller dimension (either width or height)
   circleSize = min(width * 0.8 / GRIDX, height * 0.8 / GRIDY);
 }
-
 
 // Check if in room and change gameState accordingly
 function checkIfInParty() {
@@ -124,13 +122,12 @@ function displaySharedGrid() {
   // Center the grid
   translate(offsetX, offsetY);
 
-  // Set color
+  // Set colors for each piece
   displayColorsOfPieces();
 }
 
-// Give each eclipse its proper colors
+// Give each ellipse its proper colors
 function displayColorsOfPieces() {
-  // Set colors for each piece
   for (let y = 0; y < GRIDY; y++) {
     for (let x = 0; x < GRIDX; x++) {
       if (shared.board[y][x] === 2) {
@@ -158,7 +155,7 @@ function displayTurnCircle() {
   ellipse(width * 0.65, height * 0.1, turnCircleSize);
 }
 
-// Placing pieces down
+// Placing pieces
 function mousePressed() {
   // Adjust mouseX to account for the translation (centering)
   let offsetX = (width - GRIDX * circleSize) / 2;
@@ -361,11 +358,11 @@ function winnerScreen() {
   textAlign(CENTER, CENTER);
   rectMode(CENTER);
   textSize(70);
-  fill("white"); 
+  fill("black"); 
   noStroke(); 
   // Draw background behind the text
   rect(width / 2, height / 2, textWidthSize, textHeightSize); 
-  fill("green");
+  fill("white");
   text(winnerColorText, width / 2, height / 2); 
 }
 
