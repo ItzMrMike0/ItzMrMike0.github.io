@@ -1,6 +1,6 @@
 // Grid Based Game
 // Michael Yang
-// 2024-11-07
+// 2024-11-15
 // Extra for Experts:
 // Used p5party for multiplayer
 
@@ -26,11 +26,12 @@ function preload() {
   // Initialize shared grid and turn if not already initialized
   shared = partyLoadShared("grid", {board: generateEmptyGrid(GRIDY, GRIDX),
     // true for player 1's turn (host), false for player 2's turn (guest)
-    currentTurn: true 
+    currentTurn: true
   });
 
   // Preloading sounds
   sounds.bgMusic = loadSound("bgmusic.mp3");
+  sounds.pieceDrop = loadSound("piecedrop.mp3");
 }
 
 function setup() {
@@ -87,7 +88,6 @@ function callGameStates() {
   }
 }
 
-
 // If no code is typed in during prompt
 function noLobby() {
   background("red");
@@ -124,12 +124,12 @@ function displaySharedGrid() {
   // Center the grid
   translate(offsetX, offsetY);
 
-  // Set colours
-  displayColoursOfPieces();
+  // Set color
+  displayColorsOfPieces();
 }
 
-// Give each eclipse its proper colours
-function displayColoursOfPieces() {
+// Give each eclipse its proper colors
+function displayColorsOfPieces() {
   // Set colors for each piece
   for (let y = 0; y < GRIDY; y++) {
     for (let x = 0; x < GRIDX; x++) {
@@ -168,38 +168,36 @@ function mousePressed() {
   let cordX = Math.floor((mouseX - offsetX) / circleSize);
   let cordY = Math.floor((mouseY - offsetY) / circleSize);
 
-  // Make sure the click is within the grid bounds
-  if (cordX >= 0 && cordX < GRIDX && cordY >= 0 && cordY < GRIDY) {
-    // Check if the column is full (if the top row is filled)
-    if (gridBoard[0][cordX] !== 0) {
-      console.log("This column is full!");
-      return; // Don't place a piece if the column is full
-    }
-
-    // Host (Player 1) can only place a piece if it's their turn
-    if (partyIsHost() && shared.currentTurn) {
-      // Host colour is red (1)
-      placePiece(cordX, cordY, 1);
-      // Switch to guest's turn
-      shared.currentTurn = false;
-    }
-    // Guest (Player 2) can only place a piece if it's their turn
-    else if (!partyIsHost() && !shared.currentTurn) {
-      // Guest colour is yellow (2)
-      placePiece(cordX, cordY, 2);
-      // Switch to host's turn
-      shared.currentTurn = true;
-    }
-
-    // Sync local grid with shared grid using partySetShared
-    partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
+  // Check if the column is full (if the top row is filled)
+  if (gridBoard[0][cordX] !== 0) {
+    console.log("This column is full!");
+    return; // Don't place a piece if the column is full
   }
+
+  // Host (Player 1) can only place a piece if it's their turn
+  if (partyIsHost() && shared.currentTurn) {
+    // Host color is red (1)
+    placePiece(cordX, cordY, 1);
+    // Switch to guest's turn
+    shared.currentTurn = false;
+  }
+  // Guest (Player 2) can only place a piece if it's their turn
+  else if (!partyIsHost() && !shared.currentTurn) {
+    // Guest color is yellow (2)
+    placePiece(cordX, cordY, 2);
+    // Switch to host's turn
+    shared.currentTurn = true;
+  }
+
+  // Sync local grid with shared grid using partySetShared
+  partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
 }
 
 // Place piece on grid
 function placePiece(cordX, cordY, playerColor) {
   // Make sure cell you're toggling is in the grid
   if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
+    sounds.pieceDrop.play();
     // Places piece at lowest possible cell
     for (let i = GRIDY - 1; i >= 0; i--) {
       if (gridBoard[i][cordX] === 0) {
@@ -347,6 +345,7 @@ function determineIfWinner() {
 
 function winnerScreen() {
   let winnerColorText;
+  // Determine what text it should say
   if (winnerColor === 1) {
     winnerColorText = "Red Wins!";
   }
@@ -354,16 +353,28 @@ function winnerScreen() {
     winnerColorText = "Yellow Wins!";
   }
 
+  // Draw a white background rectangle behind the text
+  // Add padding for the background 
+  let textWidthSize = textWidth(winnerColorText) + 20; 
+  let textHeightSize = 80; // Height of the rectangle
+
   textAlign(CENTER, CENTER);
+  rectMode(CENTER);
   textSize(70);
+  fill("white"); 
+  noStroke(); 
+  // Draw background behind the text
+  rect(width / 2, height / 2, textWidthSize, textHeightSize); 
   fill("green");
-  text(winnerColorText, width / 2, height / 2);
+  text(winnerColorText, width / 2, height / 2); 
 }
+
 
 function draw() {
   if (shared.board) {
     gridBoard = shared.board;
   }
+
   // Changes game state variable
   checkIfInParty();
 
