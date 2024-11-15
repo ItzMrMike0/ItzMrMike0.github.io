@@ -25,7 +25,9 @@ function preload() {
   // Initialize shared grid and current turn
   shared = partyLoadShared("grid", {board: generateEmptyGrid(GRIDY, GRIDX),
     // true for player 1's turn (host), false for player 2's turn (guest)
-    currentTurn: true
+    currentTurn: true,
+    // true for reset needed, false for no reset needed
+    reset: false
   });
 
   // Preloading sounds
@@ -52,7 +54,7 @@ function setup() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 
- // Adjust circle size based on the resized window
+  // Adjust circle size based on the resized window
   circleSize = min(width * 0.8 / GRIDX, height * 0.8 / GRIDY);
 }
 
@@ -175,45 +177,45 @@ function mousePressed() {
     // Calculate the clicked column and row based on mouse position
     let cordX = Math.floor((mouseX - offsetX) / circleSize);
     let cordY = Math.floor((mouseY - offsetY) / circleSize);
+    
+    // Make sure you are clicking onto the actual board
+    if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
+      // Prevent placing a piece in a full column
+      if (gridBoard[0][cordX] !== 0) {
+        return; 
+      }
   
-    // Prevent placing a piece in a full column
-    if (gridBoard[0][cordX] !== 0) {
-      return; 
-    }
-  
-    // Host (Player 1) can only place a piece if it's their turn
-    if (partyIsHost() && shared.currentTurn) {
+      // Host (Player 1) can only place a piece if it's their turn
+      if (partyIsHost() && shared.currentTurn) {
       // Host color is red (1)
-      placePiece(cordX, cordY, 1);
-      // Switch to guest's turn
-      shared.currentTurn = false;
-    }
-    // Guest (Player 2) can only place a piece if it's their turn
-    else if (!partyIsHost() && !shared.currentTurn) {
+        placePiece(cordX, 1);
+        // Switch to guest's turn
+        shared.currentTurn = false;
+      }
+      // Guest (Player 2) can only place a piece if it's their turn
+      else if (!partyIsHost() && !shared.currentTurn) {
       // Guest color is yellow (2)
-      placePiece(cordX, cordY, 2);
-      // Switch to host's turn
-      shared.currentTurn = true;
-    }
+        placePiece(cordX, 2);
+        // Switch to host's turn
+        shared.currentTurn = true;
+      }
   
-    // Sync the local grid with the shared grid
-    partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
+      // Sync the local grid with the shared grid
+      partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
+    }
   }
 }
 
 // Place piece on grid
-function placePiece(cordX, cordY, playerColor) {
-  // Make sure cell you're toggling is in the grid
-  if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
-    sounds.pieceDrop.play();
-    // Place the piece in the lowest available row in the specified column
-    for (let i = GRIDY - 1; i >= 0; i--) {
-      if (gridBoard[i][cordX] === 0) {
-        // Set piece for the player
-        gridBoard[i][cordX] = playerColor; 
-        // Exit after placing a piece
-        break;
-      }
+function placePiece(cordX, playerColor) {
+  sounds.pieceDrop.play();
+  // Place the piece in the lowest available row in the specified column
+  for (let i = GRIDY - 1; i >= 0; i--) {
+    if (gridBoard[i][cordX] === 0) {
+      // Set piece for the player
+      gridBoard[i][cordX] = playerColor; 
+      // Exit after placing a piece
+      break;
     }
   }
 }
@@ -385,6 +387,8 @@ function winnerScreen() {
   fill(winnerColor === 1 ? "red" : "yellow");
   // Draw text
   text(winnerText, width / 2, height / 2);
+  fill("white");
+  text("Press R to Reset", width * 0.25, height * 0.9);
 }
 
 // Display draw screen
@@ -408,12 +412,47 @@ function drawScreen() {
   fill("white");
   // Draw text
   text(drawText, width / 2, height / 2);
+  fill("white");
+  text("Press R to Reset", width * 0.25, height * 0.9);
+}
+
+// If r is pressed reset game
+function keyPressed() {
+  if (key === "r" && gameState === "winner") {
+    // Set the reset flag in the shared data
+    partySetShared(shared, { reset: true });
+  }
+}
+
+// Resets game completely
+function resetGame() {
+  // New empty grid
+  gridBoard = generateEmptyGrid(GRIDY, GRIDX);
+
+  // Make red (host) always go first
+  shared.currentTurn = true;
+
+  // Sync new information
+  partySetShared(shared, { 
+    board: gridBoard, 
+    currentTurn: shared.currentTurn,
+    reset: false
+  });
+
+  // Resetting Variables
+  gameState = "inGame";
+  winnerColor = "";
 }
 
 function draw() {
   // Sync the local grid with the shared grid for multiplayer functionality
   if (shared.board) {
     gridBoard = shared.board;
+  }
+
+  // Checks if reset has been called and if so reset the game for both users
+  if (shared.reset) {
+    resetGame();
   }
 
   // Party check is only checked once when first loading into the party
