@@ -4,16 +4,16 @@
 // Extra for Experts:
 // Used p5party for multiplayer
 
-let gameState = ""; // noLobby, inGame
+let gameState = ""; // Game state: "noLobby", "inGame", "winner", and "draw"
 let firstLoadIn = true; // Flag to check if it is the first time you loaded into the room
-let room; // Variable to hold the room code
-let shared; // Variable for shared data
+let room; // Room code to join or create a party
+let shared; // Shared data between players for synchronization
 let gridBoard; // Local grid for the game
-let circleSize; // Variable for circle size
+let circleSize; // Size of each piece (circle) in the grid
 let sounds = {}; // Store all sound effects
 let winnerColor = "";  // Track the winning color
-const GRIDX = 7; // Cols
-const GRIDY = 6; // Rows
+const GRIDX = 7; // Number of columns in the grid
+const GRIDY = 6; // Number of rows in the grid
 
 function preload() {
   // Prompt user for room code
@@ -22,7 +22,7 @@ function preload() {
   // Connect to the p5.party server and the specific room
   partyConnect("wss://demoserver.p5party.org", room);
 
-  // Initialize shared grid and turn if not already initialized
+  // Initialize shared grid and current turn
   shared = partyLoadShared("grid", {board: generateEmptyGrid(GRIDY, GRIDX),
     // true for player 1's turn (host), false for player 2's turn (guest)
     currentTurn: true
@@ -37,13 +37,13 @@ function setup() {
   // Create canvas
   createCanvas(windowWidth, windowHeight);
 
-  // Set circleSize based on the smaller dimension of the window
+  // Set circle size based on the smaller dimension of the window
   circleSize = min(width * 0.8 / GRIDX, height * 0.8 / GRIDY);
 
   // Create an empty local grid
   gridBoard = generateEmptyGrid(GRIDY, GRIDX);
 
-  // Background music setup
+  // Start background music
   sounds.bgMusic.loop(0, 1, 1, 0.5);
   sounds.bgMusic.amp(0.2);
 }
@@ -52,37 +52,43 @@ function setup() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 
-  // Set circle size based on the smaller dimension (either width or height)
+ // Adjust circle size based on the resized window
   circleSize = min(width * 0.8 / GRIDX, height * 0.8 / GRIDY);
 }
 
-// Check if in room and change gameState accordingly
+// Check if the user is in a room and update the game state accordingly
 function checkIfInParty() {
-  if (room && firstLoadIn) {
+  if (room) {
     gameState = "inGame";
 
   }
-  else if (firstLoadIn) {
+  else {
     gameState = "noLobby";
   }
 }
 
-// Calls functions depending on gameState
+// Handle different game states
 function callGameStates() {
+  // Show message if no room code is entered
   if (gameState === "noLobby") {
     noLobby();
   }
   else if (gameState === "inGame") {
     if (shared.board) { 
-      // Display the shared board for all players
+      // Display the shared game board
       displaySharedGrid();
-      // Show the turn indicator as a circle
+      // Shows turn indicator 
       displayTurnCircle();
     }
+    // Check for a winner
     determineIfWinner();
   }
+  // Show winner screen
   else if (gameState === "winner") {
     winnerScreen();
+  }
+  else if (gameState === "draw") {
+    drawScreen();
   }
 }
 
@@ -96,18 +102,18 @@ function noLobby() {
 }
 
 // Creates an empty grid that is 7 by 6
-function generateEmptyGrid(cols, rows) {
+function generateEmptyGrid(rows, cols) {
   let newGrid = [];
-  for (let y = 0; y < cols; y++) {
+  for (let y = 0; y < rows; y++) {
     newGrid.push([]);
-    for (let x = 0; x < rows; x++) {
+    for (let x = 0; x < cols; x++) {
       newGrid[y].push(0);
     }
   }
   return newGrid;
 }
 
-// Display the grid 
+// Display the grid for all players
 function displaySharedGrid() {
   if (!shared.board) {
     return;
@@ -122,7 +128,7 @@ function displaySharedGrid() {
   // Center the grid
   translate(offsetX, offsetY);
 
-  // Set colors for each piece
+  // Display the pieces on the grid
   displayColorsOfPieces();
 }
 
@@ -131,12 +137,15 @@ function displayColorsOfPieces() {
   for (let y = 0; y < GRIDY; y++) {
     for (let x = 0; x < GRIDX; x++) {
       if (shared.board[y][x] === 2) {
+        // Player 2 is yellow
         fill("yellow");
       } 
       else if (shared.board[y][x] === 1) {
+        // Player 1 is red
         fill("red");
       } 
       else {
+        // Empty cells are white
         fill("white");
       }
       ellipse(circleSize * x + circleSize / 2, circleSize * y + circleSize / 2, circleSize);
@@ -144,31 +153,30 @@ function displayColorsOfPieces() {
   }
 }
 
-// Circle showing which player's turn it is
+// Display a circle indicating which player's turn it is
 function displayTurnCircle() {
   let turnColor = shared.currentTurn ? "red" : "yellow";
   fill(turnColor);
   noStroke();
 
-  // Draw turn indicator circle at top center
+  // Draw circle
   let turnCircleSize = circleSize * 0.8; 
   ellipse(width * 0.65, height * 0.1, turnCircleSize);
 }
 
 // Placing pieces
 function mousePressed() {
-  // Adjust mouseX to account for the translation (centering)
+  // Adjust mouse position to account for the grid's centering
   let offsetX = (width - GRIDX * circleSize) / 2;
   let offsetY = (height - GRIDY * circleSize) / 2;
 
-  // Calculate coordinates relative to the centered grid
+  // Calculate the clicked column and row based on mouse position
   let cordX = Math.floor((mouseX - offsetX) / circleSize);
   let cordY = Math.floor((mouseY - offsetY) / circleSize);
 
-  // Check if the column is full (if the top row is filled)
+  // Prevent placing a piece in a full column
   if (gridBoard[0][cordX] !== 0) {
-    console.log("This column is full!");
-    return; // Don't place a piece if the column is full
+    return; 
   }
 
   // Host (Player 1) can only place a piece if it's their turn
@@ -186,7 +194,7 @@ function mousePressed() {
     shared.currentTurn = true;
   }
 
-  // Sync local grid with shared grid using partySetShared
+  // Sync the local grid with the shared grid
   partySetShared(shared, { board: gridBoard, currentTurn: shared.currentTurn });
 }
 
@@ -195,12 +203,12 @@ function placePiece(cordX, cordY, playerColor) {
   // Make sure cell you're toggling is in the grid
   if (cordX >= 0 && cordY >= 0 && cordX < GRIDX && cordY < GRIDY) {
     sounds.pieceDrop.play();
-    // Places piece at lowest possible cell
+    // Place the piece in the lowest available row in the specified column
     for (let i = GRIDY - 1; i >= 0; i--) {
       if (gridBoard[i][cordX] === 0) {
         // Set piece for the player
         gridBoard[i][cordX] = playerColor; 
-        // Break after each individual piece or whole col will be filled.
+        // Exit after placing a piece
         break;
       }
     }
@@ -210,11 +218,12 @@ function placePiece(cordX, cordY, playerColor) {
 // Checks if anyone won horizontally
 function horizontalWin() {
   for (let y = 0; y < GRIDY; y++) {
-    // Reset previous color for each row
+    // Variable to track previous color value
     let previousColorValue = 0;  
-    // Reset tally for each row
+    // Variable to track how many pieces in a row
     let horizontalTally = 0;  
 
+    // Loop from left to right of the row
     for (let x = 0; x < GRIDX; x++) {
       // Finds current color value
       let currentColorValue = gridBoard[y][x];
@@ -223,15 +232,14 @@ function horizontalWin() {
       if (currentColorValue === previousColorValue && currentColorValue !== 0) {
         horizontalTally += 1;
       } 
-      // Start a new tally if the piece is different
+      // Reset tally if the piece is different
       else {
         horizontalTally = 1;  
       }
 
       // If the tally reaches 4, we have a winner
       if (horizontalTally >= 4) {
-        console.log(`Horizontal win at row ${y}!`);
-        // Set winnerColor to current color
+        // Set winnerColor
         winnerColor = currentColorValue; 
         return true;
       }
@@ -246,27 +254,28 @@ function horizontalWin() {
 
 // Checks if anyone won vertically
 function verticalWin() {
-  for (let x = 0; x < GRIDX; x++) { // Loop through each column
-    // Reset previous color for each column
+  for (let x = 0; x < GRIDX; x++) { 
+    // Variable to track previous color value
     let previousColorValue = 0;  
-    // Reset tally for each column
+    // Variable to track how many pieces in a row
     let verticalTally = 0;  
 
-    for (let y = 0; y < GRIDY; y++) { // Loop from top to bottom of the column
+    // Loop from top to bottom of the column
+    for (let y = 0; y < GRIDY; y++) { 
+      // Finds current color value
       let currentColorValue = gridBoard[y][x];
 
       // If the current piece is the same as the previous piece and not empty (0)
       if (currentColorValue === previousColorValue && currentColorValue !== 0) {
         verticalTally += 1;
       } 
-      // Start a new tally if the piece is different
+      // Reset tally if the piece is different
       else {
         verticalTally = 1;  
       }
 
       // If the tally reaches 4, we have a winner
       if (verticalTally >= 4) {
-        console.log(`Vertical win at column ${x}!`);
         // Set winnerColor to current color
         winnerColor = currentColorValue; 
         return true;
@@ -286,6 +295,8 @@ function positiveSlopeWin() {
   for (let y = GRIDY - 1; y >= 3; y--) { 
     // Stop at the last possible column for a diagonal
     for (let x = 0; x < GRIDX - 3; x++) { 
+
+      // Finds current color value
       let currentColorValue = gridBoard[y][x];
       
       // Check if the current piece and the next three diagonal pieces are the same and not empty (0)
@@ -293,7 +304,6 @@ function positiveSlopeWin() {
           currentColorValue === gridBoard[y - 1][x + 1] &&
           currentColorValue === gridBoard[y - 2][x + 2] &&
           currentColorValue === gridBoard[y - 3][x + 3]) {
-        console.log(`Positive slope diagonal win starting at (${y}, ${x})!`);
         // Set winnerColor to current color
         winnerColor = currentColorValue; 
         return true; 
@@ -310,6 +320,8 @@ function negativeSlopeWin() {
   for (let y = 0; y < GRIDY - 3; y++) { 
     // Stop at the last possible column for a diagonal
     for (let x = 0; x < GRIDX - 3; x++) { 
+
+      // Finds current color value
       let currentColorValue = gridBoard[y][x];
       
       // Check if the current piece and the next three diagonal pieces are the same and not empty (0)
@@ -317,7 +329,6 @@ function negativeSlopeWin() {
           currentColorValue === gridBoard[y + 1][x + 1] &&
           currentColorValue === gridBoard[y + 2][x + 2] &&
           currentColorValue === gridBoard[y + 3][x + 3]) {
-        console.log(`Negative slope diagonal win starting at (${y}, ${x})!`);
         // Set winnerColor to current color
         winnerColor = currentColorValue; 
         return true; 
@@ -328,52 +339,85 @@ function negativeSlopeWin() {
   return false;
 }
 
-// Checks if anyone has won
-function determineIfWinner() {
-  if (horizontalWin() || verticalWin() || positiveSlopeWin() || negativeSlopeWin()) {
-  // If there is a winner, change the game state
-    if (winnerColor !== "") {
-      console.log("We have a winner!");
-      gameState = "winner";
-      firstLoadIn = false;
+// Check if there are no winners
+function checkForDraw() {
+  for (let x = 0; x < GRIDX; x++) {
+    if (gridBoard[0][x] === 0) {
+      return false;
     }
   }
+  // Grid is full
+  return true; 
 }
 
+// Determine if there is a winner by checking for horizontal, vertical, or diagonal wins
+function determineIfWinner() {
+  if (horizontalWin() || verticalWin() || positiveSlopeWin() || negativeSlopeWin()) {
+  // If there is a winner, change the game state 
+    gameState = "winner";
+  }
+  else if (checkForDraw()){
+    gameState = "draw";
+  }
+}
+
+// Display winner screen
 function winnerScreen() {
-  let winnerColorText;
-  // Determine what text it should say
-  if (winnerColor === 1) {
-    winnerColorText = "Red Wins!";
-  }
-  else {
-    winnerColorText = "Yellow Wins!";
-  }
+  // Set the winner text
+  let winnerText = `Winner: ${winnerColor === 1 ? "Red" : "Yellow"}`;
+  
+  // Add padding for the text
+  let textWidthSize = textWidth(winnerText) + 20; 
+  // Height of the rectangle
+  let textHeightSize = 100;
 
-  // Draw a white background rectangle behind the text
-  // Add padding for the background 
-  let textWidthSize = textWidth(winnerColorText) + 20; 
-  let textHeightSize = 80; // Height of the rectangle
-
-  textAlign(CENTER, CENTER);
   rectMode(CENTER);
-  textSize(70);
   fill("black"); 
   noStroke(); 
-  // Draw background behind the text
+  // Draw rectangle background behind the text
   rect(width / 2, height / 2, textWidthSize, textHeightSize); 
-  fill("white");
-  text(winnerColorText, width / 2, height / 2); 
+
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  fill(winnerColor === 1 ? "red" : "yellow");
+  // Draw text
+  text(winnerText, width / 2, height / 2);
 }
 
+// Display draw screen
+function drawScreen() {
+  // Set the draw text
+  let drawText = "It's a Draw!";
+  
+  // Add padding for the text
+  let textWidthSize = textWidth(drawText) + 20; 
+  // Height of the rectangle
+  let textHeightSize = 100;
+
+  rectMode(CENTER);
+  fill("black"); 
+  noStroke(); 
+  // Draw rectangle background behind the text
+  rect(width / 2, height / 2, textWidthSize, textHeightSize); 
+
+  textAlign(CENTER, CENTER);
+  textSize(100);
+  fill("white");
+  // Draw text
+  text(drawText, width / 2, height / 2);
+}
 
 function draw() {
+  // Sync the local grid with the shared grid for multiplayer functionality
   if (shared.board) {
     gridBoard = shared.board;
   }
 
-  // Changes game state variable
-  checkIfInParty();
+  // Party check is only checked once when first loading into the party
+  if (firstLoadIn) {
+    checkIfInParty();
+    firstLoadIn = false;
+  }
 
   // Calls functions depending on game state
   callGameStates();
