@@ -18,6 +18,7 @@
 - [Text File Reading](platformer)
 - [Walker OOP](walker-oop)
 - [Walker OOP Array](walker-oop-array)
+- [Fireworks OOP](fireworks-oop)
 
 ## Projects
 - [Interactive Scene](interactive-scene)
