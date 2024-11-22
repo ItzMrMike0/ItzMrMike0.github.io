@@ -20,6 +20,8 @@
 - [Walker OOP Array](walker-oop-array)
 - [Fireworks OOP](fireworks-oop)
 - [Connected Nodes OOP](nodes)
+- [Collide 2D Demo](collide)
+
 ## Projects
 - [Interactive Scene](interactive-scene)
 - [Arrays and Object Notation](array-object)
