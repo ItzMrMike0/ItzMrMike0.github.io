@@ -24,6 +24,7 @@
 - [Local Storage Demo](local-storage)
 - [Inheritance Demo](inheritance)
 - [Fractal Circles](fractal-circles)
+- [Sierpinski Triangle](sierpinski)
 
 ## Projects
 - [Interactive Scene](interactive-scene)
