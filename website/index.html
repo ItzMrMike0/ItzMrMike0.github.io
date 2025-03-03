@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern and sleek website">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Linking to the main p5.js library, which allows your code to use all 
+       p5 functions. Using this version while developing your code allows p5 
+       to provide more Friendly Error Messages if you mess something up...-->
+    <script src="libraries/p5.js"></script>
+
+    <!-- Once your project is working completely, you can comment out the link
+       to p5.js above, and instead link to this minified version. The minified
+       version takes less space, and turns off Friendly Error Messages. This 
+       increases the speed of your program quite dramatically in some cases.-->
+    <!-- <script src="libraries/p5.min.js"></script> -->
+
+    <script src="libraries/p5.sound.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="japan-flag"></div>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="hero">
+            <div class="container">
+                <h1>Welcome to My Website</h1>
+                <p>A tracker of the Japan trip</p>
+                
+                <div class="hours-section">
+                    <div class="hours-card">
+                        <h2>Michael's Hours:</h2>
+                        <p class="hours">6.1</p>
+                    </div>
+                    
+                    <div class="hours-card">
+                        <h2>Mitt's Hours:</h2>
+                        <p class="hours">9.0</p>
+                    </div>
+                    
+                    <div class="hours-card">
+                        <h2>Nate's Hours:</h2>
+                        <p class="hours">9.95</p>
+                    </div>
+                </div>
+                
+                <div class="last-updated">
+                    Last Updated: February 28, 2025
+                </div>
+
+                <div class="roles-section">
+                    <div class="hours-card">
+                        <h2>Him</h2>
+                        <div class="role-name">Nate</div>
+                    </div>
+                    
+                    <div class="hours-card">
+                        <h2>MID</h2>
+                        <div class="role-name">Mitt</div>
+                    </div>
+                    
+                    <div class="hours-card">
+                        <h2>bum</h2>
+                        <div class="role-name">Michael</div>
+                    </div>
+                </div>
+
+                <div class="total-section">
+                    <div class="top-totals">
+                        <div class="hours-card">
+                            <h2>Total Hours Worked:</h2>
+                            <div class="hours">25.05</div>
+                        </div>
+
+                        <div class="hours-card">
+                            <h2>Money Raised:</h2>
+                            <div class="hours">$375.75</div>
+                        </div>
+                    </div>
+
+                    <div class="remaining-money">
+                        <div class="hours-card">
+                            <h2>Remaining Money Needed:</h2>
+                            <div class="hours">$14,624.25</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="images-section">
+        <div class="joker-image">
+            <img src="images/joker.png" alt="Joker" class="featured-image">
+        </div>
+
+        <div class="joker-image">
+            <img src="images/ann.png" alt="Ann" class="featured-image">
+        </div>
+
+        <div class="joker-image">
+            <img src="images/morgana.png" alt="Morgana" class="featured-image">
+        </div>
+
+        <div class="joker-image">
+            <img src="images/ryuji.png" alt="Ryuji" class="featured-image">
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Michael Yang. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="sketch.js"></script>
+</body>
+</html>
