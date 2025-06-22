@@ -7,7 +7,7 @@
 :root {
     --primary-color: #3b82f6;
     --text-color: #f3f4f6;
-    --bg-color: #111827;
+    --bg-color: #1e293b;
     --accent-color: #1f2937;
     --secondary-bg: #1e293b;
 }
@@ -38,18 +38,21 @@ body {
 
 .locations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2.5rem;
+    margin-top: 1rem;
+    padding: 2rem;
 }
 
 .location-card {
-    background-color: var(--secondary-bg);
-    padding: 1.5rem;
-    border-radius: 8px;
-    transition: transform 0.2s;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
     text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .location-card a {
@@ -58,13 +61,15 @@ body {
 }
 
 .location-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .location-card h3 {
     color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
     transition: color 0.3s ease;
 }
 
@@ -74,8 +79,9 @@ body {
 
 .location-card p {
     color: var(--text-color);
-    opacity: 0.9;
-    line-height: 1.6;
+    opacity: 0.95;
+    line-height: 1.8;
+    font-size: 1.1rem;
 }
 
 footer {
@@ -211,7 +217,8 @@ footer p {
 .hero {
     background-color: var(--secondary-bg);
     text-align: center;
-    padding: 4rem 0;
+    padding: 2rem 0;
+    margin-bottom: 1rem;
 }
 
 .images-section {
