@@ -1,8 +1,258 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f5f1e8;
+  min-height: 100vh;
+  color: #2c2c2c;
 }
 
-canvas {
-  display: block;
+/* Top Bar - Traditional Japanese Style */
+.top-bar {
+  background: #1e3a5f;
+  color: #ffffff;
+  padding: 1.5rem 0;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid #c8102e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-link,
+.historical-link,
+.individual-link,
+.societal-link {
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 1px;
+  display: inline-block;
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.home-link {
+  left: 2rem;
+}
+
+.historical-link {
+  left: 9rem;
+}
+
+.individual-link {
+  left: 17rem;
+}
+
+.societal-link {
+  left: 26rem;
+}
+
+.home-link:hover,
+.historical-link:hover,
+.individual-link:hover,
+.societal-link:hover {
+  background: linear-gradient(90deg, #c8102e 0%, #dc2626 25%, #ef4444 50%, #dc2626 75%, #c8102e 100%);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-sweep 2s ease;
+}
+
+@keyframes gradient-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.japan-flag {
+  position: absolute;
+  top: 50%;
+  right: 3.5rem;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 40px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e0e0e0;
+}
+
+.flag-circle {
+  width: 28px;
+  height: 28px;
+  background: #c8102e;
+  border-radius: 50%;
+}
+
+.top-bar h1 {
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 3px;
+  color: #ffffff;
+}
+
+/* Main Container */
+.container {
+  width: 100%;
+  padding: 0;
+}
+
+/* Author Section - Traditional Japanese Style */
+.author-section {
+  background: #ffffff;
+  padding: 3rem 2.5rem;
+  margin-bottom: 0;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid #e8e4d9;
+}
+
+.author-name {
+  font-size: 1.8rem;
+  color: #1e3a5f;
+  margin-bottom: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.class-name {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* Title Section - For pages without author info */
+.title-section {
+  background: #ffffff;
+  padding: 3rem 2.5rem;
+  margin-bottom: 0;
+  text-align: center;
+  width: 100%;
+  border-bottom: 1px solid #e8e4d9;
+}
+
+.page-title {
+  font-size: 1.8rem;
+  color: #1e3a5f;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+/* Thesis Section - Traditional Japanese Style */
+.thesis-section {
+  background: #ffffff;
+  padding: 3rem 2.5rem;
+  width: 100%;
+}
+
+.thesis-title {
+  font-size: 1.4rem;
+  color: #1e3a5f;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #c8102e;
+  display: inline-block;
+}
+
+.thesis-content {
+  font-size: 1rem;
+  line-height: 2;
+  color: #4a4a4a;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.thesis-content p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.thesis-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .home-link {
+    left: 1rem;
+    font-size: 1rem;
+  }
+
+  .historical-link {
+    left: 6rem;
+    font-size: 1rem;
+  }
+
+  .individual-link {
+    left: 11rem;
+    font-size: 1rem;
+  }
+
+  .societal-link {
+    left: 16rem;
+    font-size: 1rem;
+  }
+
+  .japan-flag {
+    width: 45px;
+    height: 30px;
+    right: 2rem;
+  }
+
+  .flag-circle {
+    width: 20px;
+    height: 20px;
+  }
+
+  .top-bar h1 {
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+  }
+
+  .author-section,
+  .title-section,
+  .thesis-section {
+    padding: 2rem 1.5rem;
+  }
+
+  .author-name,
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .class-name {
+    font-size: 0.9rem;
+  }
+
+  .thesis-title {
+    font-size: 1.2rem;
+  }
+
+  .thesis-content {
+    font-size: 0.95rem;
+  }
 }
