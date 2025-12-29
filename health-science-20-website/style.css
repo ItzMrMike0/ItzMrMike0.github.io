@@ -1,9 +1,15 @@
+/* ============================================================================
+   GLOBAL RESET & BASE STYLES
+   ============================================================================ */
+
+/* Universal selector reset - removes default browser styling for consistency */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* HTML and Body base styles - sets up the foundation for the entire page */
 html, body {
   margin: 0;
   padding: 0;
@@ -13,7 +19,11 @@ html, body {
   color: #2c2c2c;
 }
 
-/* Top Bar - Traditional Japanese Style */
+/* ============================================================================
+   TOP NAVIGATION BAR
+   ============================================================================ */
+
+/* Top Bar Container - The main navigation header that appears at the top of every page */
 .top-bar {
   background: #1e3a5f;
   color: #ffffff;
@@ -28,6 +38,7 @@ html, body {
   justify-content: center;
 }
 
+/* Navigation Links Base Styles - Shared styling for all navigation links with animated gradient text effects */
 .home-link,
 .historical-link,
 .individual-link,
@@ -50,6 +61,7 @@ html, body {
   transition: all 0.3s ease;
 }
 
+/* Individual Link Positioning - Each navigation link positioned horizontally across the top bar */
 .home-link {
   left: 2rem;
 }
@@ -74,10 +86,12 @@ html, body {
   left: 39rem;
 }
 
+/* Sources Link - Positioned on the right side of the navigation bar, to the left of the Japan flag */
 .sources-link {
   right: 9rem;
 }
 
+/* Navigation Link Hover Effect - Creates an animated red gradient sweep on hover */
 .home-link:hover,
 .historical-link:hover,
 .individual-link:hover,
@@ -93,6 +107,7 @@ html, body {
   animation: gradient-sweep 2s ease;
 }
 
+/* Gradient Sweep Animation - Defines the keyframe animation that moves the gradient across the text */
 @keyframes gradient-sweep {
   0% {
     background-position: -200% 0;
@@ -102,6 +117,7 @@ html, body {
   }
 }
 
+/* Japan Flag Container - Creates the Japanese flag (Hinomaru) in the top-right corner */
 .japan-flag {
   position: absolute;
   top: 50%;
@@ -116,6 +132,7 @@ html, body {
   border: 1px solid #e0e0e0;
 }
 
+/* Flag Circle - The red circle (Hinomaru) in the center of the Japanese flag */
 .flag-circle {
   width: 28px;
   height: 28px;
@@ -123,6 +140,7 @@ html, body {
   border-radius: 50%;
 }
 
+/* Main Title Styling - "Japanese Longevity" heading in the navigation bar */
 .top-bar h1 {
   font-size: 2rem;
   font-weight: 600;
@@ -130,13 +148,21 @@ html, body {
   color: #c8102e;
 }
 
-/* Main Container */
+/* ============================================================================
+   MAIN CONTENT CONTAINER
+   ============================================================================ */
+
+/* Main Container - Wrapper for the main page content */
 .container {
   width: 100%;
   padding: 0;
 }
 
-/* Author Section - Traditional Japanese Style */
+/* ============================================================================
+   AUTHOR INFORMATION SECTION
+   ============================================================================ */
+
+/* Author Section - Displays author name and class information (only on home page) */
 .author-section {
   background: #ffffff;
   padding: 3rem 2.5rem;
@@ -146,6 +172,7 @@ html, body {
   border-bottom: 1px solid #e8e4d9;
 }
 
+/* Author Name - The student's name display */
 .author-name {
   font-size: 1.8rem;
   color: #1e3a5f;
@@ -154,6 +181,7 @@ html, body {
   letter-spacing: 1px;
 }
 
+/* Class Name - Displays the course information */
 .class-name {
   font-size: 1rem;
   color: #6b7280;
@@ -161,7 +189,11 @@ html, body {
   letter-spacing: 0.5px;
 }
 
-/* Title Section - For pages without author info */
+/* ============================================================================
+   PAGE TITLE SECTION (For non-home pages)
+   ============================================================================ */
+
+/* Title Section - Used on pages that don't have author information, displays the page title */
 .title-section {
   background: #ffffff;
   padding: 3rem 2.5rem;
@@ -171,6 +203,7 @@ html, body {
   border-bottom: 1px solid #e8e4d9;
 }
 
+/* Page Title - The main heading for each content page */
 .page-title {
   font-size: 1.8rem;
   color: #1e3a5f;
@@ -178,13 +211,18 @@ html, body {
   letter-spacing: 1px;
 }
 
-/* Thesis Section - Traditional Japanese Style */
+/* ============================================================================
+   THESIS/CONTENT SECTION
+   ============================================================================ */
+
+/* Thesis Section - The main content area where thesis text is displayed */
 .thesis-section {
   background: #ffffff;
   padding: 3rem 2.5rem;
   width: 100%;
 }
 
+/* Thesis Title - The "Thesis" heading within the content section */
 .thesis-title {
   font-size: 1.4rem;
   color: #1e3a5f;
@@ -196,6 +234,7 @@ html, body {
   display: inline-block;
 }
 
+/* Thesis Content - The main body text container with centered, readable width */
 .thesis-content {
   font-size: 1rem;
   line-height: 2;
@@ -204,17 +243,24 @@ html, body {
   margin: 0 auto;
 }
 
+/* Thesis Paragraphs - Individual paragraph styling within the content */
 .thesis-content p {
   margin-bottom: 1.5rem;
   text-align: justify;
 }
 
+/* Last Paragraph - Removes bottom margin from the final paragraph */
 .thesis-content p:last-child {
   margin-bottom: 0;
 }
 
-/* Responsive Design */
+/* ============================================================================
+   RESPONSIVE DESIGN - MOBILE & TABLET STYLES
+   ============================================================================ */
+
+/* Media Query for screens 768px and smaller - adjusts all styles for mobile devices */
 @media (max-width: 768px) {
+  /* Navigation Links - Repositioned and resized for mobile */
   .home-link {
     left: 1rem;
     font-size: 1rem;
@@ -250,42 +296,50 @@ html, body {
     font-size: 1rem;
   }
 
+  /* Japan Flag - Scaled down for mobile devices */
   .japan-flag {
     width: 45px;
     height: 30px;
     right: 2rem;
   }
 
+  /* Flag Circle - Scaled proportionally with the flag container */
   .flag-circle {
     width: 20px;
     height: 20px;
   }
 
+  /* Main Title - Reduced size for mobile */
   .top-bar h1 {
     font-size: 1.6rem;
     font-weight: 600;
     letter-spacing: 2px;
   }
 
+  /* Content Sections - Reduced padding for mobile */
   .author-section,
   .title-section,
   .thesis-section {
     padding: 2rem 1.5rem;
   }
 
+  /* Headings - Scaled down for mobile readability */
   .author-name,
   .page-title {
     font-size: 1.5rem;
   }
 
+  /* Class Name - Slightly reduced for mobile */
   .class-name {
     font-size: 0.9rem;
   }
 
+  /* Thesis Title - Reduced for mobile */
   .thesis-title {
     font-size: 1.2rem;
   }
 
+  /* Thesis Content - Slightly smaller text for mobile */
   .thesis-content {
     font-size: 0.95rem;
   }
