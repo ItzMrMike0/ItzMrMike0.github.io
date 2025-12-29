@@ -31,7 +31,10 @@ html, body {
 .home-link,
 .historical-link,
 .individual-link,
-.societal-link {
+.societal-link,
+.west-link,
+.conclusion-link,
+.sources-link {
   position: absolute;
   font-size: 1.2rem;
   font-weight: 500;
@@ -52,21 +55,36 @@ html, body {
 }
 
 .historical-link {
-  left: 9rem;
+  left: 8rem;
 }
 
 .individual-link {
-  left: 17rem;
+  left: 16rem;
 }
 
 .societal-link {
-  left: 26rem;
+  left: 24rem;
+}
+
+.west-link {
+  left: 31rem;
+}
+
+.conclusion-link {
+  left: 39rem;
+}
+
+.sources-link {
+  right: 9rem;
 }
 
 .home-link:hover,
 .historical-link:hover,
 .individual-link:hover,
-.societal-link:hover {
+.societal-link:hover,
+.west-link:hover,
+.conclusion-link:hover,
+.sources-link:hover {
   background: linear-gradient(90deg, #c8102e 0%, #dc2626 25%, #ef4444 50%, #dc2626 75%, #c8102e 100%);
   background-size: 200% 100%;
   background-clip: text;
@@ -106,10 +124,10 @@ html, body {
 }
 
 .top-bar h1 {
-  font-size: 1.6rem;
-  font-weight: 400;
+  font-size: 2rem;
+  font-weight: 600;
   letter-spacing: 3px;
-  color: #ffffff;
+  color: #c8102e;
 }
 
 /* Main Container */
@@ -217,6 +235,21 @@ html, body {
     font-size: 1rem;
   }
 
+  .west-link {
+    left: 21rem;
+    font-size: 1rem;
+  }
+
+  .conclusion-link {
+    left: 28rem;
+    font-size: 1rem;
+  }
+
+  .sources-link {
+    right: 5rem;
+    font-size: 1rem;
+  }
+
   .japan-flag {
     width: 45px;
     height: 30px;
@@ -229,7 +262,8 @@ html, body {
   }
 
   .top-bar h1 {
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+    font-weight: 600;
     letter-spacing: 2px;
   }
 
