@@ -220,6 +220,9 @@ html, body {
   background: #ffffff;
   padding: 3rem 2.5rem;
   width: 100%;
+  position: relative;
+  min-height: 400px;
+  margin-bottom: 2rem;
 }
 
 /* Thesis Title - The "Thesis" heading within the content section */
@@ -239,8 +242,42 @@ html, body {
   font-size: 1rem;
   line-height: 2;
   color: #4a4a4a;
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 50%;
+  margin: 0;
+  padding-right: 2rem;
+}
+
+/* Thesis Image - Image displayed on the right side of the thesis section */
+.thesis-image {
+  position: absolute;
+  left: 60%;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 400px;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Mount Fuji Image - Larger size */
+.mtfuji-image {
+  max-width: 700px;
+  max-height: 800px;
+}
+
+/* Highlighted Map Image - Larger size */
+.highlightedmap-image {
+  max-width: 700px;
+  max-height: 600px;
+}
+
+/* Desk Image - Larger size */
+.desk-image {
+  max-width: 600px;
+  max-height: 600px;
 }
 
 /* Thesis Paragraphs - Individual paragraph styling within the content */
@@ -342,5 +379,17 @@ html, body {
   /* Thesis Content - Slightly smaller text for mobile */
   .thesis-content {
     font-size: 0.95rem;
+  }
+
+  /* Thesis Image - Stack below content on mobile */
+  .thesis-image {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    max-width: 100%;
+    max-height: 300px;
+    margin-top: 2rem;
+    display: block;
   }
 }
