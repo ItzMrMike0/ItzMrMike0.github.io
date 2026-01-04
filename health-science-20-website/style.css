@@ -667,8 +667,8 @@ html, body {
   right: auto;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(45% - 0.5rem), 450px);
-  max-height: min(1000vw, 1000px);
+  max-width: min(calc(20% - 0.5rem), 400px);
+  max-height: min(70vw, 800px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -691,7 +691,7 @@ html, body {
 .genetics-image {
   left: 60%;
   right: 1rem;
-  top:35%;
+  top: 35%;
   transform: translateY(-50%);
   max-width: min(calc(50% - 1rem), 2000px);
   max-height: min(90vw, 1200px);
