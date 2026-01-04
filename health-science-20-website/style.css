@@ -544,6 +544,58 @@ html, body {
   object-fit: contain;
 }
 
+/* School Lunch Image - Positioned centered in the right section */
+.schoollunch-image {
+  left: 62%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 600px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Infant Mortality Image - Positioned centered in the right section */
+.infantmortality-image {
+  left: 55%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 700px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Healthcare Spending Image - Positioned centered in the right section */
+.healthcarespending-image {
+  left: 63%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(60vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Organization Healthcare Image - Positioned centered in the right section */
+.organizationhealthcare-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 475);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 /* Thesis Paragraphs - Individual paragraph styling within the content */
 .thesis-content p {
   margin-bottom: 1.5rem;
@@ -887,6 +939,42 @@ html, body {
     top: 50%;
     object-fit: contain;
   }
+  
+  .schoollunch-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .infantmortality-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .healthcarespending-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .organizationhealthcare-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
 }
 
 /* Narrow screens - Prevent image cutoff */
@@ -990,6 +1078,42 @@ html, body {
     top: 50%;
     object-fit: contain;
   }
+  
+  .schoollunch-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .infantmortality-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .healthcarespending-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .organizationhealthcare-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
 }
 
 /* Very narrow desktop screens - More aggressive scaling */
@@ -1086,6 +1210,42 @@ html, body {
   }
   
   .diseasedeathrates-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .schoollunch-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .infantmortality-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .healthcarespending-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .organizationhealthcare-image {
     left: 45%;
     right: 1rem;
     max-width: calc(54% - 1rem);
