@@ -596,6 +596,149 @@ html, body {
   object-fit: contain;
 }
 
+/* Global Life Expectancy Image - Positioned centered in the right section */
+.globallifeexpectancy-image {
+  left: 64%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 400px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Highlighting School Lunch Image - Positioned centered in the right section */
+.highlightingschoollunch-image {
+  left: 54%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 700px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Traditional Meal Image - Positioned higher up on the right */
+.traditionalmeal-image {
+  left: 60%;
+  right: 1rem;
+  top: 30%;
+  transform: translateY(-50%);
+  max-width: min(calc(20% - 0.5rem), 400px);
+  max-height: min(25vw, 350px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Omega Map Image - Positioned centered in the right section */
+.omegamap-image {
+  left: 54%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 700px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Active Chart Image - Positioned centered in the right section */
+.activechart-image {
+  left: 54%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 550px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Smoking Rates Image - Positioned on the left side, centered vertically */
+.smokingrates-image {
+  left: 52%;
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 0.5rem), 450px);
+  max-height: min(1000vw, 1000px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Alcohol Graph Image - Positioned on the right side, centered vertically */
+.alcoholgraph-image {
+  left: 77%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(20% - 0.5rem), 400px);
+  max-height: min(70vw, 800px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Genetics Image - Positioned centered in the right section */
+.genetics-image {
+  left: 60%;
+  right: 1rem;
+  top:35%;
+  transform: translateY(-50%);
+  max-width: min(calc(50% - 1rem), 2000px);
+  max-height: min(90vw, 1200px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* DNA Image - Positioned below the genetics image */
+.dna-image {
+  left: 65%;
+  right: 1rem;
+  top: 75%;
+  transform: translateY(-50%);
+  max-width: min(calc(50% - 1rem), 300px);
+  max-height: min(90vw, 500);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Doctor Visits Image - Positioned centered in the right section */
+.doctorvists-image {
+  left: 54%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1500px);
+  max-height: min(60vw, 600px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Hara Hachi Bu Image - Positioned centered in the right section */
+.harahacibun-image {
+  left:63%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 700px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 /* Thesis Paragraphs - Individual paragraph styling within the content */
 .thesis-content p {
   margin-bottom: 1.5rem;
@@ -975,6 +1118,105 @@ html, body {
     top: 50%;
     object-fit: contain;
   }
+  
+  .globallifeexpectancy-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .highlightingschoollunch-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .traditionalmeal-image {
+    left: 45%;
+    right: auto;
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
+    top: 30%;
+    object-fit: contain;
+  }
+  
+  .omegamap-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .activechart-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .smokingrates-image {
+    left: 45%;
+    right: auto;
+    max-width: calc(15% - 0.5rem);
+    max-height: min(70vw, 800px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .alcoholgraph-image {
+    left: 62%;
+    right: 1rem;
+    max-width: calc(15% - 0.5rem);
+    max-height: min(70vw, 800px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .genetics-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(55% - 1rem);
+    max-height: min(90vw, 1200px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .dna-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(55% - 1rem);
+    max-height: min(90vw, 1200px);
+    top: 75%;
+    object-fit: contain;
+  }
+  
+  .doctorvists-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .harahacibun-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
 }
 
 /* Narrow screens - Prevent image cutoff */
@@ -1114,6 +1356,105 @@ html, body {
     top: 50%;
     object-fit: contain;
   }
+  
+  .globallifeexpectancy-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .highlightingschoollunch-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .traditionalmeal-image {
+    left: 50%;
+    right: auto;
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
+    top: 30%;
+    object-fit: contain;
+  }
+  
+  .omegamap-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .activechart-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .smokingrates-image {
+    left: 50%;
+    right: auto;
+    max-width: calc(15% - 0.5rem);
+    max-height: min(70vw, 800px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .alcoholgraph-image {
+    left: 67%;
+    right: 1rem;
+    max-width: calc(15% - 0.5rem);
+    max-height: min(70vw, 800px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .genetics-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(50% - 1rem);
+    max-height: min(90vw, 1200px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .dna-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(50% - 1rem);
+    max-height: min(90vw, 1200px);
+    top: 75%;
+    object-fit: contain;
+  }
+  
+  .doctorvists-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .harahacibun-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
 }
 
 /* Very narrow desktop screens - More aggressive scaling */
@@ -1246,6 +1587,105 @@ html, body {
   }
   
   .organizationhealthcare-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .globallifeexpectancy-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .highlightingschoollunch-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .traditionalmeal-image {
+    left: 45%;
+    right: auto;
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
+    top: 30%;
+    object-fit: contain;
+  }
+  
+  .omegamap-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .activechart-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .smokingrates-image {
+    left: 45%;
+    right: auto;
+    max-width: calc(15% - 0.5rem);
+    max-height: min(70vw, 800px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .alcoholgraph-image {
+    left: 62%;
+    right: 1rem;
+    max-width: calc(15% - 0.5rem);
+    max-height: min(70vw, 800px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .genetics-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(55% - 1rem);
+    max-height: min(90vw, 1200px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .dna-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(55% - 1rem);
+    max-height: min(90vw, 1200px);
+    top: 75%;
+    object-fit: contain;
+  }
+  
+  .doctorvists-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .harahacibun-image {
     left: 45%;
     right: 1rem;
     max-width: calc(54% - 1rem);
