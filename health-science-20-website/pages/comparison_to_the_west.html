@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay"></div>
+    
     <!-- Top Navigation Bar - Sticky header with navigation links and site title -->
     <header class="top-bar">
       <!-- Navigation Links - Links to different pages of the website -->
@@ -55,6 +58,39 @@
         </div>
       </section>
     </main>
+
+    <script>
+      // Page Transition Effect - Red screen slides down on navigation
+      document.addEventListener('DOMContentLoaded', function() {
+        const transitionOverlay = document.querySelector('.page-transition-overlay');
+        
+        // Show red transition on page load (slides down over 2s: 0.5s delay + 1.5s duration)
+        if (transitionOverlay) {
+          transitionOverlay.style.opacity = '1';
+          transitionOverlay.style.transform = 'translateY(0)';
+          setTimeout(function() {
+            transitionOverlay.style.display = 'none';
+          }, 2000);
+        }
+
+        // Show overlay when clicking navigation links
+        const navLinks = document.querySelectorAll('a[href]');
+        navLinks.forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            // Only handle internal links
+            const href = this.getAttribute('href');
+            if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:')) {
+              if (transitionOverlay) {
+                transitionOverlay.style.display = 'block';
+                transitionOverlay.style.opacity = '1';
+                transitionOverlay.style.transform = 'translateY(0)';
+                transitionOverlay.style.visibility = 'visible';
+              }
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>
 

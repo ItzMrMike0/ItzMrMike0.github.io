@@ -20,6 +20,126 @@ html, body {
 }
 
 /* ============================================================================
+   PAGE LOAD ANIMATION
+   ============================================================================ */
+
+/* Page Load Overlay Base - Full screen overlay for page load animation */
+.page-load-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Red Overlay - Background layer, visible from start, fades out after blue fully reaches bottom */
+.red-overlay {
+  background: #c8102e;
+  z-index: 10000;
+  animation: fadeOut 2s ease-in-out 2.5s forwards;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Red Overlay Text Container - Centers the text content */
+.red-overlay-text {
+  text-align: center;
+  color: #2c2c2c;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Memento Mori Title - Large main heading */
+.memento-mori-title {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Memento Mori Lines - Smaller text below the title */
+.memento-mori-line {
+  font-size: clamp(1rem, 2.5vw, 1.8rem);
+  font-weight: 400;
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+  letter-spacing: 0.05em;
+  color: #2c2c2c;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.memento-mori-line:last-child {
+  margin-bottom: 0;
+}
+
+/* Blue Overlay - On top of red, holds for 0.5s, then slides down like a wave */
+.blue-overlay {
+  background: #1e3a5f;
+  z-index: 10001;
+  animation: slideDown 2s ease-in-out 0.5s forwards;
+}
+
+/* Slide Down Animation - Blue overlay holds, then moves downward slowly and fades at the end */
+@keyframes slideDown {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  85% {
+    transform: translateY(100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Fade Out Animation - Red overlay fades away to reveal the page */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ============================================================================
+   PAGE TRANSITION EFFECT
+   ============================================================================ */
+
+/* Page Transition Overlay - Red screen that slides down on page navigation */
+.page-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #c8102e;
+  z-index: 10002;
+  pointer-events: none;
+  opacity: 1;
+  animation: slideDownFade 1.5s ease-in-out 0.5s forwards;
+}
+
+/* Slide Down with Fade Animation - Slides down while gradually fading out */
+@keyframes slideDownFade {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* ============================================================================
    TOP NAVIGATION BAR
    ============================================================================ */
 
@@ -320,6 +440,45 @@ html, body {
   height: auto;
 }
 
+/* Life Expectancy Image - Positioned on the left side of the image area, narrower */
+.lifeexpectancy-image {
+  left: calc(50% + 2.5rem);
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(22% - 1rem), 400px);
+  max-height: min(55vw, 650px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Hiroshima Image - Positioned further to the right of the life expectancy image, higher up */
+.hiroshima-image {
+  left: 78%;
+  right: 2.5rem;
+  top: 35%;
+  transform: translateY(-50%);
+  max-width: min(calc(18% - 1rem), 350px);
+  max-height: min(25vw, 300px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Bums Image - Positioned below the hiroshima image, same size */
+.bums-image {
+  left: 78%;
+  right: 2.5rem;
+  top: 70%;
+  transform: translateY(-50%);
+  max-width: min(calc(18% - 1rem), 350px);
+  max-height: min(25vw, 300px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 /* Thesis Paragraphs - Individual paragraph styling within the content */
 .thesis-content p {
   margin-bottom: 1.5rem;
@@ -549,7 +708,7 @@ html, body {
     max-width: 100%;
     max-height: 300px;
     margin-top: 2rem;
-    display: block;
+  display: block;
   }
 }
 
@@ -593,6 +752,31 @@ html, body {
     max-width: calc(45% - 2rem);
     max-height: min(50vw, 550px);
   }
+  
+  .lifeexpectancy-image {
+    left: 55%;
+    max-width: calc(18% - 1rem);
+    max-height: min(50vw, 550px);
+    object-fit: contain;
+  }
+  
+  .hiroshima-image {
+    left: 74%;
+    right: 1rem;
+    max-width: calc(18% - 1rem);
+    max-height: min(25vw, 300px);
+    top: 35%;
+    object-fit: contain;
+  }
+  
+  .bums-image {
+    left: 74%;
+    right: 1rem;
+    max-width: calc(18% - 1rem);
+    max-height: min(25vw, 300px);
+    top: 70%;
+    object-fit: contain;
+  }
 }
 
 /* Narrow screens - Prevent image cutoff */
@@ -626,6 +810,31 @@ html, body {
   .desk-image {
     max-width: calc(42% - 2rem);
   }
+  
+  .lifeexpectancy-image {
+    left: 58%;
+    max-width: calc(20% - 1rem);
+    max-height: min(50vw, 550px);
+    object-fit: contain;
+  }
+  
+  .hiroshima-image {
+    left: 79%;
+    right: 1.5rem;
+    max-width: calc(18% - 1rem);
+    max-height: min(25vw, 300px);
+    top: 35%;
+    object-fit: contain;
+  }
+  
+  .bums-image {
+    left: 79%;
+    right: 1.5rem;
+    max-width: calc(18% - 1rem);
+    max-height: min(25vw, 300px);
+    top: 70%;
+    object-fit: contain;
+  }
 }
 
 /* Very narrow desktop screens - More aggressive scaling */
@@ -658,5 +867,30 @@ html, body {
   
   .desk-image {
     max-width: calc(45% - 1.5rem);
+  }
+  
+  .lifeexpectancy-image {
+    left: 55%;
+    max-width: calc(18% - 1rem);
+    max-height: min(50vw, 550px);
+    object-fit: contain;
+  }
+  
+  .hiroshima-image {
+    left: 74%;
+    right: 1rem;
+    max-width: calc(18% - 1rem);
+    max-height: min(25vw, 300px);
+    top: 35%;
+    object-fit: contain;
+  }
+  
+  .bums-image {
+    left: 74%;
+    right: 1rem;
+    max-width: calc(18% - 1rem);
+    max-height: min(25vw, 300px);
+    top: 70%;
+    object-fit: contain;
   }
 }

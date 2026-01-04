@@ -13,6 +13,20 @@
   </head>
 
   <body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay"></div>
+    
+    <!-- Page Load Animation Overlays -->
+    <div class="page-load-overlay blue-overlay"></div>
+    <div class="page-load-overlay red-overlay">
+      <div class="red-overlay-text">
+        <h1 class="memento-mori-title">Memento Mori</h1>
+        <p class="memento-mori-line">Remember, You Will Die.</p>
+        <p class="memento-mori-line">Time never waits.</p>
+        <p class="memento-mori-line">It delivers all equally to the same end.</p>
+      </div>
+    </div>
+
     <!-- Top Bar -->
     <header class="top-bar">
       <a href="index.html" class="home-link">Home</a>
@@ -74,7 +88,7 @@
         <h2 class="thesis-title">Scope and Limitations</h2>
         <div class="thesis-content">
           <p>
-            The scope of this study is limited to population-level patterns and systems rather than individual clinical cases or genetic analyses. It focuses on preventative health strategies as they relate to lifestyle, public policy, and healthcare infrastructure in Japan, with comparative reference to Western countries, primarily in North America. While genetics and medical technology are acknowledged as contributing factors, they are not the primary focus of this project. This limitation allows for a clearer analysis of modifiable behaviors and systems that influence long-term health outcomes.
+            The scope of this study is limited to population-level patterns and systems rather than individual clinical cases. It focuses on preventative health strategies as they relate to lifestyle, public policy, and healthcare infrastructure in Japan, with comparative reference to Western countries, primarily in North America. While medical technology are acknowledged as contributing factors, they are not the primary focus of this project. This limitation allows for a clearer analysis of modifiable behaviors and systems that influence long-term health outcomes.
           </p>
         </div>
         <img src="images/highlightedmap.jpg" alt="Highlighted Map" class="thesis-image highlightedmap-image">
@@ -102,5 +116,92 @@
         <img src="images/desk.jpg" alt="Desk" class="thesis-image desk-image">
       </section>
     </main>
+
+    <script>
+      // Page Load Animation - Only show on first visit to home page
+      window.addEventListener('load', function() {
+        const blueOverlay = document.querySelector('.blue-overlay');
+        const redOverlay = document.querySelector('.red-overlay');
+        
+        // Check if animation has already been shown in this session
+        const animationShown = sessionStorage.getItem('homePageAnimationShown');
+        
+        if (animationShown === 'true') {
+          // Animation already shown, hide overlays immediately
+          if (blueOverlay) {
+            blueOverlay.style.display = 'none';
+          }
+          if (redOverlay) {
+            redOverlay.style.display = 'none';
+          }
+        } else {
+          // First time visit, show animation and mark as shown
+          sessionStorage.setItem('homePageAnimationShown', 'true');
+          
+          // Remove blue overlay after slide down animation (0.5s delay + 2s duration = 2.5s)
+          setTimeout(function() {
+            if (blueOverlay) {
+              blueOverlay.style.display = 'none';
+            }
+          }, 2500);
+          
+          // Remove red overlay after fade out animation (2.5s delay + 2s duration = 4.5s)
+          setTimeout(function() {
+            if (redOverlay) {
+              redOverlay.style.display = 'none';
+            }
+          }, 4500);
+        }
+      });
+
+      // Page Transition Effect - Red screen slides down on navigation
+      document.addEventListener('DOMContentLoaded', function() {
+        const transitionOverlay = document.querySelector('.page-transition-overlay');
+        const animationShown = sessionStorage.getItem('homePageAnimationShown');
+        
+        // On home page, only show transition if animation has already been shown
+        // On other pages, always show transition
+        if (transitionOverlay) {
+          // If on home page and first visit, hide transition overlay (memento mori will show)
+          if (window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/')) {
+            if (animationShown !== 'true') {
+              // First visit to home page - hide transition, memento mori will show
+              transitionOverlay.style.display = 'none';
+            } else {
+              // Return visit to home page - show red transition
+              transitionOverlay.style.opacity = '1';
+              transitionOverlay.style.transform = 'translateY(0)';
+              setTimeout(function() {
+                transitionOverlay.style.display = 'none';
+              }, 2000);
+            }
+          } else {
+            // On other pages, show red transition
+            transitionOverlay.style.opacity = '1';
+            transitionOverlay.style.transform = 'translateY(0)';
+            setTimeout(function() {
+              transitionOverlay.style.display = 'none';
+            }, 2000);
+          }
+        }
+
+        // Show overlay when clicking navigation links
+        const navLinks = document.querySelectorAll('a[href]');
+        navLinks.forEach(function(link) {
+          link.addEventListener('click', function(e) {
+            // Only handle internal links
+            const href = this.getAttribute('href');
+            if (href && !href.startsWith('#') && !href.startsWith('http') && !href.startsWith('mailto:')) {
+              if (transitionOverlay) {
+                transitionOverlay.style.display = 'block';
+                transitionOverlay.style.opacity = '1';
+                transitionOverlay.style.transform = 'translateY(0)';
+                transitionOverlay.style.visibility = 'visible';
+              }
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>
