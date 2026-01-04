@@ -446,8 +446,8 @@ html, body {
   right: auto;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(22% - 1rem), 400px);
-  max-height: min(55vw, 650px);
+  max-width: min(calc(28% - 1rem), 500px);
+  max-height: min(45vw, 550px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -457,10 +457,10 @@ html, body {
 .hiroshima-image {
   left: 78%;
   right: 2.5rem;
-  top: 35%;
+  top: 30%;
   transform: translateY(-50%);
   max-width: min(calc(18% - 1rem), 350px);
-  max-height: min(25vw, 300px);
+  max-height: min(22vw, 280px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -470,10 +470,10 @@ html, body {
 .bums-image {
   left: 78%;
   right: 2.5rem;
-  top: 70%;
+  top: 75%;
   transform: translateY(-50%);
   max-width: min(calc(18% - 1rem), 350px);
-  max-height: min(25vw, 300px);
+  max-height: min(22vw, 280px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -483,10 +483,10 @@ html, body {
 .ww2lifeexpectancy-image {
   left: 60%;
   right: 1rem;
-  top: 30%;
+  top: 27%;
   transform: translateY(-50%);
-  max-width: min(calc(48% - 1rem), 1200px);
-  max-height: min(30vw, 400px);
+  max-width: min(calc(40% - 1rem), 1000px);
+  max-height: min(25vw, 350px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -494,12 +494,12 @@ html, body {
 
 /* Nukedgirls Image - Positioned at the bottom left */
 .nukedgirls-image {
-  left: 50%;
+  left: 52%;
   right: auto;
   top: 75%;
   transform: translateY(-50%);
-  max-width: min(calc(24% - 0.5rem), 600px);
-  max-height: min(25vw, 300px);
+  max-width: min(calc(20% - 0.5rem), 500px);
+  max-height: min(20vw, 250px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -507,12 +507,38 @@ html, body {
 
 /* Nuke Image - Positioned to the right of the nukedgirls image */
 .nuke-image {
-  left: 74%;
+  left: 75%;
   right: 1rem;
   top: 75%;
   transform: translateY(-50%);
-  max-width: min(calc(24% - 0.5rem), 600px);
-  max-height: min(25vw, 300px);
+  max-width: min(calc(20% - 0.5rem), 500px);
+  max-height: min(20vw, 250px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Calories Image - Positioned centered in the right section */
+.calories-image {
+  left: 55%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(48% - 1rem), 1400px);
+  max-height: min(60vw, 700px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Disease Death Rates Image - Positioned centered in the right section */
+.diseasedeathrates-image {
+  left: 54%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(45% - 1rem), 1400px);
+  max-height: min(60vw, 700px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -795,33 +821,33 @@ html, body {
   .lifeexpectancy-image {
     left: 55%;
     max-width: calc(18% - 1rem);
-    max-height: min(50vw, 550px);
+    max-height: min(40vw, 480px);
     object-fit: contain;
   }
   
   .hiroshima-image {
-    left: 74%;
+    left: 80%;
     right: 1rem;
-    max-width: calc(18% - 1rem);
-    max-height: min(25vw, 300px);
-    top: 35%;
+    max-width: calc(15% - 1rem);
+    max-height: min(22vw, 280px);
+    top: 30%;
     object-fit: contain;
   }
   
   .bums-image {
-    left: 74%;
+    left: 80%;
     right: 1rem;
-    max-width: calc(18% - 1rem);
-    max-height: min(25vw, 300px);
-    top: 70%;
+    max-width: calc(15% - 1rem);
+    max-height: min(22vw, 280px);
+    top: 75%;
     object-fit: contain;
   }
   
   .ww2lifeexpectancy-image {
     left: 45%;
     right: 1rem;
-    max-width: calc(54% - 1rem);
-    max-height: min(30vw, 400px);
+    max-width: calc(40% - 1rem);
+    max-height: min(25vw, 350px);
     top: 20%;
     object-fit: contain;
   }
@@ -829,18 +855,36 @@ html, body {
   .nukedgirls-image {
     left: 45%;
     right: auto;
-    max-width: calc(26% - 0.5rem);
-    max-height: min(25vw, 300px);
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
     top: 75%;
     object-fit: contain;
   }
   
   .nuke-image {
-    left: 72%;
+    left: 65%;
     right: 1rem;
-    max-width: calc(26% - 0.5rem);
-    max-height: min(25vw, 300px);
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
     top: 75%;
+    object-fit: contain;
+  }
+  
+  .calories-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .diseasedeathrates-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
     object-fit: contain;
   }
 }
@@ -880,33 +924,33 @@ html, body {
   .lifeexpectancy-image {
     left: 58%;
     max-width: calc(20% - 1rem);
-    max-height: min(50vw, 550px);
+    max-height: min(40vw, 480px);
     object-fit: contain;
   }
   
   .hiroshima-image {
-    left: 79%;
+    left: 82%;
     right: 1.5rem;
-    max-width: calc(18% - 1rem);
-    max-height: min(25vw, 300px);
-    top: 35%;
+    max-width: calc(15% - 1rem);
+    max-height: min(22vw, 280px);
+    top: 30%;
     object-fit: contain;
   }
   
   .bums-image {
-    left: 79%;
+    left: 82%;
     right: 1.5rem;
-    max-width: calc(18% - 1rem);
-    max-height: min(25vw, 300px);
-    top: 70%;
+    max-width: calc(15% - 1rem);
+    max-height: min(22vw, 280px);
+    top: 75%;
     object-fit: contain;
   }
   
   .ww2lifeexpectancy-image {
     left: 50%;
     right: 1rem;
-    max-width: calc(49% - 1rem);
-    max-height: min(30vw, 300px);
+    max-width: calc(40% - 1rem);
+    max-height: min(25vw, 350px);
     top: 20%;
     object-fit: contain;
   }
@@ -914,18 +958,36 @@ html, body {
   .nukedgirls-image {
     left: 50%;
     right: auto;
-    max-width: calc(24% - 0.5rem);
-    max-height: min(25vw, 300px);
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
     top: 75%;
     object-fit: contain;
   }
   
   .nuke-image {
-    left: 74%;
+    left: 70%;
     right: 1rem;
-    max-width: calc(24% - 0.5rem);
-    max-height: min(25vw, 300px);
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
     top: 75%;
+    object-fit: contain;
+  }
+  
+  .calories-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .diseasedeathrates-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
     object-fit: contain;
   }
 }
@@ -965,33 +1027,33 @@ html, body {
   .lifeexpectancy-image {
     left: 55%;
     max-width: calc(18% - 1rem);
-    max-height: min(50vw, 550px);
+    max-height: min(40vw, 480px);
     object-fit: contain;
   }
   
   .hiroshima-image {
-    left: 74%;
+    left: 80%;
     right: 1rem;
-    max-width: calc(18% - 1rem);
-    max-height: min(25vw, 300px);
-    top: 35%;
+    max-width: calc(15% - 1rem);
+    max-height: min(22vw, 280px);
+    top: 30%;
     object-fit: contain;
   }
   
   .bums-image {
-    left: 74%;
+    left: 80%;
     right: 1rem;
-    max-width: calc(18% - 1rem);
-    max-height: min(25vw, 300px);
-    top: 70%;
+    max-width: calc(15% - 1rem);
+    max-height: min(22vw, 280px);
+    top: 75%;
     object-fit: contain;
   }
   
   .ww2lifeexpectancy-image {
     left: 45%;
     right: 1rem;
-    max-width: calc(54% - 1rem);
-    max-height: min(30vw, 400px);
+    max-width: calc(40% - 1rem);
+    max-height: min(25vw, 350px);
     top: 20%;
     object-fit: contain;
   }
@@ -999,18 +1061,36 @@ html, body {
   .nukedgirls-image {
     left: 45%;
     right: auto;
-    max-width: calc(26% - 0.5rem);
-    max-height: min(25vw, 300px);
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
     top: 75%;
     object-fit: contain;
   }
   
   .nuke-image {
-    left: 72%;
+    left: 65%;
     right: 1rem;
-    max-width: calc(26% - 0.5rem);
-    max-height: min(25vw, 300px);
+    max-width: calc(20% - 0.5rem);
+    max-height: min(20vw, 250px);
     top: 75%;
+    object-fit: contain;
+  }
+  
+  .calories-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
+    object-fit: contain;
+  }
+  
+  .diseasedeathrates-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(60vw, 700px);
+    top: 50%;
     object-fit: contain;
   }
 }
