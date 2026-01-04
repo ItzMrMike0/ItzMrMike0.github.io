@@ -27,7 +27,7 @@ html, body {
 .top-bar {
   background: #1e3a5f;
   color: #ffffff;
-  padding: 1.5rem 0;
+  padding: 2rem 0;
   text-align: center;
   position: sticky;
   top: 0;
@@ -47,11 +47,11 @@ html, body {
 .conclusion-link,
 .sources-link {
   position: absolute;
-  font-size: 1.2rem;
+  font-size: clamp(0.7rem, 1.1vw, 1.2rem);
   font-weight: 500;
   color: #ffffff;
   text-decoration: none;
-  letter-spacing: 1px;
+  letter-spacing: clamp(0.5px, 0.1vw, 1px);
   display: inline-block;
   background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
   background-size: 200% 100%;
@@ -59,36 +59,37 @@ html, body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 /* Individual Link Positioning - Each navigation link positioned horizontally across the top bar */
 .home-link {
-  left: 2rem;
+  left: 2%;
 }
 
 .historical-link {
-  left: 8rem;
+  left: 8%;
 }
 
 .individual-link {
-  left: 16rem;
+  left: 16%;
 }
 
 .societal-link {
-  left: 24rem;
+  left: 24%;
 }
 
 .west-link {
-  left: 31rem;
+  left: 31%;
 }
 
 .conclusion-link {
-  left: 39rem;
+  left: 39%;
 }
 
 /* Sources Link - Positioned on the right side of the navigation bar, to the left of the Japan flag */
 .sources-link {
-  right: 9rem;
+  right: 10%;
 }
 
 /* Navigation Link Hover Effect - Creates an animated red gradient sweep on hover */
@@ -121,10 +122,10 @@ html, body {
 .japan-flag {
   position: absolute;
   top: 50%;
-  right: 3.5rem;
+  right: clamp(1.5rem, 3.5vw, 3.5rem);
   transform: translateY(-50%);
-  width: 60px;
-  height: 40px;
+  width: clamp(40px, 6vw, 60px);
+  height: clamp(27px, 4vw, 40px);
   background: #ffffff;
   display: flex;
   align-items: center;
@@ -134,18 +135,20 @@ html, body {
 
 /* Flag Circle - The red circle (Hinomaru) in the center of the Japanese flag */
 .flag-circle {
-  width: 28px;
-  height: 28px;
+  width: clamp(18px, 2.9vw, 28px);
+  height: clamp(18px, 2.9vw, 28px);
   background: #c8102e;
   border-radius: 50%;
 }
 
-/* Main Title Styling - "Japanese Longevity" heading in the navigation bar */
-.top-bar h1 {
-  font-size: 2rem;
+/* Main Title Styling - "Japanese Longevity" heading on each page */
+.main-title {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
   font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: clamp(2px, 0.4vw, 4px);
   color: #c8102e;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 /* ============================================================================
@@ -170,20 +173,24 @@ html, body {
   text-align: center;
   width: 100%;
   border-bottom: 1px solid #e8e4d9;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Author Name - The student's name display */
 .author-name {
-  font-size: 1.8rem;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
   color: #1e3a5f;
   margin-bottom: 0.8rem;
   font-weight: 400;
   letter-spacing: 1px;
+  line-height: 1.4;
 }
 
 /* Class Name - Displays the course information */
 .class-name {
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
   color: #6b7280;
   font-weight: 300;
   letter-spacing: 0.5px;
@@ -201,14 +208,19 @@ html, body {
   text-align: center;
   width: 100%;
   border-bottom: 1px solid #e8e4d9;
+  font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Page Title - The main heading for each content page */
 .page-title {
-  font-size: 1.8rem;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
   color: #1e3a5f;
   font-weight: 400;
   letter-spacing: 1px;
+  line-height: 1.4;
+  margin-bottom: 0;
 }
 
 /* ============================================================================
@@ -223,11 +235,12 @@ html, body {
   position: relative;
   min-height: 400px;
   margin-bottom: 2rem;
+  overflow-x: hidden;
 }
 
 /* Thesis Title - The "Thesis" heading within the content section */
 .thesis-title {
-  font-size: 1.4rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
   color: #1e3a5f;
   margin-bottom: 2rem;
   font-weight: 400;
@@ -239,7 +252,7 @@ html, body {
 
 /* Thesis Content - The main body text container with centered, readable width */
 .thesis-content {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
   line-height: 2;
   color: #4a4a4a;
   max-width: 50%;
@@ -253,31 +266,58 @@ html, body {
   left: 60%;
   top: 50%;
   transform: translateY(-50%);
-  max-width: 400px;
-  max-height: 500px;
+  max-width: min(calc(40% - 2.5rem), 400px);
+  max-height: min(45vw, 500px);
   width: auto;
   height: auto;
   object-fit: cover;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  right: 2.5rem;
 }
 
-/* Mount Fuji Image - Larger size */
+/* Japan Map Image - Positioned more to the right, scales with viewport */
+.japanmap-image {
+  left: 67%;
+  right: 1.5rem;
+  max-width: min(calc(33% - 1.5rem), 400px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+}
+
+/* SPSD Image - Positioned closer to the right, scales with viewport */
+.spsd-image {
+  left: 65%;
+  right: 1.5rem;
+  max-width: min(calc(35% - 1.5rem), 400px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+}
+
+/* Mount Fuji Image - Larger size, scales with viewport */
 .mtfuji-image {
-  max-width: 700px;
-  max-height: 800px;
+  max-width: min(calc(40% - 2.5rem), 700px);
+  max-height: min(73vw, 800px);
+  width: auto;
+  height: auto;
 }
 
-/* Highlighted Map Image - Larger size */
+/* Highlighted Map Image - Larger size, scales with viewport */
 .highlightedmap-image {
-  max-width: 700px;
-  max-height: 600px;
+  max-width: min(calc(40% - 2.5rem), 700px);
+  max-height: min(55vw, 600px);
+  width: auto;
+  height: auto;
 }
 
-/* Desk Image - Larger size */
+/* Desk Image - Larger size, scales with viewport */
 .desk-image {
-  max-width: 600px;
-  max-height: 600px;
+  max-width: min(calc(40% - 2.5rem), 600px);
+  max-height: min(55vw, 600px);
+  width: auto;
+  height: auto;
 }
 
 /* Thesis Paragraphs - Individual paragraph styling within the content */
@@ -295,62 +335,179 @@ html, body {
    RESPONSIVE DESIGN - MOBILE & TABLET STYLES
    ============================================================================ */
 
+/* Medium screens - Adjust navigation to prevent overlap */
+@media (max-width: 1200px) and (min-width: 851px) {
+  .home-link { left: 1.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .historical-link { left: 7.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .individual-link { left: 14.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .societal-link { left: 21.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .west-link { left: 28.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .conclusion-link { left: 35.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .sources-link { right: calc(3.5rem + 60px + 1rem); font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .japan-flag { right: 3.5rem; width: 60px; height: 40px; }
+  .flag-circle { width: 28px; height: 28px; }
+}
+
+/* Small desktop screens - More compact navigation */
+@media (max-width: 1000px) and (min-width: 851px) {
+  .home-link { left: 1%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .historical-link { left: 6.5%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .individual-link { left: 12%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .societal-link { left: 17.5%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .west-link { left: 23%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .conclusion-link { left: 28.5%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .sources-link { right: calc(3rem + 55px + 0.8rem); font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .japan-flag { right: 3rem; width: 55px; height: 37px; }
+  .flag-circle { width: 26px; height: 26px; }
+}
+
+/* Very small desktop screens - Maximum compactness */
+@media (max-width: 900px) and (min-width: 769px) {
+  .home-link { left: 0.5%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .historical-link { left: 7%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .individual-link { left: 13.5%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .societal-link { left: 20%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .west-link { left: 26.5%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .conclusion-link { left: 33%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .sources-link { right: calc(2.5rem + 50px + 0.8rem); font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .japan-flag { right: 2.5rem; width: 50px; height: 33px; }
+  .flag-circle { width: 24px; height: 24px; }
+}
+
+/* Small mobile screens - More compact spacing */
+@media (max-width: 600px) and (min-width: 481px) {
+  .home-link { left: 0.3%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
+  .historical-link { left: 10%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
+  .individual-link { left: 19.5%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
+  .societal-link { left: 29%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
+  .west-link { left: 38.5%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
+  .conclusion-link { left: 48%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
+  .sources-link { right: calc(1.5rem + 40px + 0.7rem); font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
+  .japan-flag { width: 40px; height: 27px; right: 1.5rem; }
+  .flag-circle { width: 18px; height: 18px; }
+}
+
+/* Very small mobile screens - Extra compact to prevent overlap */
+@media (max-width: 480px) {
+  .home-link {
+    left: 0.2%;
+    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  }
+
+  .historical-link {
+    left: 13%;
+    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  }
+
+  .individual-link {
+    left: 25%;
+    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  }
+
+  .societal-link {
+    left: 37%;
+    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  }
+
+  .west-link {
+    left: 49%;
+    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  }
+
+  .conclusion-link {
+    left: 61%;
+    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  }
+
+  .sources-link {
+    right: calc(1rem + 35px + 0.6rem);
+    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  }
+  
+  .japan-flag {
+    width: 35px;
+    height: 23px;
+    right: 1rem;
+  }
+  
+  .flag-circle {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Medium-small screens - Better spacing */
+@media (max-width: 850px) and (min-width: 769px) {
+  .home-link { left: 0.5%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+  .historical-link { left: 8%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+  .individual-link { left: 15.5%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+  .societal-link { left: 23%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+  .west-link { left: 30.5%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+  .conclusion-link { left: 38%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+  .sources-link { right: calc(2.5rem + 50px + 0.8rem); font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+}
+
 /* Media Query for screens 768px and smaller - adjusts all styles for mobile devices */
 @media (max-width: 768px) {
   /* Navigation Links - Repositioned and resized for mobile */
   .home-link {
-    left: 1rem;
-    font-size: 1rem;
+    left: 0.5%;
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
   }
 
   .historical-link {
-    left: 6rem;
-    font-size: 1rem;
+    left: 11%;
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
   }
 
   .individual-link {
-    left: 11rem;
-    font-size: 1rem;
+    left: 21%;
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
   }
 
   .societal-link {
-    left: 16rem;
-    font-size: 1rem;
+    left: 31%;
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
   }
 
   .west-link {
-    left: 21rem;
-    font-size: 1rem;
+    left: 41%;
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
   }
 
   .conclusion-link {
-    left: 28rem;
-    font-size: 1rem;
+    left: 51%;
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
   }
 
   .sources-link {
-    right: 5rem;
-    font-size: 1rem;
+    right: calc(2rem + 45px + 0.8rem);
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
+  }
+  
+  .japan-flag {
+    width: clamp(35px, 6vw, 45px);
+    height: clamp(23px, 4vw, 30px);
+    right: clamp(1rem, 3vw, 2rem);
   }
 
   /* Japan Flag - Scaled down for mobile devices */
   .japan-flag {
-    width: 45px;
-    height: 30px;
-    right: 2rem;
+    width: clamp(35px, 6vw, 45px);
+    height: clamp(23px, 4vw, 30px);
+    right: clamp(1rem, 3vw, 2rem);
   }
 
   /* Flag Circle - Scaled proportionally with the flag container */
   .flag-circle {
-    width: 20px;
-    height: 20px;
+    width: clamp(16px, 2.5vw, 20px);
+    height: clamp(16px, 2.5vw, 20px);
   }
 
   /* Main Title - Reduced size for mobile */
-  .top-bar h1 {
-    font-size: 1.6rem;
-    font-weight: 600;
-    letter-spacing: 2px;
+  .main-title {
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    letter-spacing: 1.5px;
   }
 
   /* Content Sections - Reduced padding for mobile */
@@ -379,17 +536,127 @@ html, body {
   /* Thesis Content - Slightly smaller text for mobile */
   .thesis-content {
     font-size: 0.95rem;
+    max-width: 100%;
+    padding-right: 0;
   }
 
   /* Thesis Image - Stack below content on mobile */
   .thesis-image {
     position: relative;
-    right: auto;
+    left: auto;
     top: auto;
     transform: none;
     max-width: 100%;
     max-height: 300px;
     margin-top: 2rem;
     display: block;
+  }
+}
+
+/* Tablet screens - Adjust content layout */
+@media (max-width: 1000px) and (min-width: 769px) {
+  .thesis-content {
+    max-width: 45%;
+    padding-right: 1.5rem;
+  }
+  
+  .thesis-image {
+    left: 55%;
+    right: 2rem;
+    max-width: calc(45% - 2rem);
+    max-height: min(60vw, 600px);
+  }
+  
+  .japanmap-image {
+    left: 62%;
+    right: 1rem;
+    max-width: calc(38% - 1rem);
+  }
+  
+  .spsd-image {
+    left: 60%;
+    right: 1rem;
+    max-width: calc(40% - 1rem);
+  }
+  
+  .mtfuji-image {
+    max-width: calc(45% - 2rem);
+    max-height: min(65vw, 700px);
+  }
+  
+  .highlightedmap-image {
+    max-width: calc(45% - 2rem);
+    max-height: min(50vw, 550px);
+  }
+  
+  .desk-image {
+    max-width: calc(45% - 2rem);
+    max-height: min(50vw, 550px);
+  }
+}
+
+/* Narrow screens - Prevent image cutoff */
+@media (max-width: 1200px) and (min-width: 1001px) {
+  .thesis-image {
+    left: 58%;
+    right: 2rem;
+    max-width: calc(42% - 2rem);
+  }
+  
+  .japanmap-image {
+    left: 65%;
+    right: 1.5rem;
+    max-width: calc(35% - 1.5rem);
+  }
+  
+  .spsd-image {
+    left: 63%;
+    right: 1.5rem;
+    max-width: calc(37% - 1.5rem);
+  }
+  
+  .mtfuji-image {
+    max-width: calc(42% - 2rem);
+  }
+  
+  .highlightedmap-image {
+    max-width: calc(42% - 2rem);
+  }
+  
+  .desk-image {
+    max-width: calc(42% - 2rem);
+  }
+}
+
+/* Very narrow desktop screens - More aggressive scaling */
+@media (max-width: 1100px) and (min-width: 769px) {
+  .thesis-image {
+    left: 55%;
+    right: 1.5rem;
+    max-width: calc(45% - 1.5rem);
+  }
+  
+  .japanmap-image {
+    left: 62%;
+    right: 1rem;
+    max-width: calc(38% - 1rem);
+  }
+  
+  .spsd-image {
+    left: 60%;
+    right: 1rem;
+    max-width: calc(40% - 1rem);
+  }
+  
+  .mtfuji-image {
+    max-width: calc(45% - 1.5rem);
+  }
+  
+  .highlightedmap-image {
+    max-width: calc(45% - 1.5rem);
+  }
+  
+  .desk-image {
+    max-width: calc(45% - 1.5rem);
   }
 }
