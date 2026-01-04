@@ -479,6 +479,45 @@ html, body {
   object-fit: contain;
 }
 
+/* WW2 Life Expectancy Image - Positioned at the top, full width on the right side */
+.ww2lifeexpectancy-image {
+  left: 60%;
+  right: 1rem;
+  top: 30%;
+  transform: translateY(-50%);
+  max-width: min(calc(48% - 1rem), 1200px);
+  max-height: min(30vw, 400px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Nukedgirls Image - Positioned at the bottom left */
+.nukedgirls-image {
+  left: 50%;
+  right: auto;
+  top: 75%;
+  transform: translateY(-50%);
+  max-width: min(calc(24% - 0.5rem), 600px);
+  max-height: min(25vw, 300px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Nuke Image - Positioned to the right of the nukedgirls image */
+.nuke-image {
+  left: 74%;
+  right: 1rem;
+  top: 75%;
+  transform: translateY(-50%);
+  max-width: min(calc(24% - 0.5rem), 600px);
+  max-height: min(25vw, 300px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 /* Thesis Paragraphs - Individual paragraph styling within the content */
 .thesis-content p {
   margin-bottom: 1.5rem;
@@ -777,6 +816,33 @@ html, body {
     top: 70%;
     object-fit: contain;
   }
+  
+  .ww2lifeexpectancy-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(30vw, 400px);
+    top: 20%;
+    object-fit: contain;
+  }
+  
+  .nukedgirls-image {
+    left: 45%;
+    right: auto;
+    max-width: calc(26% - 0.5rem);
+    max-height: min(25vw, 300px);
+    top: 75%;
+    object-fit: contain;
+  }
+  
+  .nuke-image {
+    left: 72%;
+    right: 1rem;
+    max-width: calc(26% - 0.5rem);
+    max-height: min(25vw, 300px);
+    top: 75%;
+    object-fit: contain;
+  }
 }
 
 /* Narrow screens - Prevent image cutoff */
@@ -835,6 +901,33 @@ html, body {
     top: 70%;
     object-fit: contain;
   }
+  
+  .ww2lifeexpectancy-image {
+    left: 50%;
+    right: 1rem;
+    max-width: calc(49% - 1rem);
+    max-height: min(30vw, 400px);
+    top: 20%;
+    object-fit: contain;
+  }
+  
+  .nukedgirls-image {
+    left: 50%;
+    right: auto;
+    max-width: calc(24% - 0.5rem);
+    max-height: min(25vw, 300px);
+    top: 75%;
+    object-fit: contain;
+  }
+  
+  .nuke-image {
+    left: 74%;
+    right: 1rem;
+    max-width: calc(24% - 0.5rem);
+    max-height: min(25vw, 300px);
+    top: 75%;
+    object-fit: contain;
+  }
 }
 
 /* Very narrow desktop screens - More aggressive scaling */
@@ -891,6 +984,33 @@ html, body {
     max-width: calc(18% - 1rem);
     max-height: min(25vw, 300px);
     top: 70%;
+    object-fit: contain;
+  }
+  
+  .ww2lifeexpectancy-image {
+    left: 45%;
+    right: 1rem;
+    max-width: calc(54% - 1rem);
+    max-height: min(30vw, 400px);
+    top: 20%;
+    object-fit: contain;
+  }
+  
+  .nukedgirls-image {
+    left: 45%;
+    right: auto;
+    max-width: calc(26% - 0.5rem);
+    max-height: min(25vw, 300px);
+    top: 75%;
+    object-fit: contain;
+  }
+  
+  .nuke-image {
+    left: 72%;
+    right: 1rem;
+    max-width: calc(26% - 0.5rem);
+    max-height: min(25vw, 300px);
+    top: 75%;
     object-fit: contain;
   }
 }
