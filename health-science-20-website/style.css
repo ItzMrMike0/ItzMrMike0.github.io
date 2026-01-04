@@ -906,7 +906,7 @@ html, body {
     left: 50%;
     right: 1rem;
     max-width: calc(49% - 1rem);
-    max-height: min(30vw, 400px);
+    max-height: min(30vw, 300px);
     top: 20%;
     object-fit: contain;
   }
