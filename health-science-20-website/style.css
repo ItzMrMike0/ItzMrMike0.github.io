@@ -148,6 +148,8 @@ html, body {
   background: #1e3a5f;
   color: #ffffff;
   padding: 2rem 0;
+  padding-left: clamp(1rem, 2vw, 2rem);
+  padding-right: clamp(5rem, 8vw, 8rem);
   text-align: center;
   position: sticky;
   top: 0;
@@ -156,6 +158,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: clamp(1rem, 2.5vw, 3rem);
 }
 
 /* Navigation Links Base Styles - Shared styling for all navigation links with animated gradient text effects */
@@ -166,7 +169,7 @@ html, body {
 .west-link,
 .conclusion-link,
 .sources-link {
-  position: absolute;
+  position: relative;
   font-size: clamp(0.7rem, 1.1vw, 1.2rem);
   font-weight: 500;
   color: #ffffff;
@@ -180,36 +183,7 @@ html, body {
   -webkit-text-fill-color: transparent;
   transition: all 0.3s ease;
   white-space: nowrap;
-}
-
-/* Individual Link Positioning - Each navigation link positioned horizontally across the top bar */
-.home-link {
-  left: 2%;
-}
-
-.historical-link {
-  left: 8%;
-}
-
-.individual-link {
-  left: 16%;
-}
-
-.societal-link {
-  left: 24%;
-}
-
-.west-link {
-  left: 31%;
-}
-
-.conclusion-link {
-  left: 39%;
-}
-
-/* Sources Link - Positioned on the right side of the navigation bar, to the left of the Japan flag */
-.sources-link {
-  right: 10%;
+  flex: 0 0 auto;
 }
 
 /* Navigation Link Hover Effect - Creates an animated red gradient sweep on hover */
@@ -756,171 +730,158 @@ html, body {
 
 /* Medium screens - Adjust navigation to prevent overlap */
 @media (max-width: 1200px) and (min-width: 851px) {
-  .home-link { left: 1.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
-  .historical-link { left: 7.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
-  .individual-link { left: 14.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
-  .societal-link { left: 21.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
-  .west-link { left: 28.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
-  .conclusion-link { left: 35.5%; font-size: clamp(0.7rem, 1.1vw, 1rem); }
-  .sources-link { right: calc(3.5rem + 60px + 1rem); font-size: clamp(0.7rem, 1.1vw, 1rem); }
+  .top-bar {
+    gap: clamp(0.8rem, 2vw, 2.5rem);
+    padding-right: clamp(4rem, 7vw, 7rem);
+  }
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
+  .sources-link {
+    font-size: clamp(0.7rem, 1.1vw, 1rem);
+  }
   .japan-flag { right: 3.5rem; width: 60px; height: 40px; }
   .flag-circle { width: 28px; height: 28px; }
 }
 
 /* Small desktop screens - More compact navigation */
 @media (max-width: 1000px) and (min-width: 851px) {
-  .home-link { left: 1%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
-  .historical-link { left: 6.5%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
-  .individual-link { left: 12%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
-  .societal-link { left: 17.5%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
-  .west-link { left: 23%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
-  .conclusion-link { left: 28.5%; font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
-  .sources-link { right: calc(3rem + 55px + 0.8rem); font-size: clamp(0.65rem, 1.2vw, 0.9rem); }
+  .top-bar {
+    gap: clamp(0.7rem, 1.8vw, 2rem);
+    padding-right: clamp(3.5rem, 6.5vw, 6.5rem);
+  }
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
+  .sources-link {
+    font-size: clamp(0.65rem, 1.2vw, 0.9rem);
+  }
   .japan-flag { right: 3rem; width: 55px; height: 37px; }
   .flag-circle { width: 26px; height: 26px; }
 }
 
 /* Very small desktop screens - Maximum compactness */
 @media (max-width: 900px) and (min-width: 769px) {
-  .home-link { left: 0.5%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
-  .historical-link { left: 7%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
-  .individual-link { left: 13.5%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
-  .societal-link { left: 20%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
-  .west-link { left: 26.5%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
-  .conclusion-link { left: 33%; font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
-  .sources-link { right: calc(2.5rem + 50px + 0.8rem); font-size: clamp(0.6rem, 1.3vw, 0.8rem); }
+  .top-bar {
+    gap: clamp(0.6rem, 1.5vw, 1.8rem);
+    padding-right: clamp(3rem, 6vw, 6rem);
+  }
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
+  .sources-link {
+    font-size: clamp(0.6rem, 1.3vw, 0.8rem);
+  }
   .japan-flag { right: 2.5rem; width: 50px; height: 33px; }
   .flag-circle { width: 24px; height: 24px; }
 }
 
 /* Small mobile screens - More compact spacing */
 @media (max-width: 600px) and (min-width: 481px) {
-  .home-link { left: 0.3%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
-  .historical-link { left: 10%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
-  .individual-link { left: 19.5%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
-  .societal-link { left: 29%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
-  .west-link { left: 38.5%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
-  .conclusion-link { left: 48%; font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
-  .sources-link { right: calc(1.5rem + 40px + 0.7rem); font-size: clamp(0.55rem, 2.5vw, 0.7rem); }
-  .japan-flag { width: 40px; height: 27px; right: 1.5rem; }
-  .flag-circle { width: 18px; height: 18px; }
+  .top-bar {
+    padding: 0.8rem 0;
+    gap: clamp(0.3rem, 1.2vw, 0.6rem);
+    padding-right: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
+  .sources-link {
+    font-size: clamp(0.4rem, 2vw, 0.55rem);
+  }
+  .japan-flag { width: 32px; height: 22px; right: 1rem; }
+  .flag-circle { width: 15px; height: 15px; }
 }
 
 /* Very small mobile screens - Extra compact to prevent overlap */
 @media (max-width: 480px) {
-  .home-link {
-    left: 0.2%;
-    font-size: clamp(0.5rem, 3vw, 0.65rem);
+  .top-bar {
+    padding: 0.7rem 0;
+    gap: clamp(0.25rem, 1vw, 0.5rem);
+    padding-right: clamp(2rem, 4.5vw, 3rem);
   }
-
-  .historical-link {
-    left: 13%;
-    font-size: clamp(0.5rem, 3vw, 0.65rem);
-  }
-
-  .individual-link {
-    left: 25%;
-    font-size: clamp(0.5rem, 3vw, 0.65rem);
-  }
-
-  .societal-link {
-    left: 37%;
-    font-size: clamp(0.5rem, 3vw, 0.65rem);
-  }
-
-  .west-link {
-    left: 49%;
-    font-size: clamp(0.5rem, 3vw, 0.65rem);
-  }
-
-  .conclusion-link {
-    left: 61%;
-    font-size: clamp(0.5rem, 3vw, 0.65rem);
-  }
-
+  
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
   .sources-link {
-    right: calc(1rem + 35px + 0.6rem);
-    font-size: clamp(0.5rem, 3vw, 0.65rem);
+    font-size: clamp(0.35rem, 2.5vw, 0.5rem);
   }
   
   .japan-flag {
-    width: 35px;
-    height: 23px;
-    right: 1rem;
+    width: 28px;
+    height: 19px;
+    right: 0.8rem;
   }
   
   .flag-circle {
-    width: 16px;
-    height: 16px;
+    width: 13px;
+    height: 13px;
   }
 }
 
 /* Medium-small screens - Better spacing */
 @media (max-width: 850px) and (min-width: 769px) {
-  .home-link { left: 0.5%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
-  .historical-link { left: 8%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
-  .individual-link { left: 15.5%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
-  .societal-link { left: 23%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
-  .west-link { left: 30.5%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
-  .conclusion-link { left: 38%; font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
-  .sources-link { right: calc(2.5rem + 50px + 0.8rem); font-size: clamp(0.65rem, 1.2vw, 0.8rem); }
+  .top-bar {
+    gap: clamp(0.65rem, 1.6vw, 1.9rem);
+    padding-right: clamp(3rem, 6vw, 6rem);
+  }
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
+  .sources-link {
+    font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+  }
 }
 
 /* Media Query for screens 768px and smaller - adjusts all styles for mobile devices */
 @media (max-width: 768px) {
+  /* Top Bar - Reduced padding for mobile */
+  .top-bar {
+    padding: 1rem 0;
+    gap: clamp(0.4rem, 1.5vw, 0.8rem);
+    padding-right: clamp(2.5rem, 5.5vw, 4rem);
+  }
+
   /* Navigation Links - Repositioned and resized for mobile */
-  .home-link {
-    left: 0.5%;
-    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-  }
-
-  .historical-link {
-    left: 11%;
-    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-  }
-
-  .individual-link {
-    left: 21%;
-    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-  }
-
-  .societal-link {
-    left: 31%;
-    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-  }
-
-  .west-link {
-    left: 41%;
-    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-  }
-
-  .conclusion-link {
-    left: 51%;
-    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
-  }
-
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
   .sources-link {
-    right: calc(2rem + 45px + 0.8rem);
-    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
+    font-size: clamp(0.45rem, 1.8vw, 0.65rem);
   }
   
   .japan-flag {
-    width: clamp(35px, 6vw, 45px);
-    height: clamp(23px, 4vw, 30px);
-    right: clamp(1rem, 3vw, 2rem);
-  }
-
-  /* Japan Flag - Scaled down for mobile devices */
-  .japan-flag {
-    width: clamp(35px, 6vw, 45px);
-    height: clamp(23px, 4vw, 30px);
-    right: clamp(1rem, 3vw, 2rem);
+    width: clamp(30px, 5vw, 38px);
+    height: clamp(20px, 3.5vw, 25px);
+    right: clamp(0.5rem, 2vw, 1.5rem);
   }
 
   /* Flag Circle - Scaled proportionally with the flag container */
   .flag-circle {
-    width: clamp(16px, 2.5vw, 20px);
-    height: clamp(16px, 2.5vw, 20px);
+    width: clamp(14px, 2.2vw, 18px);
+    height: clamp(14px, 2.2vw, 18px);
   }
 
   /* Main Title - Reduced size for mobile */
@@ -960,15 +921,78 @@ html, body {
   }
 
   /* Thesis Image - Stack below content on mobile */
-  .thesis-image {
+  .thesis-image,
+  .thesis-image.japanmap-image,
+  .thesis-image.spsd-image,
+  .thesis-image.mtfuji-image,
+  .thesis-image.highlightedmap-image,
+  .thesis-image.desk-image,
+  .thesis-image.lifeexpectancy-image,
+  .thesis-image.hiroshima-image,
+  .thesis-image.bums-image,
+  .thesis-image.ww2lifeexpectancy-image,
+  .thesis-image.nukedgirls-image,
+  .thesis-image.nuke-image,
+  .thesis-image.calories-image,
+  .thesis-image.diseasedeathrates-image,
+  .thesis-image.schoollunch-image,
+  .thesis-image.infantmortality-image,
+  .thesis-image.healthcarespending-image,
+  .thesis-image.organizationhealthcare-image,
+  .thesis-image.globallifeexpectancy-image,
+  .thesis-image.highlightingschoollunch-image,
+  .thesis-image.traditionalmeal-image,
+  .thesis-image.omegamap-image,
+  .thesis-image.activechart-image,
+  .thesis-image.smokingrates-image,
+  .thesis-image.alcoholgraph-image,
+  .thesis-image.genetics-image,
+  .thesis-image.dna-image,
+  .thesis-image.doctorvists-image,
+  .thesis-image.harahacibun-image {
     position: relative;
     left: auto;
+    right: auto;
     top: auto;
     transform: none;
     max-width: 100%;
     max-height: 300px;
-    margin-top: 2rem;
-  display: block;
+    margin: 2rem auto 0;
+    display: block;
+  }
+}
+
+/* Extra small mobile screens - Further reduce sizes */
+@media (max-width: 360px) {
+  .top-bar {
+    padding: 0.6rem 0;
+    gap: clamp(0.2rem, 0.8vw, 0.4rem);
+    padding-right: clamp(1.8rem, 4vw, 2.5rem);
+  }
+  
+  .home-link,
+  .historical-link,
+  .individual-link,
+  .societal-link,
+  .west-link,
+  .conclusion-link,
+  .sources-link {
+    font-size: clamp(0.3rem, 2vw, 0.45rem);
+  }
+  
+  .japan-flag {
+    width: 24px;
+    height: 16px;
+    right: 0.5rem;
+  }
+  
+  .flag-circle {
+    width: 11px;
+    height: 11px;
+  }
+  
+  .thesis-image {
+    max-height: 250px;
   }
 }
 
@@ -1694,3 +1718,4 @@ html, body {
     object-fit: contain;
   }
 }
+
