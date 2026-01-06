@@ -378,6 +378,7 @@ html, body {
   max-height: min(50vw, 500px);
   width: auto;
   height: auto;
+  object-fit: cover;
 }
 
 /* SPSD Image - Positioned closer to the right, scales with viewport */
@@ -964,14 +965,17 @@ html, body {
   .thesis-image.doctorvists-image,
   .thesis-image.harahacibun-image {
     position: relative;
-    left: auto;
-    right: auto;
-    top: auto;
-    transform: none;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
     max-width: 100%;
     max-height: 300px;
     margin: 2rem auto 0;
     display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 }
 
