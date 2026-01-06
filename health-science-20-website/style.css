@@ -378,7 +378,6 @@ html, body {
   max-height: min(50vw, 500px);
   width: auto;
   height: auto;
-  object-fit: cover;
 }
 
 /* SPSD Image - Positioned closer to the right, scales with viewport */
@@ -929,11 +928,6 @@ html, body {
     padding-right: 0;
   }
 
-  /* Thesis Paragraphs - Change from justify to left on mobile to prevent awkward spacing */
-  .thesis-content p {
-    text-align: left;
-  }
-
   /* Thesis Image - Stack below content on mobile */
   .thesis-image,
   .thesis-image.japanmap-image,
@@ -965,17 +959,14 @@ html, body {
   .thesis-image.doctorvists-image,
   .thesis-image.harahacibun-image {
     position: relative;
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    transform: none !important;
+    left: auto;
+    right: auto;
+    top: auto;
+    transform: none;
     max-width: 100%;
     max-height: 300px;
     margin: 2rem auto 0;
     display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
   }
 }
 
@@ -1018,11 +1009,6 @@ html, body {
   .thesis-content {
     max-width: 45%;
     padding-right: 1.5rem;
-  }
-
-  /* Thesis Paragraphs - Change from justify to left on tablets to prevent awkward spacing */
-  .thesis-content p {
-    text-align: left;
   }
   
   .thesis-image {
