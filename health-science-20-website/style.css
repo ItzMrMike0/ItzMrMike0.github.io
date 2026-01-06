@@ -676,12 +676,12 @@ html, body {
 
 /* DNA Image - Positioned below the genetics image */
 .dna-image {
-  left: 65%;
+  left: 67%;
   right: 1rem;
   top: 75%;
   transform: translateY(-50%);
-  max-width: min(calc(50% - 1rem), 300px);
-  max-height: min(90vw, 500);
+  max-width: min(calc(30% - 1rem), 200px);
+  max-height: min(30vw, 250px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -1218,8 +1218,8 @@ html, body {
   .dna-image {
     left: 45%;
     right: 1rem;
-    max-width: calc(55% - 1rem);
-    max-height: min(90vw, 1200px);
+    max-width: calc(30% - 1rem);
+    max-height: min(30vw, 250px);
     top: 75%;
     object-fit: contain;
   }
@@ -1456,8 +1456,8 @@ html, body {
   .dna-image {
     left: 50%;
     right: 1rem;
-    max-width: calc(50% - 1rem);
-    max-height: min(90vw, 1200px);
+    max-width: calc(30% - 1rem);
+    max-height: min(30vw, 250px);
     top: 75%;
     object-fit: contain;
   }
@@ -1694,8 +1694,8 @@ html, body {
   .dna-image {
     left: 45%;
     right: 1rem;
-    max-width: calc(55% - 1rem);
-    max-height: min(90vw, 1200px);
+    max-width: calc(30% - 1rem);
+    max-height: min(30vw, 250px);
     top: 75%;
     object-fit: contain;
   }
