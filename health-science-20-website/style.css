@@ -928,6 +928,11 @@ html, body {
     padding-right: 0;
   }
 
+  /* Thesis Paragraphs - Change from justify to left on mobile to prevent awkward spacing */
+  .thesis-content p {
+    text-align: left;
+  }
+
   /* Thesis Image - Stack below content on mobile */
   .thesis-image,
   .thesis-image.japanmap-image,
@@ -1009,6 +1014,11 @@ html, body {
   .thesis-content {
     max-width: 45%;
     padding-right: 1.5rem;
+  }
+
+  /* Thesis Paragraphs - Change from justify to left on tablets to prevent awkward spacing */
+  .thesis-content p {
+    text-align: left;
   }
   
   .thesis-image {
