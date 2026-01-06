@@ -724,6 +724,14 @@ html, body {
   margin-bottom: 0;
 }
 
+/* Citation Paragraphs - APA style hanging indent */
+.thesis-content p.citation {
+  text-indent: -2em;
+  padding-left: 2em;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
 /* ============================================================================
    RESPONSIVE DESIGN - MOBILE & TABLET STYLES
    ============================================================================ */
