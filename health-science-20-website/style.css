@@ -570,6 +570,97 @@ html, body {
   object-fit: contain;
 }
 
+/* Wearing Mask Image - Positioned centered in the right section */
+.wearingmask-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Shibuya Crossing Image - Positioned on the left side, beside biking image */
+.shibuyacrossing-image {
+  left: 57%;
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(20% - 0.5rem), 350px);
+  max-height: min(30vw, 350px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Biking Image - Positioned beside shibuyacrossing image */
+.biking-image {
+  left: 78%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(20% - 0.5rem), 350px);
+  max-height: min(30vw, 350px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Workplace Image - Positioned centered in the right section */
+.workplace-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Caring for Old Image - Positioned centered in the right section */
+.caringforold-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Students Studying Image - Positioned centered in the right section */
+.studentsstudying-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Checking Time Image - Positioned centered in the right section */
+.checkingtime-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
 /* Global Life Expectancy Image - Positioned centered in the right section */
 .globallifeexpectancy-image {
   left: 64%;
@@ -617,6 +708,19 @@ html, body {
   transform: translateY(-50%);
   max-width: min(calc(45% - 1rem), 1400px);
   max-height: min(60vw, 700px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Drink Difference Image - Positioned centered in the right section */
+.drinkdifference-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
   width: auto;
   height: auto;
   object-fit: contain;
