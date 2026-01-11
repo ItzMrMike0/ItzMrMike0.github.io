@@ -1178,8 +1178,8 @@ html, body {
   /* Top Bar - Reduced padding for mobile */
   .top-bar {
     padding: 1rem 0;
-    gap: clamp(0.4rem, 1.5vw, 0.8rem);
-    padding-right: clamp(2.5rem, 5.5vw, 4rem);
+    gap: 0.6rem;
+    padding-right: 3rem;
   }
 
   /* Navigation Links - Repositioned and resized for mobile */
@@ -1190,24 +1190,24 @@ html, body {
   .west-link,
   .conclusion-link,
   .sources-link {
-    font-size: clamp(0.45rem, 1.8vw, 0.65rem);
+    font-size: 0.55rem;
   }
   
   .japan-flag {
-    width: clamp(30px, 5vw, 38px);
-    height: clamp(20px, 3.5vw, 25px);
-    right: clamp(0.5rem, 2vw, 1.5rem);
+    width: 32px;
+    height: 22px;
+    right: 1rem;
   }
 
   /* Flag Circle - Scaled proportionally with the flag container */
   .flag-circle {
-    width: clamp(14px, 2.2vw, 18px);
-    height: clamp(14px, 2.2vw, 18px);
+    width: 15px;
+    height: 15px;
   }
 
   /* Main Title - Reduced size for mobile */
   .main-title {
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    font-size: 1.5rem;
     letter-spacing: 1.5px;
   }
 
@@ -1270,7 +1270,28 @@ html, body {
   .thesis-image.genetics-image,
   .thesis-image.dna-image,
   .thesis-image.doctorvists-image,
-  .thesis-image.harahacibun-image {
+  .thesis-image.harahacibun-image,
+  .thesis-image.bombed-image,
+  .thesis-image.youngkidslunch-image,
+  .thesis-image.girlbeingvaccined-image,
+  .thesis-image.stretch-image,
+  .thesis-image.socialevent-image,
+  .thesis-image.stats-image,
+  .thesis-image.castle-image,
+  .thesis-image.ikigai-image,
+  .thesis-image.usvsjp-image,
+  .thesis-image.drinkdifference-image,
+  .thesis-image.biking-image,
+  .thesis-image.shibuyacrossing-image,
+  .thesis-image.medicalcost-image,
+  .thesis-image.emptywallet-image,
+  .thesis-image.ushighway-image,
+  .thesis-image.japanstation-image,
+  .thesis-image.inequality-image,
+  .thesis-image.usreseachlab-image,
+  .thesis-image.cherryblossom-image,
+  .thesis-image.barriers-image,
+  .thesis-image.japansmoking-image {
     position: relative;
     left: auto;
     right: auto;
@@ -1287,8 +1308,8 @@ html, body {
 @media (max-width: 360px) {
   .top-bar {
     padding: 0.6rem 0;
-    gap: clamp(0.2rem, 0.8vw, 0.4rem);
-    padding-right: clamp(1.8rem, 4vw, 2.5rem);
+    gap: 0.4rem;
+    padding-right: 2rem;
   }
   
   .home-link,
@@ -1298,7 +1319,7 @@ html, body {
   .west-link,
   .conclusion-link,
   .sources-link {
-    font-size: clamp(0.3rem, 2vw, 0.45rem);
+    font-size: 0.4rem;
   }
   
   .japan-flag {
