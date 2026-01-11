@@ -576,8 +576,8 @@ html, body {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(40% - 1rem), 600px);
-  max-height: min(50vw, 500px);
+  max-width: min(calc(45% - 1rem), 700px);
+  max-height: min(55vw, 550px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -585,12 +585,12 @@ html, body {
 
 /* Shibuya Crossing Image - Positioned on the left side, beside biking image */
 .shibuyacrossing-image {
-  left: 57%;
+  left: 52%;
   right: auto;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(20% - 0.5rem), 350px);
-  max-height: min(30vw, 350px);
+  max-width: min(calc(25% - 0.5rem), 450px);
+  max-height: min(35vw, 450px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -598,12 +598,12 @@ html, body {
 
 /* Biking Image - Positioned beside shibuyacrossing image */
 .biking-image {
-  left: 78%;
+  left: 76%;
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(20% - 0.5rem), 350px);
-  max-height: min(30vw, 350px);
+  max-width: min(calc(25% - 0.5rem), 450px);
+  max-height: min(35vw, 450px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -615,8 +615,8 @@ html, body {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(40% - 1rem), 600px);
-  max-height: min(50vw, 500px);
+  max-width: min(calc(45% - 1rem), 700px);
+  max-height: min(55vw, 550px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -628,8 +628,8 @@ html, body {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(40% - 1rem), 600px);
-  max-height: min(50vw, 500px);
+  max-width: min(calc(45% - 1rem), 700px);
+  max-height: min(55vw, 550px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -641,8 +641,8 @@ html, body {
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  max-width: min(calc(40% - 1rem), 600px);
-  max-height: min(50vw, 500px);
+  max-width: min(calc(45% - 1rem), 700px);
+  max-height: min(55vw, 550px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -650,7 +650,7 @@ html, body {
 
 /* Checking Time Image - Positioned centered in the right section */
 .checkingtime-image {
-  left: 57%;
+  left: 60%;
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
@@ -715,12 +715,26 @@ html, body {
 
 /* Drink Difference Image - Positioned centered in the right section */
 .drinkdifference-image {
-  left: 57%;
+  left: 60%;
   right: 1rem;
-  top: 50%;
+  top: 71%;
   transform: translateY(-50%);
-  max-width: min(calc(40% - 1rem), 600px);
-  max-height: min(50vw, 500px);
+  max-width: min(calc(35% - 1rem), 600px);
+  max-height: min(45vw, 450px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* US vs JP Image - Positioned beside the title */
+.usvsjp-image {
+  position: absolute;
+  left: 51%;
+  right: auto;
+  top: 30%;
+  transform: translateY(-50%);
+  max-width: min(calc(50% - 0.5rem), 900px);
+  max-height: min(25vw, 350px);
   width: auto;
   height: auto;
   object-fit: contain;
@@ -812,6 +826,201 @@ html, body {
   transform: translateY(-50%);
   max-width: min(calc(45% - 1rem), 1400px);
   max-height: min(60vw, 700px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Medical Cost Image - Positioned on the left side, above emptywallet */
+.medicalcost-image {
+  left: 62%;
+  right: auto;
+  top: 25%;
+  transform: translateY(-50%);
+  max-width: min(calc(50% - 0.5rem), 650px);
+  max-height: min(20vw, 300px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Empty Wallet Image - Positioned below medicalcost */
+.emptywallet-image {
+  left: 61%;
+  right: auto;
+  top: 75%;
+  transform: translateY(-50%);
+  max-width: min(calc(30% - 0.5rem), 500px);
+  max-height: min(20vw, 300px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* US Highway Image - Positioned on top in Environmental section */
+.ushighway-image {
+  left: 75%;
+  right: 1rem;
+  top: 45%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 450px);
+  max-height: min(25vw, 400px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Japan Station Image - Positioned below ushighway */
+.japanstation-image {
+  left: 52%;
+  right: 1rem;
+  top: 42%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 380px);
+  max-height: min(30vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Inequality Image - Positioned centered in the right section */
+.inequality-image {
+  left: 55%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 800px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* US Research Lab Image - Positioned centered in the right section */
+.usreseachlab-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 700px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Cherry Blossom Image - Positioned centered in the right section */
+.cherryblossom-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 700px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Barriers Image - Positioned centered in the right section */
+.barriers-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(180% - 1rem), 600px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Japan Smoking Image - Positioned centered in the right section */
+.japansmoking-image {
+  left: 57%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Bombed Image - Positioned at top of conclusion section */
+.bombed-image {
+  left: 60%;
+  right: 1rem;
+  top: 12%;
+  transform: translateY(-50%);
+  max-width: min(calc(60% - 1rem), 1000px);
+  max-height: min(18vw, 450px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Young Kids Lunch Image - Positioned second in conclusion section */
+.youngkidslunch-image {
+  left: 59%;
+  right: 1rem;
+  top: 30%;
+  transform: translateY(-50%);
+  max-width: min(calc(60% - 1rem), 800px);
+  max-height: min(18vw, 450px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Girl Being Vaccined Image - Positioned third in conclusion section */
+.girlbeingvaccined-image {
+  left: 60%;
+  right: 1rem;
+  top: 48%;
+  transform: translateY(-50%);
+  max-width: min(calc(60% - 1rem), 800px);
+  max-height: min(18vw, 450px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Stretch Image - Positioned fourth in conclusion section */
+.stretch-image {
+  left: 59%;
+  right: 1rem;
+  top: 68%;
+  transform: translateY(-50%);
+  max-width: min(calc(60% - 1rem), 800px);
+  max-height: min(18vw, 450px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Stats Image - Positioned seventh in conclusion section */
+.stats-image {
+  left: 58%;
+  right: 1rem;
+  top: 87%;
+  transform: translateY(-50%);
+  max-width: min(calc(60% - 1rem), 800px);
+  max-height: min(18vw, 450px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Ikigai Image - Positioned in Did You Know? section */
+.ikigai-image {
+  left: 59%;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: min(calc(40% - 1rem), 600px);
+  max-height: min(50vw, 500px);
   width: auto;
   height: auto;
   object-fit: contain;
